@@ -1,11 +1,16 @@
+#include <chrono>
 #include <functional>
 #include <memory>
+#include <thread>
 
 #include <X11/Xlib.h>
 
 #include <GL/glew.h>
 #include <GL/glx.h>
 
+namespace this_thread = std::this_thread;
+using std::chrono::milliseconds;
+using std::chrono::steady_clock;
 using std::function;
 using std::make_pair;
 using std::pair;
@@ -119,6 +124,29 @@ private:
 
 //----------------------------------------------------------------------------
 
+class frame_rate_limit
+{
+public:
+    explicit
+    frame_rate_limit(unsigned int fps) :
+        dt_(1000 / fps),
+        t_(steady_clock::now())
+    {
+    }
+
+    void
+    wait()
+    {
+        this_thread::sleep_until(t_ += dt_);
+    }
+
+private:
+    const milliseconds dt_;
+    steady_clock::time_point t_;
+};
+
+//----------------------------------------------------------------------------
+
 void
 init(const pair<unsigned int, unsigned int>& window_size)
 {
@@ -138,11 +166,13 @@ int
 main()
 {
     rendering_context ctx;
+    frame_rate_limit fps(10);
 
     init(ctx.window_size());
     while (true) {
         render();
         ctx.swap_buffers();
+        fps.wait();
     }
 
     return 0;
