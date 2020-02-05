@@ -6,6 +6,7 @@ CXXFLAGS += -O2
 CXXFLAGS += -std=c++17
 
 LDLIBS += -lGL
+LDLIBS += -lGLEW
 LDLIBS += -lGLX
 LDLIBS += -lX11
 
