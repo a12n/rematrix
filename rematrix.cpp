@@ -26,7 +26,7 @@ public:
     rendering_context() :
         display_(open_display_()),
         window_(RootWindow(display_.get(), screen_())),
-        context_(create_context_(choose_visual_(screen_())))
+        context_(create_context_(choose_fb_config_(screen_())))
     {
         if (glXMakeCurrent(display_.get(), window_, context_.get()) != True) {
             throw runtime_error("couldn't activate rendering context");
@@ -62,7 +62,6 @@ public:
 
 private:
     typedef unique_ptr<Display, decltype(&XCloseDisplay)> display_ptr;
-    typedef unique_ptr<XVisualInfo, decltype(&XFree)> visual_ptr;
     typedef unique_ptr<__GLXcontextRec, function<void(GLXContext)>> context_ptr; // XXX
 
     static display_ptr
@@ -83,32 +82,32 @@ private:
         return DefaultScreen(display_.get());
     }
 
-    visual_ptr
-    choose_visual_(int screen) const
+    GLXFBConfig
+    choose_fb_config_(int screen) const
     {
-        int attrs[] = {
-            GLX_RGBA,
-            GLX_DOUBLEBUFFER,
+        const int attrs[] = {
+            GLX_DOUBLEBUFFER, True,
+            GLX_X_RENDERABLE, True,
             None
         };
 
-        visual_ptr ans(glXChooseVisual(display_.get(), screen, attrs), XFree);
-
-        if (! ans) {
-            throw runtime_error("couldn't choose visual for rendering context");
+        int n = 0;
+        unique_ptr<GLXFBConfig, decltype(&XFree)> configs(glXChooseFBConfig(display_.get(), screen, attrs, &n), XFree);
+        if (! configs || n < 1) {
+            throw runtime_error("couldn't choose frame buffer configuration");
         }
 
-        return ans;
+        return configs.get()[0];
     }
 
     context_ptr
-    create_context_(visual_ptr visual) const
+    create_context_(GLXFBConfig config) const
     {
         auto context_deleter =
             [this] (GLXContext c) -> void {
                 glXDestroyContext(this->display_.get(), c);
             };
-        context_ptr ans(glXCreateContext(display_.get(), visual.get(), nullptr, True), context_deleter);
+        context_ptr ans(glXCreateNewContext(display_.get(), config, GLX_RGBA_TYPE, nullptr, True), context_deleter);
 
         if (! ans) {
             throw runtime_error("couldn't create rendering context");
