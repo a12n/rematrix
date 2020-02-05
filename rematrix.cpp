@@ -151,6 +151,10 @@ private:
 void
 init(const pair<unsigned int, unsigned int>& window_size)
 {
+    if (auto status = glewInit(); status != GLEW_OK) {
+        throw runtime_error(reinterpret_cast<const char*>(glewGetErrorString(status)));
+    }
+
     glViewport(0, 0, window_size.first, window_size.second);
 }
 
