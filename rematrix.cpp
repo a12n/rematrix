@@ -155,6 +155,10 @@ init(const pair<unsigned int, unsigned int>& window_size)
         throw runtime_error(reinterpret_cast<const char*>(glewGetErrorString(status)));
     }
 
+    if (! GLEW_VERSION_3_0) {
+        throw runtime_error("OpenGL 3.0 required");
+    }
+
     glViewport(0, 0, window_size.first, window_size.second);
 }
 
