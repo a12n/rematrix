@@ -12,7 +12,9 @@ LDLIBS += -lX11
 
 OBJS =	\
 	main.o	\
-	rendering_context.o
+	program.o	\
+	rendering_context.o	\
+	shader.o
 
 .PHONY: clean
 
