@@ -74,6 +74,21 @@ void
 render(const duration<float>& dt)
 {
     glClear(GL_COLOR_BUFFER_BIT);
+
+    vertex_buf->bind();
+    glVertexAttribPointer(position_attrib,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(GLfloat) * 3,
+                          static_cast<void*>(0));
+    glEnableVertexAttribArray(position_attrib);
+    index_buf->bind();
+    glDrawElements(GL_TRIANGLE_STRIP,
+                   4,
+                   GL_UNSIGNED_SHORT,
+                   static_cast<void*>(0));
+    glDisableVertexAttribArray(position_attrib);
 }
 
 } // namespace
