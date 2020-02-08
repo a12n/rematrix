@@ -24,9 +24,12 @@ using std::string_view;
 using std::unique_ptr;
 
 class rendering_context;
+struct buffer;
+struct element_buffer;
 struct fragment_shader;
 struct program;
 struct shader;
+struct vertex_buffer;
 struct vertex_shader;
 
 } // namespace rematrix
