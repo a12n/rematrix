@@ -5,6 +5,7 @@
 #include <functional>
 #include <iostream>
 #include <memory>
+#include <string_view>
 #include <thread>
 
 namespace rematrix {
@@ -18,6 +19,7 @@ using std::make_pair;
 using std::pair;
 using std::remove_pointer_t;
 using std::runtime_error;
+using std::string_view;
 using std::unique_ptr;
 
 } // namespace rematrix
