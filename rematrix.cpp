@@ -9,7 +9,8 @@
 #include <GL/glx.h>
 
 namespace this_thread = std::this_thread;
-using std::chrono::milliseconds;
+using std::chrono::duration;
+using std::chrono::duration_cast;
 using std::chrono::steady_clock;
 using std::function;
 using std::make_pair;
@@ -176,13 +177,19 @@ int
 main()
 {
     rendering_context ctx;
-    frame_rate_limit fps(10);
+
+    constexpr unsigned int frame_rate = 5;
+    constexpr duration<float> frame_interval(1.0f / frame_rate);
 
     init(ctx.window_size());
+
+    auto prev_time = steady_clock::now();
     while (true) {
+        this_thread::sleep_for(frame_interval);
+        auto cur_time = steady_clock::now();
         render();
         ctx.swap_buffers();
-        fps.wait();
+        prev_time = cur_time;
     }
 
     return 0;
