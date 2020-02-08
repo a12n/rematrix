@@ -29,6 +29,24 @@ struct shader
     const GLuint id;
 };
 
+//----------------------------------------------------------------------------
+
+struct vertex_shader : shader
+{
+    vertex_shader();
+
+    vertex_shader(const char* src);
+};
+
+//----------------------------------------------------------------------------
+
+struct fragment_shader : shader
+{
+    fragment_shader();
+
+    fragment_shader(const char* src);
+};
+
 } // namespace rematrix
 
 #endif  // REMATRIX_SHADER_HPP

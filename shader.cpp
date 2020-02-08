@@ -41,4 +41,30 @@ shader::compile(const char* src)
     }
 }
 
+//----------------------------------------------------------------------------
+
+vertex_shader::vertex_shader() :
+    shader{GL_VERTEX_SHADER}
+{
+}
+
+vertex_shader::vertex_shader(const char* src) :
+    vertex_shader()
+{
+    compile(src);
+}
+
+//----------------------------------------------------------------------------
+
+fragment_shader::fragment_shader() :
+    shader{GL_FRAGMENT_SHADER}
+{
+}
+
+fragment_shader::fragment_shader(const char* src) :
+    fragment_shader()
+{
+    compile(src);
+}
+
 } // namespace rematrix
