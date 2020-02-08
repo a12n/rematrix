@@ -108,7 +108,7 @@ private:
     {
         auto context_deleter =
             [this] (GLXContext c) -> void {
-                glXDestroyContext(this->display_.get(), c);
+                glXDestroyContext(display_.get(), c);
             };
         context_ptr ans(glXCreateNewContext(display_.get(), config, GLX_RGBA_TYPE, nullptr, True), context_deleter);
 
