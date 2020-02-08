@@ -165,7 +165,7 @@ init(const pair<unsigned int, unsigned int>& window_size)
 }
 
 void
-render()
+render(const duration<float>& dt)
 {
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -187,7 +187,7 @@ main()
     while (true) {
         this_thread::sleep_for(frame_interval);
         auto cur_time = steady_clock::now();
-        render();
+        render(duration_cast<duration<float>>(cur_time - prev_time));
         ctx.swap_buffers();
         prev_time = cur_time;
     }
