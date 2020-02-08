@@ -14,6 +14,7 @@ using std::chrono::steady_clock;
 using std::function;
 using std::make_pair;
 using std::pair;
+using std::remove_pointer_t;
 using std::runtime_error;
 using std::unique_ptr;
 
@@ -62,7 +63,7 @@ public:
 
 private:
     typedef unique_ptr<Display, decltype(&XCloseDisplay)> display_ptr;
-    typedef unique_ptr<__GLXcontextRec, function<void(GLXContext)>> context_ptr; // XXX
+    typedef unique_ptr<remove_pointer_t<GLXContext>, function<void(GLXContext)>> context_ptr;
 
     static display_ptr
     open_display_()
