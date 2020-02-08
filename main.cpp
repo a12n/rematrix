@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 
+#include "buffer.hpp"
 #include "program.hpp"
 #include "rendering_context.hpp"
 #include "shader.hpp"
@@ -9,6 +10,8 @@ using namespace rematrix;
 namespace {
 
 unique_ptr<program> prog;
+unique_ptr<vertex_buffer> vertex_buf;
+unique_ptr<element_buffer> index_buf;
 
 GLint position_attrib;
 
@@ -22,6 +25,19 @@ init(const pair<unsigned int, unsigned int>& window_size)
     if (! GLEW_VERSION_3_0) {
         throw runtime_error("OpenGL 3.0 required");
     }
+
+    const GLfloat vertices[] = {
+        -0.8f, -0.8f, 0.0f,
+         0.8f, -0.8f, 0.0f,
+        -0.8f,  0.8f, 0.0f,
+         0.8f,  0.8f, 0.0f
+    };
+    const GLushort indices[] = {
+        0, 1, 2, 3
+    };
+
+    vertex_buf = make_unique<vertex_buffer>(vertices, sizeof(vertices));
+    index_buf = make_unique<element_buffer>(indices, sizeof(indices));
 
     const vertex_shader v_shader{R"(
 #version 130
