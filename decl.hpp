@@ -22,6 +22,11 @@ using std::runtime_error;
 using std::string_view;
 using std::unique_ptr;
 
+class rendering_context;
+struct fragment_shader;
+struct shader;
+struct vertex_shader;
+
 } // namespace rematrix
 
 #endif  // REMATRIX_DECL_HPP
