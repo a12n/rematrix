@@ -28,6 +28,9 @@ struct program
     void
     link(const vertex_shader& v, const fragment_shader& f);
 
+    void
+    use();
+
     const GLuint id;
 };
 

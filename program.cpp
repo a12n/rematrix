@@ -51,4 +51,10 @@ program::link(const vertex_shader& v, const fragment_shader& f)
     }
 }
 
+void
+program::use()
+{
+    glUseProgram(id);
+}
+
 } // namespace rematrix
