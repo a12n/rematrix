@@ -37,4 +37,30 @@ buffer::bind(GLenum target)
     glBindBuffer(target, id);
 }
 
+//----------------------------------------------------------------------------
+
+vertex_buffer::vertex_buffer(const void* data, GLsizeiptr size, GLenum usage) :
+    buffer{GL_ARRAY_BUFFER, data, size, usage}
+{
+}
+
+void
+vertex_buffer::bind()
+{
+    buffer::bind(GL_ARRAY_BUFFER);
+}
+
+//----------------------------------------------------------------------------
+
+element_buffer::element_buffer(const void* data, GLsizeiptr size, GLenum usage) :
+    buffer{GL_ELEMENT_ARRAY_BUFFER, data, size, usage}
+{
+}
+
+void
+element_buffer::bind()
+{
+    buffer::bind(GL_ELEMENT_ARRAY_BUFFER);
+}
+
 } // namespace rematrix
