@@ -1,10 +1,16 @@
 #include <GL/glew.h>
 
+#include "program.hpp"
 #include "rendering_context.hpp"
+#include "shader.hpp"
 
 using namespace rematrix;
 
 namespace {
+
+unique_ptr<program> prog;
+
+GLint position_attrib;
 
 void
 init(const pair<unsigned int, unsigned int>& window_size)
@@ -16,6 +22,32 @@ init(const pair<unsigned int, unsigned int>& window_size)
     if (! GLEW_VERSION_3_0) {
         throw runtime_error("OpenGL 3.0 required");
     }
+
+    const vertex_shader v_shader{R"(
+#version 130
+
+attribute vec3 position;
+
+void
+main()
+{
+    gl_Position = vec4(position, 1.0);
+}
+)"};
+
+    const fragment_shader f_shader{R"(
+#version 130
+
+void
+main()
+{
+    gl_FragColor = vec4(0.1, 0.2, 0.3, 1.0);
+}
+)"};
+
+    prog = make_unique<program>(v_shader, f_shader);
+    position_attrib = prog->attrib_location("position");
+    prog->use();
 
     glViewport(0, 0, window_size.first, window_size.second);
 
