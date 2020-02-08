@@ -57,4 +57,10 @@ program::use()
     glUseProgram(id);
 }
 
+GLint
+program::attrib_location(const GLchar* name) const
+{
+    return glGetAttribLocation(id, name);
+}
+
 } // namespace rematrix
