@@ -25,6 +25,7 @@ using std::unique_ptr;
 
 class rendering_context;
 struct fragment_shader;
+struct program;
 struct shader;
 struct vertex_shader;
 
