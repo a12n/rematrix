@@ -16,6 +16,7 @@ using std::chrono::duration_cast;
 using std::chrono::steady_clock;
 using std::function;
 using std::make_pair;
+using std::make_unique;
 using std::pair;
 using std::remove_pointer_t;
 using std::runtime_error;
