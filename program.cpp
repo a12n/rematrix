@@ -60,7 +60,11 @@ program::use()
 GLint
 program::attrib_location(const GLchar* name) const
 {
-    return glGetAttribLocation(id, name);
+    auto ans{glGetAttribLocation(id, name)};
+    if (ans == -1) {
+        throw runtime_error("couldn't locate program attribute");
+    }
+    return ans;
 }
 
 } // namespace rematrix
