@@ -37,9 +37,16 @@ main()
 
     init(ctx.window_size());
 
+    constexpr unsigned int frame_rate{5};
+    constexpr duration<float> frame_interval{1.0f / frame_rate};
+    auto prev_time{steady_clock::now()};
+
     while (true) {
-        render(duration<float>{});
+        this_thread::sleep_for(frame_interval);
+        auto cur_time{steady_clock::now()};
+        render(duration_cast<duration<float>>(cur_time - prev_time));
         ctx.swap_buffers();
+        prev_time = cur_time;
     }
 
     return 0;
