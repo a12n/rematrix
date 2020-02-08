@@ -24,6 +24,10 @@ struct buffer
     operator=(buffer&& other) noexcept;
 
     const GLuint id{0};
+
+protected:
+    void
+    bind(GLenum target);
 };
 
 } // namespace rematrix

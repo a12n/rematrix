@@ -8,7 +8,7 @@ buffer::buffer(GLenum target, const void* data, GLsizeiptr size, GLenum usage)
     if (id == 0) {
         throw runtime_error("couldn't generate buffer");
     }
-    glBindBuffer(target, id);
+    bind(target);
     glBufferData(target, size, data, usage);
 }
 
@@ -29,6 +29,12 @@ buffer::operator=(buffer&& other) noexcept
     const_cast<GLuint&>(id) = other.id;
     const_cast<GLuint&>(other.id) = 0;
     return *this;
+}
+
+void
+buffer::bind(GLenum target)
+{
+    glBindBuffer(target, id);
 }
 
 } // namespace rematrix
