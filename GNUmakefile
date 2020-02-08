@@ -10,10 +10,14 @@ LDLIBS += -lGLEW
 LDLIBS += -lGLX
 LDLIBS += -lX11
 
+OBJS =	\
+	main.o	\
+	rendering_context.o
+
 .PHONY: clean
 
-$(PROG): $(PROG).cpp
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDLIBS)
+$(PROG): $(OBJS)
+	$(CXX) $^ -o $@ $(LDLIBS)
 
 clean:
-	$(RM) $(PROG)
+	$(RM) $(PROG) $(OBJS)
