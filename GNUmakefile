@@ -11,6 +11,7 @@ LDLIBS += -lGLX
 LDLIBS += -lX11
 
 OBJS =	\
+	buffer.o	\
 	main.o	\
 	program.o	\
 	rendering_context.o	\
