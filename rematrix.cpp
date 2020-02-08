@@ -127,29 +127,6 @@ private:
 
 //----------------------------------------------------------------------------
 
-class frame_rate_limit
-{
-public:
-    explicit
-    frame_rate_limit(unsigned int fps) :
-        dt_(1000 / fps),
-        t_(steady_clock::now())
-    {
-    }
-
-    void
-    wait()
-    {
-        this_thread::sleep_until(t_ += dt_);
-    }
-
-private:
-    const milliseconds dt_;
-    steady_clock::time_point t_;
-};
-
-//----------------------------------------------------------------------------
-
 void
 init(const pair<unsigned int, unsigned int>& window_size)
 {
