@@ -3,6 +3,7 @@
 #include "buffer.hpp"
 #include "program.hpp"
 #include "rendering_context.hpp"
+#include "resources.hpp"
 #include "shader.hpp"
 
 using namespace rematrix;
@@ -39,27 +40,8 @@ init(const pair<unsigned int, unsigned int>& window_size)
     vertex_buf = make_unique<vertex_buffer>(vertices, sizeof(vertices));
     index_buf = make_unique<element_buffer>(indices, sizeof(indices));
 
-    const vertex_shader v_shader{R"(
-#version 130
-
-attribute vec3 position;
-
-void
-main()
-{
-    gl_Position = vec4(position, 1.0);
-}
-)"};
-
-    const fragment_shader f_shader{R"(
-#version 130
-
-void
-main()
-{
-    gl_FragColor = vec4(0.1, 0.2, 0.3, 1.0);
-}
-)"};
+    const vertex_shader v_shader{vertex_src};
+    const fragment_shader f_shader{fragment_src};
 
     prog = make_unique<program>(v_shader, f_shader);
     position_attrib = prog->attrib_location("position");
