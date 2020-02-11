@@ -15,6 +15,7 @@ OBJS =	\
 	main.o	\
 	program.o	\
 	rendering_context.o	\
+	resources.o	\
 	shader.o
 
 .PHONY: clean
@@ -24,3 +25,9 @@ $(PROG): $(OBJS)
 
 clean:
 	$(RM) $(PROG) $(OBJS)
+
+resources.cpp:	\
+		resources.cpp.sh	\
+		data/fragment.glsl	\
+		data/vertex.glsl
+	./$< > $@
