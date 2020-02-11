@@ -18,13 +18,16 @@ OBJS =	\
 	resources.o	\
 	shader.o
 
+GENERATED =	\
+	resources.cpp
+
 .PHONY: clean
 
 $(PROG): $(OBJS)
 	$(CXX) $^ -o $@ $(LDLIBS)
 
 clean:
-	$(RM) $(PROG) $(OBJS)
+	$(RM) $(PROG) $(OBJS) $(GENERATED)
 
 resources.cpp:	\
 		resources.cpp.sh	\
