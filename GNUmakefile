@@ -17,7 +17,8 @@ OBJS =	\
 	rendering_context.o	\
 	resources.o	\
 	shader.o	\
-	texture.o
+	texture.o	\
+	vertex_array.o
 
 GENERATED =	\
 	resources.cpp
