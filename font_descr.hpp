@@ -13,6 +13,23 @@ struct glyph_descr
 
 struct font_descr
 {
+    array<array<double, 2>, 4>
+    tex_coords(char c) const
+    {
+        return tex_coords(glyphs.at(c));
+    }
+
+    array<array<double, 2>, 4>
+    tex_coords(const glyph_descr& g) const
+    {
+        auto [x, y] = g.pos;
+        auto [w, h] = g.size;
+        return {{ {x    , y    },
+                  {x    , y + h},
+                  {x + w, y + h},
+                  {x + w, y    } }};
+    }
+
     const unordered_map<char, glyph_descr> glyphs;
 };
 
