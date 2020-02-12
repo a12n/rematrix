@@ -11,6 +11,7 @@
 namespace rematrix {
 
 namespace this_thread = std::this_thread;
+using std::array;
 using std::chrono::duration;
 using std::chrono::duration_cast;
 using std::chrono::steady_clock;
