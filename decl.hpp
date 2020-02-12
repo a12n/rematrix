@@ -7,6 +7,7 @@
 #include <memory>
 #include <string_view>
 #include <thread>
+#include <unordered_map>
 
 namespace rematrix {
 
@@ -23,6 +24,7 @@ using std::remove_pointer_t;
 using std::runtime_error;
 using std::string_view;
 using std::unique_ptr;
+using std::unordered_map;
 
 class rendering_context;
 struct buffer;
