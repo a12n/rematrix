@@ -33,11 +33,11 @@ init(const array<unsigned int, 2>& window_size)
 
     // Make a rectangle
 
-    const GLfloat vertices[] = {
-        -0.8f, -0.8f, 0.0f,
-         0.8f, -0.8f, 0.0f,
-        -0.8f,  0.8f, 0.0f,
-         0.8f,  0.8f, 0.0f
+    const GLdouble vertices[] = {
+        -0.8, -0.8, 0.0,
+         0.8, -0.8, 0.0,
+        -0.8,  0.8, 0.0,
+         0.8,  0.8, 0.0
     };
     const GLushort indices[] = {
         0, 1, 2, 3
@@ -51,9 +51,9 @@ init(const array<unsigned int, 2>& window_size)
     vertex_buf->bind();
     glVertexAttribPointer(position_attrib,
                           3,
-                          GL_FLOAT,
+                          GL_DOUBLE,
                           GL_FALSE,
-                          sizeof(GLfloat) * 3,
+                          sizeof(GLdouble) * 3,
                           static_cast<void*>(0));
     glEnableVertexAttribArray(position_attrib);
 
@@ -69,7 +69,7 @@ init(const array<unsigned int, 2>& window_size)
 }
 
 void
-render(const duration<float>&)
+render(const duration<double>&)
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glDrawElements(GL_TRIANGLE_STRIP,
@@ -88,13 +88,13 @@ main()
     init(ctx.window_size());
 
     constexpr unsigned int frame_rate{5};
-    constexpr duration<float> frame_interval{1.0f / frame_rate};
+    constexpr duration<double> frame_interval{1.0f / frame_rate};
     auto prev_time{steady_clock::now()};
 
     while (true) {
         this_thread::sleep_for(frame_interval);
         auto cur_time{steady_clock::now()};
-        render(duration_cast<duration<float>>(cur_time - prev_time));
+        render(duration_cast<duration<double>>(cur_time - prev_time));
         ctx.swap_buffers();
         prev_time = cur_time;
     }
