@@ -11,7 +11,10 @@ struct glyph_descr
     const array<double, 2> size;
 };
 
-typedef unordered_map<char, glyph_descr> font_descr;
+struct font_descr
+{
+    const unordered_map<char, glyph_descr> glyphs;
+};
 
 } // namespace rematrix
 
