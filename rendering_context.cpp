@@ -94,4 +94,20 @@ rendering_context::create_context(GLXFBConfig config) const
     return ans;
 }
 
+void
+rendering_context::update_visibility()
+{
+    while (XPending(display.get()) > 0) {
+        XEvent ev;
+        XNextEvent(display.get(), &ev);
+        switch (ev.type) {
+        case VisibilityNotify :
+            obscured = (ev.xvisibility.state == VisibilityFullyObscured);
+            break;
+        default :
+            break;
+        };
+    }
+}
+
 } // namespace rematrix

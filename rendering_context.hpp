@@ -36,6 +36,9 @@ private:
     context_ptr
     create_context(GLXFBConfig config) const;
 
+    void
+    update_visibility();
+
     const display_ptr display;
     const Window window;
     const context_ptr context;
