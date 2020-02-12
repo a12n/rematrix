@@ -10,6 +10,12 @@ texture::texture()
     }
 }
 
+texture::texture(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels) :
+    texture()
+{
+    load(internal_format, width, height, format, type, pixels);
+}
+
 texture::texture(texture&& other) noexcept :
     id{other.id}
 {
