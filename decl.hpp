@@ -22,6 +22,7 @@ using std::make_unique;
 using std::pair;
 using std::remove_pointer_t;
 using std::runtime_error;
+using std::string;
 using std::string_view;
 using std::unique_ptr;
 using std::unordered_map;
