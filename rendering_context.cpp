@@ -11,6 +11,8 @@ rendering_context::rendering_context() :
     if (! glXMakeCurrent(display.get(), window, context.get())) {
         throw runtime_error("couldn't activate rendering context");
     }
+    // XSelectInput(display.get(), window, VisibilityChangeMask);
+    // XSync(display.get(), False);
 }
 
 void
