@@ -37,7 +37,11 @@ shader::compile(const char* src)
     GLint ok;
     glGetShaderiv(id, GL_COMPILE_STATUS, &ok);
     if (! ok) {
-        throw runtime_error("couldn't compile shader");
+        GLint length;
+        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+        string log(length, '\0');
+        glGetShaderInfoLog(id, length, nullptr, log.data());
+        throw runtime_error(log);
     }
 }
 
