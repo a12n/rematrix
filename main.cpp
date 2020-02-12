@@ -16,6 +16,7 @@ unique_ptr<vertex_buffer> vertex_buf;
 unique_ptr<element_buffer> index_buf;
 unique_ptr<texture> tex;
 
+GLint position_attrib{-1};
 
 void
 init(const array<unsigned int, 2>& window_size)
@@ -33,6 +34,8 @@ init(const array<unsigned int, 2>& window_size)
     prog = make_unique<program>(vertex_shader{vertex_src}, fragment_shader{fragment_src});
     prog->use();
 
+    position_attrib = prog->attrib_location("position");
+
     // Make a rectangle
 
     const GLdouble vertices[] = {
@@ -48,7 +51,6 @@ init(const array<unsigned int, 2>& window_size)
     vertex_buf = make_unique<vertex_buffer>(vertices, sizeof(vertices));
     index_buf = make_unique<element_buffer>(indices, sizeof(indices));
 
-    const GLint position_attrib{prog->attrib_location("position")};
 
     vertex_buf->bind();
     glVertexAttribPointer(position_attrib,
