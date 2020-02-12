@@ -20,6 +20,9 @@ public:
     array<unsigned int, 2>
     window_size() const;
 
+    bool
+    window_obscured() const;
+
 private:
     typedef unique_ptr<Display, decltype(&XCloseDisplay)> display_ptr;
     typedef unique_ptr<remove_pointer_t<GLXContext>, function<void(GLXContext)>> context_ptr;
@@ -36,6 +39,7 @@ private:
     const display_ptr display;
     const Window window;
     const context_ptr context;
+    bool obscured;
 };
 
 } // namespace rematrix

@@ -5,7 +5,8 @@ namespace rematrix {
 rendering_context::rendering_context() :
     display{open_display()},
     window{XRootWindow(display.get(), XDefaultScreen(display.get()))},
-    context{create_context(choose_fb_config(XDefaultScreen(display.get())))}
+    context{create_context(choose_fb_config(XDefaultScreen(display.get())))},
+    obscured{false}
 {
     if (! glXMakeCurrent(display.get(), window, context.get())) {
         throw runtime_error("couldn't activate rendering context");
@@ -37,6 +38,12 @@ rendering_context::window_size() const
     }
 
     return {{width, height}};
+}
+
+bool
+rendering_context::window_obscured() const
+{
+    return obscured;
 }
 
 rendering_context::display_ptr
