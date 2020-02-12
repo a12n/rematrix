@@ -32,6 +32,7 @@ clean:
 
 resources.cpp:	\
 		resources.cpp.sh	\
+		data/font.png	\
 		data/fragment.glsl	\
 		data/vertex.glsl
 	./$< > $@
