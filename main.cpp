@@ -68,9 +68,9 @@ init(const array<unsigned int, 2>& window_size)
     // Other GL init
 
     glViewport(0, 0, window_size[0], window_size[1]);
-    glClearColor(static_cast<double>(0x3c) / 255,
-                 static_cast<double>(0x38) / 255,
-                 static_cast<double>(0x36) / 255,
+    glClearColor(static_cast<double>(0x28) / 255,
+                 static_cast<double>(0x28) / 255,
+                 static_cast<double>(0x28) / 255,
                  1.0);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
