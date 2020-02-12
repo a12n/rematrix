@@ -5,6 +5,7 @@
 #include "rendering_context.hpp"
 #include "resources.hpp"
 #include "shader.hpp"
+#include "texture.hpp"
 
 using namespace rematrix;
 
@@ -13,6 +14,7 @@ namespace {
 unique_ptr<program> prog;
 unique_ptr<vertex_buffer> vertex_buf;
 unique_ptr<element_buffer> index_buf;
+unique_ptr<texture> tex;
 
 
 void
@@ -58,6 +60,10 @@ init(const array<unsigned int, 2>& window_size)
     glEnableVertexAttribArray(position_attrib);
 
     index_buf->bind();
+
+    // Load font texture
+
+    tex = make_unique<texture>();
 
     // Other GL init
 
