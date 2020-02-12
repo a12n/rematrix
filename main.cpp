@@ -101,8 +101,10 @@ main()
 
     while (true) {
         this_thread::sleep_until(frame_tick += frame_interval);
-        render(frame_tick);
-        ctx.swap_buffers();
+        if (! ctx.window_obscured()) {
+            render(frame_tick);
+            ctx.swap_buffers();
+        }
     }
 
     return 0;
