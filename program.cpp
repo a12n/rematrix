@@ -47,7 +47,11 @@ program::link(const vertex_shader& v, const fragment_shader& f)
     glDetachShader(id, f.id);
     glDetachShader(id, v.id);
     if (! ok) {
-        throw runtime_error("couldn't link program");
+        GLint length;
+        glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
+        string log(length, '\0');
+        glGetProgramInfoLog(id, length, nullptr, log.data());
+        throw runtime_error(log);
     }
 }
 
