@@ -16,7 +16,8 @@ OBJS =	\
 	program.o	\
 	rendering_context.o	\
 	resources.o	\
-	shader.o
+	shader.o	\
+	texture.o
 
 GENERATED =	\
 	resources.cpp
