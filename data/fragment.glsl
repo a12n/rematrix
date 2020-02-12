@@ -4,7 +4,7 @@ in vec2 tex_coord;
 
 uniform sampler2D tex;
 
-const float smoothing = 0.75 / 16.0;
+const float smoothing = 0.025;
 
 void
 main()
