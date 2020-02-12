@@ -19,7 +19,7 @@ void
 rendering_context::swap_buffers()
 {
     glXSwapBuffers(display.get(), window);
-    update_visibility();
+    // update_visibility();
 }
 
 array<unsigned int, 2>
@@ -46,7 +46,7 @@ rendering_context::window_size() const
 bool
 rendering_context::window_obscured() const
 {
-    const_cast<rendering_context*>(this)->update_visibility();
+    // const_cast<rendering_context*>(this)->update_visibility();
     return obscured;
 }
 
