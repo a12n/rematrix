@@ -34,6 +34,9 @@ struct program
     GLint
     attrib_location(const GLchar* name) const;
 
+    GLint
+    uniform_location(const GLchar* name) const;
+
     const GLuint id;
 };
 

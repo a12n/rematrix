@@ -67,4 +67,14 @@ program::attrib_location(const GLchar* name) const
     return ans;
 }
 
+GLint
+program::uniform_location(const GLchar* name) const
+{
+    auto ans{glGetUniformLocation(id, name)};
+    if (ans == -1) {
+        throw runtime_error("couldn't locate a uniform in program");
+    }
+    return ans;
+}
+
 } // namespace rematrix
