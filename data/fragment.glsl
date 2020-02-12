@@ -7,14 +7,21 @@ in vec2 tex_coord;
 
 uniform sampler2D tex;
 uniform vec3 fill_color = neutral_blue;
+uniform vec3 fill_color2 = faded_blue;
 
 const float fill = 0.5;
 const float falloff = 0.03;
+
+const float fill2 = 0.2;
+const float falloff2 = 0.8;
 
 void
 main()
 {
     float dist = 1.0 - texture(tex, tex_coord).r;
     float alpha = 1.0 - smoothstep(fill, fill + falloff, dist);
-    gl_FragColor = vec4(fill_color, alpha);
+    float alpha2 = 1.0 - smoothstep(fill2, fill2 + falloff2, dist);
+    float alpha_ans = alpha + (1.0 - alpha) * alpha2;
+    vec3 color_ans = mix(fill_color2, fill_color, alpha / alpha_ans);
+    gl_FragColor = vec4(color_ans, alpha_ans);
 }
