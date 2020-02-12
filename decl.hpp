@@ -15,6 +15,7 @@ namespace this_thread = std::this_thread;
 using std::array;
 using std::chrono::duration;
 using std::chrono::duration_cast;
+using std::chrono::milliseconds;
 using std::chrono::steady_clock;
 using std::function;
 using std::make_pair;
