@@ -72,6 +72,8 @@ init(const array<unsigned int, 2>& window_size)
                  static_cast<double>(0x38) / 255,
                  static_cast<double>(0x36) / 255,
                  1.0);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void
