@@ -96,15 +96,13 @@ main()
     init(ctx.window_size());
 
     constexpr unsigned int frame_rate{5};
-    constexpr duration<double> frame_interval{1.0f / frame_rate};
-    auto prev_time{steady_clock::now()};
+    constexpr milliseconds frame_interval{1'000 / frame_rate};
+    auto frame_tick{steady_clock::now()};
 
     while (true) {
-        this_thread::sleep_for(frame_interval);
-        auto cur_time{steady_clock::now()};
-        render(duration_cast<duration<double>>(cur_time - prev_time));
+        this_thread::sleep_until(frame_tick += frame_interval);
+        render(frame_tick);
         ctx.swap_buffers();
-        prev_time = cur_time;
     }
 
     return 0;
