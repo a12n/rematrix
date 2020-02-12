@@ -1,7 +1,11 @@
 #version 130
 
+in vec2 tex_coord;
+
+uniform sampler2D tex;
+
 void
 main()
 {
-    gl_FragColor = vec4(0.1, 0.2, 0.3, 1.0);
+    gl_FragColor = vec4(1, 1, 1, texture(tex, tex_coord).r);
 }
