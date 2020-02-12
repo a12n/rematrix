@@ -17,7 +17,7 @@ public:
     void
     swap_buffers();
 
-    pair<unsigned int, unsigned int>
+    array<unsigned int, 2>
     window_size() const;
 
 private:

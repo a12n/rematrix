@@ -18,7 +18,7 @@ rendering_context::swap_buffers()
     glXSwapBuffers(display.get(), window);
 }
 
-pair<unsigned int, unsigned int>
+array<unsigned int, 2>
 rendering_context::window_size() const
 {
     Window root;
@@ -36,7 +36,7 @@ rendering_context::window_size() const
         throw runtime_error("couldn't get window size");
     }
 
-    return make_pair(width, height);
+    return {{width, height}};
 }
 
 rendering_context::display_ptr

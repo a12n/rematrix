@@ -16,7 +16,7 @@ unique_ptr<element_buffer> index_buf;
 
 
 void
-init(const pair<unsigned int, unsigned int>& window_size)
+init(const array<unsigned int, 2>& window_size)
 {
     if (auto status{glewInit()}; status != GLEW_OK) {
         throw runtime_error(reinterpret_cast<const char*>(glewGetErrorString(status)));
@@ -61,7 +61,7 @@ init(const pair<unsigned int, unsigned int>& window_size)
 
     // Other GL init
 
-    glViewport(0, 0, window_size.first, window_size.second);
+    glViewport(0, 0, window_size[0], window_size[1]);
     glClearColor(static_cast<double>(0x3c) / 255,
                  static_cast<double>(0x38) / 255,
                  static_cast<double>(0x36) / 255,
