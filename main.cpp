@@ -77,7 +77,7 @@ init(const array<unsigned int, 2>& window_size)
 }
 
 void
-render(const duration<double>&)
+render(const steady_clock::time_point&)
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glDrawElements(GL_TRIANGLE_STRIP,
