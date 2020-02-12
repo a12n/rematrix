@@ -24,8 +24,8 @@ public:
     window_obscured() const;
 
 private:
-    typedef unique_ptr<Display, decltype(&XCloseDisplay)> display_ptr;
-    typedef unique_ptr<remove_pointer_t<GLXContext>, function<void(GLXContext)>> context_ptr;
+    using display_ptr = unique_ptr<Display, decltype(&XCloseDisplay)>;
+    using context_ptr = unique_ptr<remove_pointer_t<GLXContext>, function<void(GLXContext)>>;
 
     static display_ptr
     open_display();
