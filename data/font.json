@@ -1,0 +1,172 @@
+{
+  "name": "PT Mono",
+  "size": 85,
+  "bold": false,
+  "italic": false,
+  "width": 512,
+  "height": 128,
+  "characters": {
+    "0": {
+      "x": 0,
+      "y": 0,
+      "width": 45,
+      "height": 64,
+      "originX": -3,
+      "originY": 62,
+      "advance": 51
+    },
+    "1": {
+      "x": 188,
+      "y": 64,
+      "width": 39,
+      "height": 62,
+      "originX": -6,
+      "originY": 61,
+      "advance": 51
+    },
+    "2": {
+      "x": 383,
+      "y": 0,
+      "width": 41,
+      "height": 63,
+      "originX": -5,
+      "originY": 62,
+      "advance": 51
+    },
+    "3": {
+      "x": 344,
+      "y": 0,
+      "width": 39,
+      "height": 64,
+      "originX": -6,
+      "originY": 61,
+      "advance": 51
+    },
+    "4": {
+      "x": 51,
+      "y": 64,
+      "width": 49,
+      "height": 62,
+      "originX": -2,
+      "originY": 61,
+      "advance": 51
+    },
+    "5": {
+      "x": 424,
+      "y": 0,
+      "width": 38,
+      "height": 63,
+      "originX": -6,
+      "originY": 61,
+      "advance": 51
+    },
+    "6": {
+      "x": 133,
+      "y": 0,
+      "width": 43,
+      "height": 64,
+      "originX": -4,
+      "originY": 62,
+      "advance": 51
+    },
+    "7": {
+      "x": 147,
+      "y": 64,
+      "width": 41,
+      "height": 62,
+      "originX": -4,
+      "originY": 61,
+      "advance": 51
+    },
+    "8": {
+      "x": 262,
+      "y": 0,
+      "width": 41,
+      "height": 64,
+      "originX": -5,
+      "originY": 62,
+      "advance": 51
+    },
+    "9": {
+      "x": 176,
+      "y": 0,
+      "width": 43,
+      "height": 64,
+      "originX": -4,
+      "originY": 62,
+      "advance": 51
+    },
+    "A": {
+      "x": 0,
+      "y": 64,
+      "width": 51,
+      "height": 62,
+      "originX": 0,
+      "originY": 61,
+      "advance": 51
+    },
+    "B": {
+      "x": 303,
+      "y": 0,
+      "width": 41,
+      "height": 64,
+      "originX": -7,
+      "originY": 62,
+      "advance": 51
+    },
+    "C": {
+      "x": 45,
+      "y": 0,
+      "width": 44,
+      "height": 64,
+      "originX": -4,
+      "originY": 62,
+      "advance": 51
+    },
+    "D": {
+      "x": 219,
+      "y": 0,
+      "width": 43,
+      "height": 64,
+      "originX": -5,
+      "originY": 62,
+      "advance": 51
+    },
+    "E": {
+      "x": 227,
+      "y": 64,
+      "width": 38,
+      "height": 62,
+      "originX": -8,
+      "originY": 61,
+      "advance": 51
+    },
+    "F": {
+      "x": 265,
+      "y": 64,
+      "width": 38,
+      "height": 62,
+      "originX": -8,
+      "originY": 61,
+      "advance": 51
+    },
+    "G": {
+      "x": 89,
+      "y": 0,
+      "width": 44,
+      "height": 64,
+      "originX": -3,
+      "originY": 62,
+      "advance": 51
+    },
+    "T": {
+      "x": 100,
+      "y": 64,
+      "width": 47,
+      "height": 62,
+      "originX": -2,
+      "originY": 61,
+      "advance": 51
+    }
+  }
+}
