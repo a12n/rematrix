@@ -13,7 +13,6 @@ namespace {
 
 unique_ptr<program> prog;
 unique_ptr<vertex_buffer> vertex_buf;
-unique_ptr<element_buffer> index_buf;
 unique_ptr<texture> tex;
 
 GLint position_attrib{-1};
@@ -44,24 +43,16 @@ init(const array<unsigned int, 2>& window_size)
         -0.8,  0.8, 0.0,
          0.8,  0.8, 0.0
     };
-    const GLushort indices[] = {
-        0, 1, 2, 3
-    };
 
     vertex_buf = make_unique<vertex_buffer>(vertices, sizeof(vertices));
-    index_buf = make_unique<element_buffer>(indices, sizeof(indices));
-
-
     vertex_buf->bind();
     glVertexAttribPointer(position_attrib,
                           3,
                           GL_DOUBLE,
                           GL_FALSE,
-                          sizeof(GLdouble) * 3,
+                          0,
                           static_cast<void*>(0));
     glEnableVertexAttribArray(position_attrib);
-
-    index_buf->bind();
 
     // Load font texture
 
@@ -82,10 +73,7 @@ void
 render(const steady_clock::time_point&)
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    glDrawElements(GL_TRIANGLE_STRIP,
-                   4,
-                   GL_UNSIGNED_SHORT,
-                   static_cast<void*>(0));
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 } // namespace
