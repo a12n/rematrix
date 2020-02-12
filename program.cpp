@@ -81,4 +81,10 @@ program::uniform_location(const GLchar* name) const
     return ans;
 }
 
+void
+program::set_uniform(GLint location, GLfloat x)
+{
+    glUniform1f(location, x);
+}
+
 } // namespace rematrix

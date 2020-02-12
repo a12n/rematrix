@@ -37,6 +37,9 @@ struct program
     GLint
     uniform_location(const GLchar* name) const;
 
+    void
+    set_uniform(GLint location, GLfloat x);
+
     const GLuint id;
 };
 
