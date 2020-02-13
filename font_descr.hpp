@@ -22,6 +22,8 @@ struct glyph_descr
 
     const array<T, 2> pos;
     const array<T, 2> size;
+    const array<T, 2> offset;
+    const T advance;
 };
 
 struct font_descr
