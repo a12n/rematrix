@@ -76,7 +76,7 @@ init(const array<unsigned int, 2>& window_size)
                           GL_FLOAT,
                           GL_FALSE,
                           0,
-                          static_cast<void*>(0));
+                          static_cast<const void*>(0));
     glEnableVertexAttribArray(position_attrib);
 
     const auto [coords, offsets] = font.coords_data();
