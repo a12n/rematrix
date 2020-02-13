@@ -5,10 +5,11 @@
 
 namespace rematrix {
 
+template <typename T>
 struct glyph_descr
 {
-    const array<float, 2> pos;
-    const array<float, 2> size;
+    const array<T, 2> pos;
+    const array<T, 2> size;
 };
 
 struct font_descr
@@ -46,7 +47,7 @@ struct font_descr
         return make_pair(coords, offsets);
     }
 
-    const unordered_map<char, glyph_descr> glyphs;
+    const unordered_map<char, glyph_descr<float>> glyphs;
 };
 
 } // namespace rematrix
