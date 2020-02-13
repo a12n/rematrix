@@ -18,9 +18,9 @@ const unsigned char font_image_data[]{
 $(convert data/font.png -depth 8 gray:- | od -v -A n -t u1 -w1 | sed 's/^ *//;s/$/,/')
 };
 
-const font_descr font{ {
-$(jq -r '. as $top | .characters | to_entries[] | "{ '\''\(.key)'\'', {{\(.value.x / $top.width), \(.value.y / $top.height)}, {\(.value.width / $top.width), \(.value.height / $top.height)}} },"' data/font.json)
-} };
+const font_descr font{
+$(./cmds/font_descr2 < data/font.fnt)
+};
 
 } // namespace rematrix
 EOF
