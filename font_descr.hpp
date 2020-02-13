@@ -66,7 +66,12 @@ struct font_descr
         return make_pair(coords, offsets);
     }
 
+    const unsigned short font_size{0};
     const array<unsigned short, 2> image_size{0, 0};
+    const array<unsigned short, 4> padding{0, 0, 0, 0};
+    const array<unsigned short, 2> spacing{0, 0};
+    const unsigned short line_height{0};
+    const unsigned short base{0};
     const unordered_map<char, glyph_descr> glyphs;
 };
 
