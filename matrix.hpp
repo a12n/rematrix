@@ -1,19 +1,21 @@
 #ifndef REMATRIX_MATRIX_HPP
 #define REMATRIX_MATRIX_HPP
 
-#include "decl.hpp"
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
 
 namespace rematrix {
 
-using vector4 = array<float, 4>;
-using matrix4 = array<vector4, 4>;
+using glm::vec3;
+using glm::vec4;
+using glm::mat4;
 
-inline const matrix4 identity_matrix{
-    { {1.0, 0.0, 0.0, 0.0},
-      {0.0, 1.0, 0.0, 0.0},
-      {0.0, 0.0, 1.0, 0.0},
-      {0.0, 0.0, 0.0, 1.0} }
-};
+using glm::identity;
+using glm::perspective;
+using glm::radians;
+using glm::rotate;
+using glm::scale;
+using glm::translate;
 
 } // namespace rematrix
 

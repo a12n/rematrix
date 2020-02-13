@@ -42,7 +42,7 @@ init(const array<unsigned int, 2>& window_size)
     prog->use();
 
     position_attrib = prog->attrib_location("position");
-    tex_coord_attrib = prog->attrib_location("tex_coord");
+    tex_coord_attrib = prog->attrib_location("texCoord");
 
     model_uniform = prog->uniform_location("model");
     projection_uniform = prog->uniform_location("projection");
