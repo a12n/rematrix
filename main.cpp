@@ -21,6 +21,10 @@ unique_ptr<texture> tex;
 GLint position_attrib{-1};
 GLint tex_coord_attrib{-1};
 
+GLint model_uniform{-1};
+GLint projection_uniform{-1};
+GLint view_uniform{-1};
+
 void
 init(const array<unsigned int, 2>& window_size)
 {
@@ -39,6 +43,14 @@ init(const array<unsigned int, 2>& window_size)
 
     position_attrib = prog->attrib_location("position");
     tex_coord_attrib = prog->attrib_location("tex_coord");
+
+    model_uniform = prog->uniform_location("model");
+    projection_uniform = prog->uniform_location("projection");
+    view_uniform = prog->uniform_location("view");
+
+    prog->set_uniform(model_uniform, identity_matrix);
+    prog->set_uniform(projection_uniform, identity_matrix);
+    prog->set_uniform(view_uniform, identity_matrix);
 
     // Make a rectangle
 
