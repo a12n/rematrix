@@ -30,6 +30,22 @@ struct font_descr
                   x + w, y }};
     }
 
+    pair<vector<float>, unordered_map<char, uintptr_t>>
+    tex_coords_data() const
+    {
+        vector<float> coords;
+        unordered_map<char, uintptr_t> offsets;
+
+        for (const auto [c, g] : glyphs) {
+            const auto off = coords.size() * sizeof(float);
+            offsets.insert(make_pair(c, off));
+            const auto uv = tex_coords(g);
+            coords.insert(end(coords), begin(uv), end(uv));
+        }
+
+        return make_pair(coords, offsets);
+    }
+
     const unordered_map<char, glyph_descr> glyphs;
 };
 
