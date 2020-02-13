@@ -15,9 +15,11 @@ namespace {
 unique_ptr<program> prog;
 unique_ptr<vertex_array> vertex_arr;
 unique_ptr<vertex_buffer> position_buf;
+unique_ptr<vertex_buffer> tex_coord_buf;
 unique_ptr<texture> tex;
 
 GLint position_attrib{-1};
+GLint tex_coord_attrib{-1};
 
 void
 init(const array<unsigned int, 2>& window_size)
@@ -36,6 +38,7 @@ init(const array<unsigned int, 2>& window_size)
     prog->use();
 
     position_attrib = prog->attrib_location("position");
+    tex_coord_attrib = prog->attrib_location("tex_coord");
 
     // Make a rectangle
 
@@ -58,6 +61,23 @@ init(const array<unsigned int, 2>& window_size)
                           0,
                           static_cast<void*>(0));
     glEnableVertexAttribArray(position_attrib);
+
+    const GLfloat tex_coords[] = {
+        0.0, 1.0,
+        1.0, 1.0,
+        0.0, 0.0,
+        1.0, 0.0,
+    };
+
+    tex_coord_buf = make_unique<vertex_buffer>(tex_coords, sizeof(tex_coords));
+    tex_coord_buf->bind();
+    glVertexAttribPointer(tex_coord_attrib,
+                          2,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          0,
+                          static_cast<void*>(0));
+    glEnableVertexAttribArray(tex_coord_attrib);
 
     // Load font texture
 
