@@ -29,13 +29,13 @@ struct glyph_descr
 struct font_descr
 {
     array<float, 8>
-    tex_coords(char c) const
+    coords(char c) const
     {
         return glyphs.at(c).coords();
     }
 
     pair<vector<float>, unordered_map<char, uintptr_t>>
-    tex_coords_data() const
+    coords_data() const
     {
         vector<float> coords;
         unordered_map<char, uintptr_t> offsets;

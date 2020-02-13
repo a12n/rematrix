@@ -79,7 +79,7 @@ init(const array<unsigned int, 2>& window_size)
                           static_cast<void*>(0));
     glEnableVertexAttribArray(position_attrib);
 
-    const auto [coords, offsets] = font.tex_coords_data();
+    const auto [coords, offsets] = font.coords_data();
 
     tex_coord_buf = make_unique<vertex_buffer>(coords.data(), coords.size() * sizeof(float));
     tex_coord_buf->bind();
