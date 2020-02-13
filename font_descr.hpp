@@ -24,9 +24,9 @@ struct font_descr
     {
         auto [x, y] = g.pos;
         auto [w, h] = g.size;
-        return {{ {x    , y    },
-                  {x    , y + h},
+        return {{ {x    , y + h},
                   {x + w, y + h},
+                  {x    , y    },
                   {x + w, y    } }};
     }
 
