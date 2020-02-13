@@ -37,9 +37,6 @@ struct shader;
 struct vertex_buffer;
 struct vertex_shader;
 
-using vec4 = array<float, 4>;
-using mat4 = array<vec4, 4>;
-
 } // namespace rematrix
 
 #endif  // REMATRIX_DECL_HPP
