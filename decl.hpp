@@ -15,10 +15,12 @@ namespace rematrix {
 
 namespace this_thread = std::this_thread;
 using std::array;
+using std::begin;
 using std::chrono::duration;
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
 using std::chrono::steady_clock;
+using std::end;
 using std::function;
 using std::make_pair;
 using std::make_unique;
@@ -29,6 +31,7 @@ using std::string;
 using std::string_view;
 using std::unique_ptr;
 using std::unordered_map;
+using std::vector;
 
 class rendering_context;
 struct buffer;
