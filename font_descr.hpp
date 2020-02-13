@@ -5,25 +5,41 @@
 
 namespace rematrix {
 
-template <typename T>
 struct glyph_descr
 {
-    // Texture coordinates of the glyph in GL_TRIANGLE_STRIP order.
-    constexpr array<T, 8>
+    // Image coordinates of the glyph in triangle strip order.
+    constexpr array<unsigned short, 8>
     coords() const
     {
         const auto [x, y] = pos;
         const auto [w, h] = size;
-        return {{ x, y + h,
-                  x + w, y + h,
+        return {{ x, static_cast<unsigned short>(y + h),
+                  static_cast<unsigned short>(x + w), static_cast<unsigned short>(y + h),
                   x, y,
-                  x + w, y }};
+                  static_cast<unsigned short>(x + w), y }};
     }
 
-    const array<T, 2> pos;
-    const array<T, 2> size;
-    const array<T, 2> offset;
-    const T advance;
+    // Normalized texture coordinates.
+    constexpr array<float, 8>
+    coords(array<unsigned short, 2> image_size) const
+    {
+        const auto [u1, w1, u2, w2, u3, w3, u4, w4] = coords();
+        const float w = static_cast<float>(image_size[0]);
+        const float h = static_cast<float>(image_size[1]);
+        return {{ static_cast<float>(u1) / w,
+                  static_cast<float>(w1) / h,
+                  static_cast<float>(u2) / w,
+                  static_cast<float>(w2) / h,
+                  static_cast<float>(u3) / w,
+                  static_cast<float>(w3) / h,
+                  static_cast<float>(u4) / w,
+                  static_cast<float>(w4) / h }};
+    }
+
+    const array<unsigned short, 2> pos{0, 0};
+    const array<unsigned short, 2> size{0, 0};
+    const array<short, 2> offset{0, 0};
+    const unsigned short advance{0};
 };
 
 struct font_descr
@@ -31,7 +47,7 @@ struct font_descr
     array<float, 8>
     coords(char c) const
     {
-        return glyphs.at(c).coords();
+        return glyphs.at(c).coords(image_size);
     }
 
     pair<vector<float>, unordered_map<char, uintptr_t>>
@@ -43,14 +59,15 @@ struct font_descr
         for (const auto [c, g] : glyphs) {
             const auto off = coords.size() * sizeof(float);
             offsets.insert(make_pair(c, off));
-            const auto uv = g.coords();
+            const auto uv = g.coords(image_size);
             coords.insert(end(coords), begin(uv), end(uv));
         }
 
         return make_pair(coords, offsets);
     }
 
-    const unordered_map<char, glyph_descr<float>> glyphs;
+    const array<unsigned short, 2> image_size{0, 0};
+    const unordered_map<char, glyph_descr> glyphs;
 };
 
 } // namespace rematrix
