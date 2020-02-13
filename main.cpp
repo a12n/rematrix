@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 
 #include "buffer.hpp"
+#include "matrix.hpp"
 #include "program.hpp"
 #include "rendering_context.hpp"
 #include "resources.hpp"
