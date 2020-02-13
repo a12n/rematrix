@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+
+import sys
+
+transform = {"size": int,
+             "padding": lambda s: tuple(map(int, s.split(","))),
+             "spacing": lambda s: tuple(map(int, s.split(","))),
+             "lineHeight": int,
+             "base": int,
+             "scaleW": int,
+             "scaleH": int}
+
+size = None
+padding = None
+spacing = None
+lineheight = None
+base = None
+scalew = None
+scaleh = None
+
+chars = dict()
+
+def parseprops(s):
+    ans = dict()
+    for kvstr in s.split():
+        try:
+            k, v = kvstr.split("=")
+            ans[k] = v
+        except ValueError:
+            pass
+    return ans
+
+def parsepadding(s):
+    return tuple(map(int, s.split(",")))
+
+for line in sys.stdin:
+    if line.startswith("info "):
+        p = parseprops(line)
+        size = int(p["size"])
+        padding = parsepadding(p["padding"])
+        spacing = parsepadding(p["spacing"])
+    elif line.startswith("common "):
+        p = parseprops(line)
+        lineheight = int(p["lineHeight"])
+        base = int(p["base"])
+        scalew = int(p["scaleW"])
+        scaleh = int(p["scaleH"])
+    elif line.startswith("char "):
+        p = parseprops(line)
+        chars[int(p["id"])] = (
+            (int(p["x"]), int(p["y"])),
+            (int(p["width"]), int(p["height"])),
+            (int(p["xoffset"]), int(p["yoffset"])),
+            int(p["xadvance"])
+        )
+
+def fmt(x):
+    if isinstance(x, tuple) or isinstance(x, list):
+        return "{" + ", ".join(map(fmt, x)) + "}"
+    else:
+        return str(x)
+
+print(fmt(size), ",")
+print(fmt((scalew, scaleh)), ",")
+print(fmt(padding), ",")
+print(fmt(spacing), ",")
+print(fmt(lineheight), ",")
+print(fmt(base), ",")
+print(fmt(sorted(chars.items())))
