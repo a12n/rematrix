@@ -19,6 +19,8 @@ unique_ptr<vertex_buffer> position_buf;
 unique_ptr<vertex_buffer> tex_coord_buf;
 unique_ptr<texture> tex;
 
+unordered_map<char, uintptr_t> tex_coord_buf_offset;
+
 GLint position_attrib{-1};
 GLint tex_coord_attrib{-1};
 
@@ -77,22 +79,13 @@ init(const array<unsigned int, 2>& window_size)
                           static_cast<void*>(0));
     glEnableVertexAttribArray(position_attrib);
 
-    const GLfloat tex_coords[] = {
-        0.0, 1.0,
-        1.0, 1.0,
-        0.0, 0.0,
-        1.0, 0.0,
-    };
+    const auto [coords, offsets] = font.tex_coords_data();
 
-    tex_coord_buf = make_unique<vertex_buffer>(tex_coords, sizeof(tex_coords));
+    tex_coord_buf = make_unique<vertex_buffer>(coords.data(), coords.size() * sizeof(float));
     tex_coord_buf->bind();
-    glVertexAttribPointer(tex_coord_attrib,
-                          2,
-                          GL_FLOAT,
-                          GL_FALSE,
-                          0,
-                          static_cast<void*>(0));
     glEnableVertexAttribArray(tex_coord_attrib);
+
+    tex_coord_buf_offset = offsets;
 
     // Load font texture
 
