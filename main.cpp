@@ -6,12 +6,14 @@
 #include "resources.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
+#include "vertex_array.hpp"
 
 using namespace rematrix;
 
 namespace {
 
 unique_ptr<program> prog;
+unique_ptr<vertex_array> vertex_arr;
 unique_ptr<vertex_buffer> position_buf;
 unique_ptr<texture> tex;
 
@@ -36,6 +38,9 @@ init(const array<unsigned int, 2>& window_size)
     position_attrib = prog->attrib_location("position");
 
     // Make a rectangle
+
+    vertex_arr = make_unique<vertex_array>();
+    vertex_arr->bind();
 
     const GLfloat vertices[] = {
         -0.8f, -0.8f, 0.0f,
