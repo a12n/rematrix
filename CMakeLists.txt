@@ -47,7 +47,7 @@ add_custom_command(
   COMMAND ${CMAKE_SOURCE_DIR}/resources.cpp.sh > ${CMAKE_BINARY_DIR}/resources.cpp
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   DEPENDS
-  data/font.json
+  data/font.fnt
   data/font.png
   data/fragment.glsl
   data/vertex.glsl
