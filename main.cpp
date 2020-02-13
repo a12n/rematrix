@@ -103,7 +103,7 @@ init(const array<unsigned int, 2>& window_size)
 }
 
 void
-render(const steady_clock::time_point&)
+render(const duration<double>& dt)
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -125,7 +125,7 @@ main()
     while (true) {
         this_thread::sleep_until(frame_tick += frame_interval);
         if (! ctx.window_obscured()) {
-            render(frame_tick);
+            render(frame_interval);
             ctx.swap_buffers();
         }
     }
