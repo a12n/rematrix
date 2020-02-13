@@ -8,8 +8,7 @@ namespace rematrix {
 extern const char vertex_src[];
 extern const char fragment_src[];
 
-extern const unsigned short font_image_width;
-extern const unsigned short font_image_height;
+extern const array<unsigned short, 2> font_image_size;
 extern const unsigned char font_image_data[];
 
 extern const font_descr font;

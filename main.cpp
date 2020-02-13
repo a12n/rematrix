@@ -89,7 +89,7 @@ init(const array<unsigned int, 2>& window_size)
 
     // Load font texture
 
-    tex = make_unique<texture>(GL_R8, font_image_width, font_image_height, GL_RED, GL_UNSIGNED_BYTE, font_image_data);
+    tex = make_unique<texture>(GL_R8, font_image_size[0], font_image_size[1], GL_RED, GL_UNSIGNED_BYTE, font_image_data);
 
     // Other GL init
 
