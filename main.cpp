@@ -48,10 +48,6 @@ init(const array<unsigned int, 2>& window_size)
     projection_uniform = prog->uniform_location("projection");
     view_uniform = prog->uniform_location("view");
 
-    prog->set_uniform(model_uniform, identity_matrix);
-    prog->set_uniform(projection_uniform, identity_matrix);
-    prog->set_uniform(view_uniform, identity_matrix);
-
     // Make a rectangle
 
     vertex_arr = make_unique<vertex_array>();
