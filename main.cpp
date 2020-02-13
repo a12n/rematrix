@@ -12,7 +12,7 @@ using namespace rematrix;
 namespace {
 
 unique_ptr<program> prog;
-unique_ptr<vertex_buffer> vertex_buf;
+unique_ptr<vertex_buffer> position_buf;
 unique_ptr<texture> tex;
 
 GLint position_attrib{-1};
@@ -44,8 +44,8 @@ init(const array<unsigned int, 2>& window_size)
          0.8,  0.8, 0.0
     };
 
-    vertex_buf = make_unique<vertex_buffer>(vertices, sizeof(vertices));
-    vertex_buf->bind();
+    position_buf = make_unique<vertex_buffer>(vertices, sizeof(vertices));
+    position_buf->bind();
     glVertexAttribPointer(position_attrib,
                           3,
                           GL_DOUBLE,
