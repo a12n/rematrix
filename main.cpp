@@ -46,16 +46,16 @@ init(const array<unsigned int, 2>& window_size)
     vertex_arr->bind();
 
     const GLfloat vertices[] = {
-        -0.8f, -0.8f, 0.0f,
-         0.8f, -0.8f, 0.0f,
-        -0.8f,  0.8f, 0.0f,
-         0.8f,  0.8f, 0.0f
+        -0.8f, -0.8f,
+         0.8f, -0.8f,
+        -0.8f,  0.8f,
+         0.8f,  0.8f,
     };
 
     position_buf = make_unique<vertex_buffer>(vertices, sizeof(vertices));
     position_buf->bind();
     glVertexAttribPointer(position_attrib,
-                          3,
+                          2,
                           GL_FLOAT,
                           GL_FALSE,
                           0,
