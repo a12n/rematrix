@@ -49,6 +49,12 @@ init(const array<unsigned int, 2>& window_size)
     projection_uniform = prog->uniform_location("projection");
     view_uniform = prog->uniform_location("view");
 
+    {
+        const auto ar = static_cast<float>(window_size[0]) / static_cast<float>(window_size[1]);
+        prog->set_uniform(projection_uniform, perspective(radians(45.0f), ar, 0.001f, 100.0f));
+        prog->set_uniform(view_uniform, translate(mat4(1.0f), {0.0f, 0.0f, -10.0f}));
+    }
+
     // Make a rectangle
 
     vertex_arr = make_unique<vertex_array>();
