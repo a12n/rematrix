@@ -88,7 +88,7 @@ program::set_uniform(GLint location, GLfloat x)
 }
 
 void
-program::set_uniform(GLint location, const mat4& m)
+program::set_uniform(GLint location, const matrix4& m)
 {
     glUniformMatrix4fv(location, 1, GL_FALSE, &m[0][0]);
 }

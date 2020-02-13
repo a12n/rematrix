@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 
 #include "decl.hpp"
+#include "matrix.hpp"
 
 namespace rematrix {
 
@@ -41,7 +42,7 @@ struct program
     set_uniform(GLint location, GLfloat x);
 
     void
-    set_uniform(GLint location, const mat4& m);
+    set_uniform(GLint location, const matrix4& m);
 
     const GLuint id;
 };
