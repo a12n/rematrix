@@ -42,7 +42,13 @@ struct program
     set_uniform(GLint location, GLfloat x);
 
     void
-    set_uniform(GLint location, const matrix4& m);
+    set_uniform(GLint location, const vec3& v);
+
+    void
+    set_uniform(GLint location, const vec4& v);
+
+    void
+    set_uniform(GLint location, const mat4& m);
 
     const GLuint id;
 };
