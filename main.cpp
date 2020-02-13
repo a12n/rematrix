@@ -37,18 +37,18 @@ init(const array<unsigned int, 2>& window_size)
 
     // Make a rectangle
 
-    const GLdouble vertices[] = {
-        -0.8, -0.8, 0.0,
-         0.8, -0.8, 0.0,
-        -0.8,  0.8, 0.0,
-         0.8,  0.8, 0.0
+    const GLfloat vertices[] = {
+        -0.8f, -0.8f, 0.0f,
+         0.8f, -0.8f, 0.0f,
+        -0.8f,  0.8f, 0.0f,
+         0.8f,  0.8f, 0.0f
     };
 
     position_buf = make_unique<vertex_buffer>(vertices, sizeof(vertices));
     position_buf->bind();
     glVertexAttribPointer(position_attrib,
                           3,
-                          GL_DOUBLE,
+                          GL_FLOAT,
                           GL_FALSE,
                           0,
                           static_cast<void*>(0));
