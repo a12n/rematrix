@@ -2,12 +2,14 @@
 #define REMATRIX_DECL_HPP
 
 #include <chrono>
+#include <cstdint>
 #include <functional>
 #include <iostream>
 #include <memory>
-#include <string_view>
+#include <string>
 #include <thread>
 #include <unordered_map>
+#include <vector>
 
 namespace rematrix {
 
