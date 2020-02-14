@@ -53,10 +53,10 @@ add_executable(
   main.cpp
   program.cpp
   rendering_context.cpp
+  resources.cpp
   shader.cpp
   texture.cpp
   vertex_array.cpp
-  ${CMAKE_BINARY_DIR}/resources.cpp
   )
 
 add_dependencies(
