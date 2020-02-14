@@ -94,20 +94,25 @@ init(const array<unsigned int, 2>& window_size)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void
+update(const duration<double>& dt)
+{
+}
+
 GLfloat angle{0.0f};
 
 void
 render_char(char c)
 {
-    glDrawArrays(GL_TRIANGLE_STRIP, vertex_buf_indices.at(c), 4);
+    glDrawArrays(GL_TRIANGLE_STRIP, glyph_indices.at(c), 4);
 }
 
 void
-render(const duration<double>& dt)
+render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    angle += 2.0f * dt.count();
+}
 
     prog->set_uniform(model_uniform, rotate(translate(mat4(1.0f), {-1.5f, 0.0f, angle / 5.0f}), radians(angle), {0.0f, 0.0f, 1.0f}));
     render_char('A');
@@ -134,8 +139,9 @@ main()
 
     while (true) {
         this_thread::sleep_until(frame_tick += frame_interval);
+        update(frame_interval);
         if (! ctx.window_obscured()) {
-            render(frame_interval);
+            render();
             ctx.swap_buffers();
         }
     }
