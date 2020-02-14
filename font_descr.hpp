@@ -13,10 +13,10 @@ struct glyph_descr
     {
         const auto [x, y] = pos;
         const auto [w, h] = size;
-        return {{ x, static_cast<unsigned short>(y + h),
-                  static_cast<unsigned short>(x + w), static_cast<unsigned short>(y + h),
-                  x, y,
-                  static_cast<unsigned short>(x + w), y }};
+        return {{ x, y,
+                  static_cast<unsigned short>(x + w), y,
+                  x, static_cast<unsigned short>(y + h),
+                  static_cast<unsigned short>(x + w), static_cast<unsigned short>(y + h) }};
     }
 
     // Normalized texture coordinates.
@@ -69,14 +69,18 @@ struct font_descr
     array<float, 8>
     position(const glyph_descr& g) const
     {
-        // TODO: g.offset
+        const auto f{static_cast<float>(line_height)};
         const auto w{static_cast<float>(g.size[0])};
         const auto h{static_cast<float>(g.size[1])};
-        const auto f{static_cast<float>(font_size)};
-        return {{ -w / 2 / f, -h / 2 / f,
-                  +w / 2 / f, -h / 2 / f,
-                  -w / 2 / f, +h / 2 / f,
-                  +w / 2 / f, +h / 2 / f }};
+        const auto xo{static_cast<float>(g.offset[0])};
+        const auto yo{static_cast<float>(g.offset[1])};
+        const auto a{static_cast<float>(g.advance)};
+        return {{
+                (-a/2 + xo    ) / f, (f/2 - yo    ) / f,
+                (-a/2 + xo + w) / f, (f/2 - yo    ) / f,
+                (-a/2 + xo    ) / f, (f/2 - yo - h) / f,
+                (-a/2 + xo + w) / f, (f/2 - yo - h) / f
+            }};
     }
 
     // Generate vertex buffer contents with interleaved vertex
