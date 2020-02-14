@@ -26,6 +26,7 @@ using std::end;
 using std::function;
 using std::make_pair;
 using std::make_unique;
+using std::minstd_rand;
 using std::normal_distribution;
 using std::pair;
 using std::remove_pointer_t;
