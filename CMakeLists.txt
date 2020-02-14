@@ -64,6 +64,12 @@ add_dependencies(
   resources_inc
   )
 
+target_include_directories(
+  rematrix
+  PRIVATE
+  ${PROJECT_BINARY_DIR}
+  )
+
 target_link_libraries(
   rematrix
   PRIVATE
