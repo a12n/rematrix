@@ -65,3 +65,13 @@ target_link_libraries(rematrix
 # Installation
 
 install(TARGETS rematrix DESTINATION bin)
+
+#------------------------------------------------------------------------------
+# Targets
+
+add_custom_command(
+  OUTPUT ${PROJECT_BINARY_DIR}/font_image_size.inc
+  COMMAND ${ImageMagick_identify_EXECUTABLE} -format "%w, %h" ${PROJECT_SOURCE_DIR}/data/font.png > ${PROJECT_BINARY_DIR}/font_image_size.inc
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/font.png
+  VERBATIM
+  )
