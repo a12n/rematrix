@@ -14,12 +14,10 @@ using namespace rematrix;
 namespace {
 
 unique_ptr<program> prog;
-unique_ptr<vertex_array> vertex_arr;
-unique_ptr<vertex_buffer> position_buf;
-unique_ptr<vertex_buffer> tex_coord_buf;
+unique_ptr<vertex_buffer> vertex_buf;
 unique_ptr<texture> tex;
 
-unordered_map<char, uintptr_t> tex_coord_buf_offset;
+unordered_map<char, unsigned int> vertex_buf_indices;
 
 GLint position_attrib{-1};
 GLint tex_coord_attrib{-1};
@@ -57,35 +55,28 @@ init(const array<unsigned int, 2>& window_size)
         prog->set_uniform(view_uniform, translate(mat4(1.0f), {0.0f, 0.0f, -10.0f}));
     }
 
-    // Make a rectangle
+    // Make vertex buffer
 
-    vertex_arr = make_unique<vertex_array>();
-    vertex_arr->bind();
+    {
+        const auto [data, indices] = font.data();
 
-    const GLfloat vertices[] = {
-        -0.8f, -0.8f,
-         0.8f, -0.8f,
-        -0.8f,  0.8f,
-         0.8f,  0.8f,
-    };
+        vertex_buf = make_unique<vertex_buffer>(data.data(), data.size() * sizeof(float));
+        vertex_buf->bind();
 
-    position_buf = make_unique<vertex_buffer>(vertices, sizeof(vertices));
-    position_buf->bind();
-    glVertexAttribPointer(position_attrib,
-                          2,
-                          GL_FLOAT,
-                          GL_FALSE,
-                          0,
-                          static_cast<const void*>(0));
-    glEnableVertexAttribArray(position_attrib);
+        glVertexAttribPointer(position_attrib,
+                              2, GL_FLOAT, GL_FALSE,
+                              4 * sizeof(float),
+                              static_cast<const void*>(0));
+        glEnableVertexAttribArray(position_attrib);
 
-    const auto [coords, offsets] = font.coords_data();
+        glVertexAttribPointer(tex_coord_attrib,
+                              2, GL_FLOAT, GL_FALSE,
+                              4 * sizeof(float),
+                              reinterpret_cast<const void*>(static_cast<uintptr_t>(2 * sizeof(float))));
+        glEnableVertexAttribArray(tex_coord_attrib);
 
-    tex_coord_buf = make_unique<vertex_buffer>(coords.data(), coords.size() * sizeof(float));
-    tex_coord_buf->bind();
-    glEnableVertexAttribArray(tex_coord_attrib);
-
-    tex_coord_buf_offset = offsets;
+        vertex_buf_indices = indices;
+    }
 
     // Load font texture
 
