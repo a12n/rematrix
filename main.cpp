@@ -16,14 +16,14 @@ unique_ptr<program> prog;
 unique_ptr<vertex_buffer> vertex_buf;
 unique_ptr<texture> tex;
 
-unordered_map<char, unsigned int> glyph_indices;
-
 GLint position_attrib{-1};
 GLint tex_coord_attrib{-1};
 
 GLint model_uniform{-1};
 GLint projection_uniform{-1};
 GLint view_uniform{-1};
+
+vector<unsigned int> glyph_indices;
 
 void
 render_glyph(unsigned int index)
@@ -74,8 +74,7 @@ init(const array<unsigned int, 2>& window_size)
     {
         const auto [v, i] = font.buffer_data();
 
-        // TODO: save relevant indices according to the encoding (binary, decimal, etc.)
-        glyph_indices = i;
+        // Create and fill buffer
 
         vertex_buf = make_unique<vertex_buffer>(v.data(), v.size() * sizeof(float));
         vertex_buf->bind();
@@ -91,6 +90,12 @@ init(const array<unsigned int, 2>& window_size)
                               4 * sizeof(float),
                               reinterpret_cast<const void*>(static_cast<uintptr_t>(2 * sizeof(float))));
         glEnableVertexAttribArray(tex_coord_attrib);
+
+        // Keep list of known glyph indices
+
+        for (const auto [c, j] : i) {
+            glyph_indices.push_back(j);
+        }
     }
 
     // Load font texture
