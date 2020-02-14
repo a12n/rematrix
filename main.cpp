@@ -42,6 +42,118 @@ render_glyph(unsigned int index)
 
 //----------------------------------------------------------------------------
 
+struct strip
+{
+    static constexpr unsigned int grid_size{70};
+    static constexpr unsigned int grid_depth{35};
+    static constexpr float splash_ratio{0.7f};
+
+    void
+    reset()
+    {
+        uniform_int_distribution<unsigned long> glyph_index{0, glyph_indices.size() - 1};
+
+        position[0] = uniform_real_distribution{-(grid_size / 2.0f), grid_size / 2.0f}(rand);
+        position[1] = normal_distribution{grid_size / 2.0f}(rand);
+        position[2] = uniform_real_distribution{-(grid_depth * 0.75f), grid_depth * 0.2f}(rand);
+
+        velocity[0] = 0.0f;
+        velocity[1] = 0.0f;
+        velocity[2] = max(normal_distribution{1.0f, 0.1f}(rand), 0.001f);
+
+        erasing = false;
+
+        feeder_char = glyph_indices[glyph_index(rand)];
+        feeder_y = 0.0f;
+        feeder_speed = max(normal_distribution{3.0f}(rand), 0.001f);
+
+        spin_accum = 0.0f;
+        spin_after = max(normal_distribution{1.0f, 0.3f}(rand), 0.001f);
+
+        for (auto& [index, spin] : chars) {
+            index = glyph_indices[glyph_index(rand)];
+            spin = bernoulli_distribution{1.0 / 20.0}(rand);
+        }
+    }
+
+    void
+    update(const duration<double>& dt)
+    {
+        position[0] += velocity[0] * dt.count();
+        position[1] += velocity[1] * dt.count();
+        position[2] += velocity[2] * dt.count();
+
+        if (position[2] > splash_ratio * grid_depth) {
+            reset();
+            return;
+        }
+
+        feeder_y += feeder_speed * dt.count();
+        if (feeder_y >= grid_size) {
+            if (erasing) {
+                reset();
+                return;
+            } else {
+                erasing = true;
+                feeder_y = 0.0f;
+                feeder_speed /= 2.0f;
+            }
+        }
+
+        spin_accum += dt.count();
+        if (spin_accum >= spin_after) {
+            uniform_int_distribution<unsigned long> glyph_index{0, glyph_indices.size() - 1};
+
+            spin_accum = 0.0f;
+            feeder_char = glyph_indices[glyph_index(rand)];
+            for (auto& [index, spin] : chars) {
+                if (spin) {
+                    index = glyph_indices[glyph_index(rand)];
+                    spin = bernoulli_distribution{799.0f / 800.0f}(rand);
+                }
+            }
+        }
+    }
+
+    void
+    render() const
+    {
+        for (unsigned int i{0}; i < chars.size(); ++i) {
+            bool below{feeder_y > i};
+
+            if (erasing) {
+                below = ! below;
+            }
+
+            if (below) {
+                prog->set_uniform(model_uniform, translate(mat4(1.0f), {position[0], position[1] - i, position[2]}));
+                render_index(chars[i].first);
+            }
+        }
+
+        if (! erasing) {
+            prog->set_uniform(model_uniform, translate(mat4(1.0f), {position[0], position[1] - feeder_y, position[2]}));
+            render_index(feeder_char);
+        }
+    }
+
+    array<float, 3> position;
+    array<float, 3> velocity;
+
+    bool erasing;
+
+    unsigned int feeder_char;
+    float feeder_y;
+    float feeder_speed;
+
+    array<pair<unsigned int, bool>, grid_size> chars;
+
+    float spin_accum;
+    float spin_after;
+};
+
+//----------------------------------------------------------------------------
+
 void
 init(const array<unsigned int, 2>& window_size)
 {
