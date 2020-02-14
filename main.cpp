@@ -127,13 +127,13 @@ struct strip
 
             if (below) {
                 prog->set_uniform(model_uniform, translate(mat4(1.0f), {position[0], position[1] - i, position[2]}));
-                render_index(chars[i].first);
+                render_glyph(chars[i].first);
             }
         }
 
         if (! erasing) {
             prog->set_uniform(model_uniform, translate(mat4(1.0f), {position[0], position[1] - feeder_y, position[2]}));
-            render_index(feeder_char);
+            render_glyph(feeder_char);
         }
     }
 
