@@ -6,6 +6,7 @@
 #include <functional>
 #include <iostream>
 #include <memory>
+#include <random>
 #include <string>
 #include <thread>
 #include <unordered_map>
@@ -16,6 +17,7 @@ namespace rematrix {
 namespace this_thread = std::this_thread;
 using std::array;
 using std::begin;
+using std::bernoulli_distribution;
 using std::chrono::duration;
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
@@ -24,11 +26,14 @@ using std::end;
 using std::function;
 using std::make_pair;
 using std::make_unique;
+using std::normal_distribution;
 using std::pair;
 using std::remove_pointer_t;
 using std::runtime_error;
 using std::string;
 using std::string_view;
+using std::uniform_int_distribution;
+using std::uniform_real_distribution;
 using std::unique_ptr;
 using std::unordered_map;
 using std::vector;
