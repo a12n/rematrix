@@ -58,13 +58,18 @@ add_executable(
   vertex_array.cpp
   ${CMAKE_BINARY_DIR}/resources.cpp
   )
-target_link_libraries(rematrix
-  ${X11_X11_LIB} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}
-  )
 
 add_dependencies(
   rematrix
   resources_inc
+  )
+
+target_link_libraries(
+  rematrix
+  PRIVATE
+  ${X11_X11_LIB}
+  ${OPENGL_LIBRARIES}
+  ${GLEW_LIBRARIES}
   )
 
 #------------------------------------------------------------------------------
