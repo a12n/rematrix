@@ -69,18 +69,17 @@ struct font_descr
     array<float, 8>
     position(const glyph_descr& g) const
     {
+        const auto x1{-g.advance / 2 + g.offset[0]};
+        const auto y1{line_height / 2 - g.offset[1]};
+        const auto x2{x1 + g.size[0]};
+        const auto y3{y1 - g.size[1]};
+
         const auto f{static_cast<float>(line_height)};
-        const auto w{static_cast<float>(g.size[0])};
-        const auto h{static_cast<float>(g.size[1])};
-        const auto xo{static_cast<float>(g.offset[0])};
-        const auto yo{static_cast<float>(g.offset[1])};
-        const auto a{static_cast<float>(g.advance)};
-        return {{
-                (-a/2 + xo    ) / f, (f/2 - yo    ) / f,
-                (-a/2 + xo + w) / f, (f/2 - yo    ) / f,
-                (-a/2 + xo    ) / f, (f/2 - yo - h) / f,
-                (-a/2 + xo + w) / f, (f/2 - yo - h) / f
-            }};
+
+        return {{ static_cast<float>(x1) / f, static_cast<float>(y1) / f,
+                  static_cast<float>(x2) / f, static_cast<float>(y1) / f,
+                  static_cast<float>(x1) / f, static_cast<float>(y3) / f,
+                  static_cast<float>(x2) / f, static_cast<float>(y3) / f }};
     }
 
     // Generate vertex buffer contents with interleaved vertex
