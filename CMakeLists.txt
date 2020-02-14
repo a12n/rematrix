@@ -86,6 +86,13 @@ foreach(SHADER vertex fragment)
 endforeach()
 
 add_custom_command(
+  OUTPUT ${PROJECT_BINARY_DIR}/font.inc
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font_descr2 < ${PROJECT_SOURCE_DIR}/data/font.fnt > ${PROJECT_BINARY_DIR}/font.inc
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/font.fnt
+  VERBATIM
+  )
+
+add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font.raw
   COMMAND ${ImageMagick_convert_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/font.png -depth 8 gray:${PROJECT_BINARY_DIR}/font.raw
   DEPENDS ${PROJECT_SOURCE_DIR}/data/font.png
@@ -102,6 +109,7 @@ add_custom_command(
 add_custom_target(
   resources_inc
   DEPENDS
+  ${PROJECT_BINARY_DIR}/font.inc
   ${PROJECT_BINARY_DIR}/font_image_data.inc
   ${PROJECT_BINARY_DIR}/font_image_size.inc
   ${PROJECT_BINARY_DIR}/fragment_src.inc
