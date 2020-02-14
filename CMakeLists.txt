@@ -34,19 +34,6 @@ find_package(Python3 COMPONENTS Interpreter REQUIRED)
 #------------------------------------------------------------------------------
 # Targets
 
-include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
-
-add_custom_command(
-  OUTPUT ${CMAKE_BINARY_DIR}/resources.cpp
-  COMMAND ${CMAKE_SOURCE_DIR}/resources.cpp.sh > ${CMAKE_BINARY_DIR}/resources.cpp
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  DEPENDS
-  data/font.fnt
-  data/font.png
-  data/fragment.glsl
-  data/vertex.glsl
-  )
-
 add_executable(
   rematrix
   buffer.cpp
