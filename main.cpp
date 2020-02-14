@@ -96,26 +96,26 @@ init(const array<unsigned int, 2>& window_size)
 GLfloat angle{0.0f};
 
 void
+render_char(char c)
+{
+    glDrawArrays(GL_TRIANGLE_STRIP, vertex_buf_indices.at(c), 4);
+}
+
+void
 render(const duration<double>& dt)
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
     angle += 2.0f * dt.count();
 
-    glVertexAttribPointer(tex_coord_attrib, 2, GL_FLOAT, GL_FALSE, 0,
-                          reinterpret_cast<const void*>(tex_coord_buf_offset.at('A')));
     prog->set_uniform(model_uniform, rotate(translate(mat4(1.0f), {-1.5f, 0.0f, angle / 5.0f}), radians(angle), {0.0f, 0.0f, 1.0f}));
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    render_char('A');
 
-    glVertexAttribPointer(tex_coord_attrib, 2, GL_FLOAT, GL_FALSE, 0,
-                          reinterpret_cast<const void*>(tex_coord_buf_offset.at('C')));
     prog->set_uniform(model_uniform, rotate(translate(mat4(1.0f), {-0.0f, 0.0f, angle / 5.0f}), radians(angle * 2), {0.0f, 0.0f, 1.0f}));
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    render_char('C');
 
-    glVertexAttribPointer(tex_coord_attrib, 2, GL_FLOAT, GL_FALSE, 0,
-                          reinterpret_cast<const void*>(tex_coord_buf_offset.at('G')));
     prog->set_uniform(model_uniform, rotate(translate(mat4(1.0f), {1.5f, 0.0f, angle / 5.0f}), radians(angle * 3), {0.0f, 0.0f, 1.0f}));
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    render_char('G');
 }
 
 } // namespace
