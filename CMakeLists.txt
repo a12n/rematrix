@@ -47,7 +47,8 @@ add_custom_command(
   data/vertex.glsl
   )
 
-add_executable(rematrix
+add_executable(
+  rematrix
   buffer.cpp
   main.cpp
   program.cpp
