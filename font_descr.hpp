@@ -67,13 +67,16 @@ struct font_descr
     }
 
     array<float, 8>
-    position(const glyph_descr&) const
+    position(const glyph_descr& g) const
     {
-        // TODO
-        return {{ -0.8f, -0.8f,
-                   0.8f, -0.8f,
-                  -0.8f,  0.8f,
-                   0.8f,  0.8f }};
+        // TODO: g.offset
+        const auto w{static_cast<float>(g.size[0])};
+        const auto h{static_cast<float>(g.size[1])};
+        const auto f{static_cast<float>(font_size)};
+        return {{ -w / 2 / f, -h / 2 / f,
+                  +w / 2 / f, -h / 2 / f,
+                  -w / 2 / f, +h / 2 / f,
+                  +w / 2 / f, +h / 2 / f }};
     }
 
     // Generate vertex buffer contents with interleaved vertex
