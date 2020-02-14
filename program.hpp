@@ -50,6 +50,9 @@ struct program
     void
     set_uniform(GLint location, const mat4& m);
 
+    void
+    set_uniform(GLint location, bool b);
+
     const GLuint id;
 };
 

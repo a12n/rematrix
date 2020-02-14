@@ -105,4 +105,10 @@ program::set_uniform(GLint location, const mat4& m)
     glUniformMatrix4fv(location, 1, GL_FALSE, &m[0][0]);
 }
 
+void
+program::set_uniform(GLint location, bool b)
+{
+    glUniform1i(location, b);
+}
+
 } // namespace rematrix
