@@ -85,9 +85,24 @@ foreach(SHADER vertex fragment)
     )
 endforeach()
 
+add_custom_command(
+  OUTPUT ${PROJECT_BINARY_DIR}/font.raw
+  COMMAND ${ImageMagick_convert_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/font.png -depth 8 gray:${PROJECT_BINARY_DIR}/font.raw
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/font.png
+  VERBATIM
+  )
+
+add_custom_command(
+  OUTPUT ${PROJECT_BINARY_DIR}/font_image_data.inc
+  COMMAND od -v -A n -t u1 -w1 ${PROJECT_BINARY_DIR}/font.raw | sed "s/^ *//;s/\$/,/" > ${PROJECT_BINARY_DIR}/font_image_data.inc
+  DEPENDS ${PROJECT_BINARY_DIR}/font.raw
+  VERBATIM
+  )
+
 add_custom_target(
   resources_inc
   DEPENDS
+  ${PROJECT_BINARY_DIR}/font_image_data.inc
   ${PROJECT_BINARY_DIR}/font_image_size.inc
   ${PROJECT_BINARY_DIR}/fragment_src.inc
   ${PROJECT_BINARY_DIR}/vertex_src.inc
