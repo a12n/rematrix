@@ -3,13 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 #------------------------------------------------------------------------------
 # Project variables
 
-project(rematrix)
-
-set(REMATRIX_MAJOR_VERSION 0)
-set(REMATRIX_MINOR_VERSION 1)
-set(REMATRIX_PATCH_VERSION 0)
-set(REMATRIX_VERSION
-  "${REMATRIX_MAJOR_VERSION}.${REMATRIX_MINOR_VERSION}.${REMATRIX_PATCH_VERSION}")
+project(rematrix VERSION 0.1.0 LANGUAGES CXX)
 
 #------------------------------------------------------------------------------
 # Find packages
