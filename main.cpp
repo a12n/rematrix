@@ -7,7 +7,6 @@
 #include "resources.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
-#include "vertex_array.hpp"
 
 using namespace rematrix;
 
