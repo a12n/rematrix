@@ -97,7 +97,7 @@ struct font_descr
     // GL_TRIANGLE_STRIP rendering. Returns mapping of characters to
     // vertex indices for glDrawArrays.
     pair<vector<float>, unordered_map<char, unsigned int>>
-    data() const
+    buffer_data() const
     {
         vector<float> ans;
         unordered_map<char, unsigned int> indices;
