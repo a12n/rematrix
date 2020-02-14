@@ -37,12 +37,16 @@ for line in sys.stdin:
         scalew = int(props["scaleW"])
         scaleh = int(props["scaleH"])
     elif tag == "char":
-        chars[int(props["id"])] = (
-            (int(props["x"]), int(props["y"])),
-            (int(props["width"]), int(props["height"])),
-            (int(props["xoffset"]), int(props["yoffset"])),
-            int(props["xadvance"])
-        )
+        width = int(props["width"])
+        height = int(props["height"])
+        if width > 0 and height > 0:
+            id = int(props["id"])
+            x = int(props["x"])
+            y = int(props["y"])
+            xoffset = int(props["xoffset"])
+            yoffset = int(props["yoffset"])
+            xadvance = int(props["xadvance"])
+            chars[id] = ((x, y), (width, height), (xoffset, yoffset), xadvance)
 
 def format(x):
     if isinstance(x, tuple) or isinstance(x, list):
