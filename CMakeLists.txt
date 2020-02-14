@@ -62,6 +62,11 @@ target_link_libraries(rematrix
   ${X11_X11_LIB} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}
   )
 
+add_dependencies(
+  rematrix
+  resources_inc
+  )
+
 #------------------------------------------------------------------------------
 # Installation
 
