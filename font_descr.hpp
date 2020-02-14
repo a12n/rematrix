@@ -66,6 +66,41 @@ struct font_descr
         return make_pair(coords, offsets);
     }
 
+    array<float, 8>
+    position(const glyph_descr&) const
+    {
+        // TODO
+        return {{ -0.8f, -0.8f,
+                   0.8f, -0.8f,
+                  -0.8f,  0.8f,
+                   0.8f,  0.8f }};
+    }
+
+    // Generate vertex buffer contents with interleaved vertex
+    // position (2 floats) and texture coordinates (2 floats), for
+    // GL_TRIANGLE_STRIP rendering. Returns mapping of characters to
+    // vertex indices for glDrawArrays.
+    pair<vector<float>, unordered_map<char, unsigned int>>
+    data() const
+    {
+        vector<float> ans;
+        unordered_map<char, unsigned int> indices;
+
+        for (const auto [c, g] : glyphs) {
+            const auto off = ans.size() / 4;
+            indices.insert(make_pair(c, off));
+            const auto [x1, y1, x2, y2, x3, y3, x4, y4] = position(g);
+            const auto [u1, v1, u2, v2, u3, v3, u4, v4] = g.coords(image_size);
+            const auto interleaved = {x1, y1, u1, v1,
+                                      x2, y2, u2, v2,
+                                      x3, y3, u3, v3,
+                                      x4, y4, u4, v4};
+            ans.insert(end(ans), begin(interleaved), end(interleaved));
+        }
+
+        return make_pair(ans, indices);
+    }
+
     const unsigned short font_size{0};
     const array<unsigned short, 2> image_size{0, 0};
     const array<unsigned short, 4> padding{0, 0, 0, 0};
