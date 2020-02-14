@@ -152,6 +152,8 @@ struct strip
     float spin_after;
 };
 
+vector<strip> strips;
+
 //----------------------------------------------------------------------------
 
 void
@@ -226,18 +228,30 @@ init(const array<unsigned int, 2>& window_size)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // Create strips
 
+    strips.resize(100);
+    for (strip& s : strips) {
+        s.reset();
+    }
 }
 
 void
 update(const duration<double>& dt)
 {
+    // TODO: parallel?
+    for (strip& s : strips) {
+        s.update(dt);
+    }
 }
 
 void
 render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
+    for (const strip& s : strips) {
+        s.render();
+    }
 }
 
 } // namespace
