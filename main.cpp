@@ -23,6 +23,8 @@ GLint model_uniform{-1};
 GLint projection_uniform{-1};
 GLint view_uniform{-1};
 
+minstd_rand rand{0};
+
 vector<unsigned int> glyph_indices;
 
 void
