@@ -82,6 +82,16 @@ struct font_descr
                   static_cast<float>(x2) / f, static_cast<float>(y3) / f }};
     }
 
+    float
+    advance(string_view s) const
+    {
+        float ans{0.0f};
+        for (const char c : s) {
+            ans += glyphs.at(c).advance / static_cast<float>(line_height);
+        }
+        return ans;
+    }
+
     // Generate vertex buffer contents with interleaved vertex
     // position (2 floats) and texture coordinates (2 floats), for
     // GL_TRIANGLE_STRIP rendering. Returns mapping of characters to
