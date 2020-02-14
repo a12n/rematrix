@@ -75,3 +75,9 @@ add_custom_command(
   DEPENDS ${PROJECT_SOURCE_DIR}/data/font.png
   VERBATIM
   )
+
+add_custom_target(
+  resources_inc
+  DEPENDS
+  ${PROJECT_BINARY_DIR}/font_image_size.inc
+  )
