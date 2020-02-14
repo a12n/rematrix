@@ -32,13 +32,6 @@ find_package(ImageMagick COMPONENTS convert identify REQUIRED)
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 #------------------------------------------------------------------------------
-# Compiler-specific
-
-if(${CMAKE_CXX_COMPILER_ID} MATCHES "^(GNU)|(Clang)$")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-endif()
-
-#------------------------------------------------------------------------------
 # Targets
 
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
