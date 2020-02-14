@@ -29,7 +29,7 @@ include_directories(${GLM_INCLUDE_DIR})
 
 find_package(ImageMagick COMPONENTS convert identify REQUIRED)
 
-# find_program(JQ_EXEC jq)
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 #------------------------------------------------------------------------------
 # Compiler-specific
