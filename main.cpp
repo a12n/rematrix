@@ -27,6 +27,21 @@ GLint projection_uniform{-1};
 GLint view_uniform{-1};
 
 void
+render_glyph(unsigned int index)
+{
+    glDrawArrays(GL_TRIANGLE_STRIP, index, 4);
+    // glBegin(GL_LINE_STRIP);
+    // glVertex2f(-0.5f, -0.5f);
+    // glVertex2f( 0.5f, -0.5f);
+    // glVertex2f( 0.5f,  0.5f);
+    // glVertex2f(-0.5f,  0.5f);
+    // glVertex2f(-0.5f, -0.5f);
+    // glEnd();
+}
+
+//----------------------------------------------------------------------------
+
+void
 init(const array<unsigned int, 2>& window_size)
 {
     if (auto status{glewInit()}; status != GLEW_OK) {
