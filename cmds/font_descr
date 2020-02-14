@@ -37,10 +37,10 @@ for line in sys.stdin:
         scalew = int(props["scaleW"])
         scaleh = int(props["scaleH"])
     elif tag == "char":
+        id = int(props["id"])
         width = int(props["width"])
         height = int(props["height"])
-        if width > 0 and height > 0:
-            id = int(props["id"])
+        if chr(id).isprintable():
             x = int(props["x"])
             y = int(props["y"])
             xoffset = int(props["xoffset"])
