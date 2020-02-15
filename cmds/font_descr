@@ -63,5 +63,18 @@ def make_cpp_inc():
     print(format(descr["base"]), ",")
     print(format(sorted(descr["chars"].items())))
 
+# Transpose glyphs in the texture as The Matrix glyphs (all mirrored
+# left/right, except 3).
+def transpose_glyphs():
+    from PIL import Image
+    descr = parse(sys.stdin)
+    img = Image.open(sys.argv[1])
+    for c, ((x, y), (width, height), (xoffset, yoffset), advance) in descr["chars"].items():
+        box = (x, y, x + width, y + height)
+        glyph = img.crop(box)
+        glyph = glyph.transpose(Image.FLIP_TOP_BOTTOM if c == ord("3") else Image.FLIP_LEFT_RIGHT)
+        img.paste(glyph, box)
+    img.save(sys.argv[2])
+
 if __name__ == "__main__":
     make_cpp_inc()
