@@ -23,6 +23,8 @@ GLint model_uniform{-1};
 GLint projection_uniform{-1};
 GLint view_uniform{-1};
 
+GLint feeder_glyph_uniform{-1};
+
 minstd_rand rand{0};
 
 vector<unsigned int> glyph_indices;
@@ -118,6 +120,7 @@ struct strip
     void
     render() const
     {
+        prog->set_uniform(feeder_glyph_uniform, false);
         for (unsigned int i{0}; i < chars.size(); ++i) {
             bool below{feeder_y > i};
 
@@ -133,6 +136,7 @@ struct strip
 
         if (! erasing) {
             prog->set_uniform(model_uniform, translate(mat4(1.0f), {position[0], position[1] - feeder_y, position[2]}));
+            prog->set_uniform(feeder_glyph_uniform, true);
             render_glyph(feeder_char);
         }
     }
@@ -178,6 +182,8 @@ init(const array<unsigned int, 2>& window_size)
     model_uniform = prog->uniform_location("model");
     projection_uniform = prog->uniform_location("projection");
     view_uniform = prog->uniform_location("view");
+
+    feeder_glyph_uniform = prog->uniform_location("feederGlyph");
 
     {
         const auto ar = static_cast<float>(window_size[0]) / static_cast<float>(window_size[1]);
