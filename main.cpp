@@ -124,10 +124,17 @@ struct strip
     render() const
     {
         prog->set_uniform(is_feeder_uniform, false);
+        if (erasing) {
+            prog->set_uniform(eraser_pos_uniform, feeder_y);
+        } else {
+            prog->set_uniform(eraser_pos_uniform, 0.0f);
+            prog->set_uniform(char_pos_uniform, static_cast<int>(1));
+        }
         for (unsigned int i{0}; i < chars.size(); ++i) {
             bool below{feeder_y > i};
 
             if (erasing) {
+                prog->set_uniform(char_pos_uniform, static_cast<int>(i));
                 below = ! below;
             }
 
