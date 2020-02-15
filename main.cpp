@@ -56,7 +56,7 @@ struct strip
     void
     reset()
     {
-        uniform_int_distribution<unsigned long> glyph_indices_distr{0, glyph_indices.size() - 1};
+        uniform_int_distribution<unsigned long> glyph_indices_distr{1, glyph_indices.size() - 1};
 
         position[0] = uniform_real_distribution{-(grid_size / 2.0f), grid_size / 2.0f}(rand);
         position[1] = normal_distribution{grid_size / 2.0f}(rand);
@@ -111,7 +111,7 @@ struct strip
 
         spin_accum += dt.count();
         if (spin_accum >= spin_after) {
-            uniform_int_distribution<unsigned long> glyph_indices_distr{0, glyph_indices.size() - 1};
+            uniform_int_distribution<unsigned long> glyph_indices_distr{1, glyph_indices.size() - 1};
 
             spin_accum = 0.0f;
             feeder_char = glyph_indices[glyph_indices_distr(rand)];
