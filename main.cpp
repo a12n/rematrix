@@ -25,6 +25,9 @@ GLint view_uniform{-1};
 
 GLint is_feeder_uniform{-1};
 
+GLint eraser_pos_uniform{-1};
+GLint char_pos_uniform{-1};
+
 minstd_rand rand{0};
 
 vector<unsigned int> glyph_indices;
@@ -184,6 +187,9 @@ init(const array<unsigned int, 2>& window_size)
     view_uniform = prog->uniform_location("view");
 
     is_feeder_uniform = prog->uniform_location("isFeeder");
+
+    eraser_pos_uniform = prog->uniform_location("eraserPos");
+    char_pos_uniform = prog->uniform_location("charPos");
 
     {
         const auto ar = static_cast<float>(window_size[0]) / static_cast<float>(window_size[1]);
