@@ -229,7 +229,9 @@ init(const array<unsigned int, 2>& window_size)
         // Keep list of known glyph indices
 
         // XXX: index for space glyph must be at index 0 in the glyph_indices array
-        for (const auto [c, j] : i) {
+        // for (const auto [c, j] : i) {
+        for (const char c : {' ', 'A', 'C', 'G', 'T'}) {
+            const auto j = i.at(c);
             glyph_indices.push_back(j);
         }
     }
