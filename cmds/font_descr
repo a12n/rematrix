@@ -76,5 +76,25 @@ def transpose_glyphs():
         img.paste(glyph, box)
     img.save(sys.argv[2])
 
+# Transpose font description for The Matrix texture,
+def transpose_descr():
+    descr = parse(sys.stdin)
+    scalew = descr["scaleW"]
+    descr["scaleW"] = scalew * 2
+    privuni = range(0xE000, 0xF8FF + 1)
+    for c, c2 in zip(sorted(descr["chars"].keys()), privuni):
+        (x, y), (width, height), (xoffset, yoffset), advance = descr["chars"][c]
+        x2 = x + scalew
+        if c == ord("3"):
+            xoffset2 = xoffset
+            yoffset2 = yoffset  # TODO
+        else:
+            xoffset2 = xoffset  # TODO
+            yoffset2 = yoffset
+            advance2 = advance  # TODO
+        del(descr["chars"][c])
+        descr["chars"][c2] = ((x2, y), (width, height), (xoffset2, yoffset2), advance2)
+    write(descr, sys.stdout)
+
 if __name__ == "__main__":
     make_cpp_inc()
