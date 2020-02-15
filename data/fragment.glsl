@@ -17,5 +17,6 @@ main()
     float d = (s - 0.5) * c;
     float alpha = clamp(d + 0.5, 0.0, 1.0);
     // gl_FragColor = vec4(fillColor, min(alpha + 0.5, 1.0));
-    gl_FragColor = vec4(isFeeder ? feederColor : fillColor, smoothstep(24, 23, fragDepth) * alpha);
+    float splashFactor = smoothstep(24, 23, fragDepth);
+    gl_FragColor = vec4(isFeeder ? feederColor : fillColor, splashFactor * alpha);
 }
