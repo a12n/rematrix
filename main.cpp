@@ -53,7 +53,7 @@ struct strip
     void
     reset()
     {
-        uniform_int_distribution<unsigned long> glyph_index{0, glyph_indices.size() - 1};
+        uniform_int_distribution<unsigned long> glyph_indices_distr{0, glyph_indices.size() - 1};
 
         position[0] = uniform_real_distribution{-(grid_size / 2.0f), grid_size / 2.0f}(rand);
         position[1] = normal_distribution{grid_size / 2.0f}(rand);
@@ -65,7 +65,7 @@ struct strip
 
         erasing = false;
 
-        feeder_char = glyph_indices[glyph_index(rand)];
+        feeder_char = glyph_indices[glyph_indices_distr(rand)];
         feeder_y = 0.0f;
         feeder_speed = max(normal_distribution{3.0f}(rand), 0.001f);
 
@@ -73,7 +73,7 @@ struct strip
         spin_after = max(normal_distribution{1.0f, 0.3f}(rand), 0.001f);
 
         for (auto& [index, spin] : chars) {
-            index = glyph_indices[glyph_index(rand)];
+            index = glyph_indices[glyph_indices_distr(rand)];
             spin = bernoulli_distribution{1.0 / 20.0}(rand);
         }
     }
@@ -104,13 +104,13 @@ struct strip
 
         spin_accum += dt.count();
         if (spin_accum >= spin_after) {
-            uniform_int_distribution<unsigned long> glyph_index{0, glyph_indices.size() - 1};
+            uniform_int_distribution<unsigned long> glyph_indices_distr{0, glyph_indices.size() - 1};
 
             spin_accum = 0.0f;
-            feeder_char = glyph_indices[glyph_index(rand)];
+            feeder_char = glyph_indices[glyph_indices_distr(rand)];
             for (auto& [index, spin] : chars) {
                 if (spin) {
-                    index = glyph_indices[glyph_index(rand)];
+                    index = glyph_indices[glyph_indices_distr(rand)];
                     spin = bernoulli_distribution{799.0f / 800.0f}(rand);
                 }
             }
