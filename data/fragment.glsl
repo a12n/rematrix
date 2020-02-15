@@ -9,7 +9,7 @@ uniform bool isFeeder = false;
 
 const vec3 feederColor = vec3(0x83 / 255.0, 0xa5 / 255.0, 0x98 / 255.0);
 
-uniform float eraserPos = 0.0;
+uniform float feederPos = 0.0;
 uniform int charPos = 1;
 
 void
@@ -21,6 +21,6 @@ main()
     float alpha = clamp(d + 0.5, 0.0, 1.0);
     // gl_FragColor = vec4(fillColor, min(alpha + 0.5, 1.0));
     float splashFactor = smoothstep(24, 23, fragDepth);
-    float eraseFactor = smoothstep(0, -1, eraserPos - charPos);
+    float eraseFactor = smoothstep(0, -1, feederPos - charPos);
     gl_FragColor = vec4(isFeeder ? feederColor : fillColor, eraseFactor * splashFactor * alpha);
 }

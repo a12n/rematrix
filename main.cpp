@@ -23,10 +23,9 @@ GLint model_uniform{-1};
 GLint projection_uniform{-1};
 GLint view_uniform{-1};
 
-GLint is_feeder_uniform{-1};
-
-GLint eraser_pos_uniform{-1};
 GLint char_pos_uniform{-1};
+GLint feeder_pos_uniform{-1};
+GLint is_feeder_uniform{-1};
 
 minstd_rand rand{0};
 
@@ -125,9 +124,9 @@ struct strip
     {
         prog->set_uniform(is_feeder_uniform, false);
         if (erasing) {
-            prog->set_uniform(eraser_pos_uniform, feeder_y);
+            prog->set_uniform(feeder_pos_uniform, feeder_y);
         } else {
-            prog->set_uniform(eraser_pos_uniform, 0.0f);
+            prog->set_uniform(feeder_pos_uniform, 0.0f);
             prog->set_uniform(char_pos_uniform, static_cast<int>(1));
         }
         for (unsigned int i{0}; i < chars.size(); ++i) {
@@ -193,10 +192,9 @@ init(const array<unsigned int, 2>& window_size)
     projection_uniform = prog->uniform_location("projection");
     view_uniform = prog->uniform_location("view");
 
-    is_feeder_uniform = prog->uniform_location("isFeeder");
-
-    eraser_pos_uniform = prog->uniform_location("eraserPos");
     char_pos_uniform = prog->uniform_location("charPos");
+    feeder_pos_uniform = prog->uniform_location("feederPos");
+    is_feeder_uniform = prog->uniform_location("isFeeder");
 
     {
         const auto ar = static_cast<float>(window_size[0]) / static_cast<float>(window_size[1]);
