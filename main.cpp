@@ -224,6 +224,7 @@ init(const array<unsigned int, 2>& window_size)
 
         // Keep list of known glyph indices
 
+        // XXX: index for space glyph must be at index 0 in the glyph_indices array
         for (const auto [c, j] : i) {
             glyph_indices.push_back(j);
         }
