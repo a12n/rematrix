@@ -97,4 +97,9 @@ def transpose_descr():
     write(descr, sys.stdout)
 
 if __name__ == "__main__":
-    make_cpp_inc()
+    if sys.argv[0].endswith("make_cpp_inc"):
+        make_cpp_inc()
+    elif sys.argv[0].endswith("transpose_glyphs"):
+        transpose_glyphs()
+    elif sys.argv[0].endswith("transpose_descr"):
+        transpose_descr()
