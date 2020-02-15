@@ -76,7 +76,11 @@ struct strip
         spin_after = max(normal_distribution{1.0f, 0.3f}(rand), 0.001f);
 
         for (auto& [index, spin] : chars) {
-            index = glyph_indices[glyph_indices_distr(rand)];
+            if (bernoulli_distribution{7.0f / 8.0f}(rand)) {
+                index = glyph_indices[glyph_indices_distr(rand)];
+            } else {
+                index = glyph_indices[0];
+            }
             spin = bernoulli_distribution{1.0 / 20.0}(rand);
         }
     }
