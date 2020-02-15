@@ -82,6 +82,12 @@ program::uniform_location(const GLchar* name) const
 }
 
 void
+program::set_uniform(GLint location, GLint i)
+{
+    glUniform1i(location, i);
+}
+
+void
 program::set_uniform(GLint location, GLfloat x)
 {
     glUniform1f(location, x);
