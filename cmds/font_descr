@@ -1,63 +1,55 @@
 #!/usr/bin/env python3
 
-import sys
-
-size = None
-padding = None
-spacing = None
-lineheight = None
-base = None
-scalew = None
-scaleh = None
-chars = dict()
-
-def parseline(s):
-    fields = s.split()
-    props = dict()
-    for kv in fields[1:]:
-        try:
-            k, v = kv.split("=")
-            props[k] = v
-        except ValueError:
-            pass
-    return (fields[0], props)
-
-def parsetuple(s):
-    return tuple(map(int, s.split(",")))
-
-for line in sys.stdin:
-    tag, props = parseline(line)
-    if tag == "info":
-        size = int(props["size"])
-        padding = parsetuple(props["padding"])
-        spacing = parsetuple(props["spacing"])
-    elif tag == "common":
-        lineheight = int(props["lineHeight"])
-        base = int(props["base"])
-        scalew = int(props["scaleW"])
-        scaleh = int(props["scaleH"])
-    elif tag == "char":
-        id = int(props["id"])
-        width = int(props["width"])
-        height = int(props["height"])
-        if chr(id).isprintable():
+def parse(f):
+    def parseline(s):
+        fields = s.split()
+        props = dict()
+        for kv in fields[1:]:
+            try:
+                k, v = kv.split("=")
+                props[k] = v
+            except ValueError:
+                pass
+        return (fields[0], props)
+    def parsetuple(s):
+        return tuple(map(int, s.split(",")))
+    ans = dict()
+    for line in f:
+        tag, props = parseline(line)
+        if tag == "info":
+            ans["size"] = int(props["size"])
+            ans["padding"] = parsetuple(props["padding"])
+            ans["spacing"] = parsetuple(props["spacing"])
+        elif tag == "common":
+            ans["lineHeight"] = int(props["lineHeight"])
+            ans["base"] = int(props["base"])
+            ans["scaleW"] = int(props["scaleW"])
+            ans["scaleH"] = int(props["scaleH"])
+        elif tag == "char":
+            id = int(props["id"])
             x = int(props["x"])
             y = int(props["y"])
+            width = int(props["width"])
+            height = int(props["height"])
             xoffset = int(props["xoffset"])
             yoffset = int(props["yoffset"])
             xadvance = int(props["xadvance"])
-            chars[id] = ((x, y), (width, height), (xoffset, yoffset), xadvance)
+            ans.setdefault("chars", dict())
+            ans["chars"][id] = ((x, y), (width, height), (xoffset, yoffset), xadvance)
+    return ans
 
-def format(x):
-    if isinstance(x, tuple) or isinstance(x, list):
-        return "".join(["{", ", ".join(map(format, x)), "}"])
-    else:
-        return str(x)
-
-print(format(size), ",")
-print(format((scalew, scaleh)), ",")
-print(format(padding), ",")
-print(format(spacing), ",")
-print(format(lineheight), ",")
-print(format(base), ",")
-print(format(sorted(chars.items())))
+if __name__ == "__main__":
+    import sys
+    def format(x):
+        if isinstance(x, tuple) or isinstance(x, list):
+            return "".join(["{", ", ".join(map(format, x)), "}"])
+        else:
+            return str(x)
+    descr = parse(sys.stdin)
+    print(format(descr["size"]), ",")
+    print(format((descr["scaleW"], descr["scaleH"])), ",")
+    print(format(descr["padding"]), ",")
+    print(format(descr["spacing"]), ",")
+    print(format(descr["lineHeight"]), ",")
+    print(format(descr["base"]), ",")
+    print(format(sorted(descr["chars"].items())))
