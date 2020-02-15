@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import sys
+
 def parse(f):
     def parseline(s):
         fields = s.split()
@@ -38,8 +40,7 @@ def parse(f):
             ans["chars"][id] = ((x, y), (width, height), (xoffset, yoffset), xadvance)
     return ans
 
-if __name__ == "__main__":
-    import sys
+def make_cpp_inc():
     def format(x):
         if isinstance(x, tuple) or isinstance(x, list):
             return "".join(["{", ", ".join(map(format, x)), "}"])
@@ -53,3 +54,6 @@ if __name__ == "__main__":
     print(format(descr["lineHeight"]), ",")
     print(format(descr["base"]), ",")
     print(format(sorted(descr["chars"].items())))
+
+if __name__ == "__main__":
+    make_cpp_inc()
