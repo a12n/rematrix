@@ -59,7 +59,7 @@ struct strip
 
         velocity[0] = 0.0f;
         velocity[1] = 0.0f;
-        velocity[2] = max(normal_distribution{1.0f, 0.1f}(rand), 0.001f);
+        velocity[2] = max(normal_distribution{0.8f, 0.01f}(rand), 0.001f);
 
         erasing = false;
 
