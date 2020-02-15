@@ -271,6 +271,7 @@ void
 render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
+    sort(strips.begin(), strips.end(), [] (const strip& a, const strip& b) { return a.position[2] < b.position[2]; });
     for (const strip& s : strips) {
         s.render();
     }

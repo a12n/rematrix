@@ -1,6 +1,7 @@
 #ifndef REMATRIX_DECL_HPP
 #define REMATRIX_DECL_HPP
 
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <functional>
@@ -32,6 +33,7 @@ using std::normal_distribution;
 using std::pair;
 using std::remove_pointer_t;
 using std::runtime_error;
+using std::sort;
 using std::string;
 using std::string_view;
 using std::uniform_int_distribution;
