@@ -10,7 +10,7 @@ uniform bool isFeeder = false;
 const vec3 feederColor = vec3(0x83 / 255.0, 0xa5 / 255.0, 0x98 / 255.0);
 
 uniform float eraserPos = 0.0;
-uniform int charPos = -1;
+uniform int charPos = 1;
 
 void
 main()
