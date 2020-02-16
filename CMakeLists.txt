@@ -98,6 +98,20 @@ add_custom_command(
   VERBATIM
   )
 
+add_custom_command(
+  OUTPUT ${PROJECT_BINARY_DIR}/font2.png
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-transpose_glyphs ${PROJECT_SOURCE_DIR}/data/font2.png ${PROJECT_BINARY_DIR}/font2.png < ${PROJECT_SOURCE_DIR}/data/font2.fnt
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/font2.png ${PROJECT_SOURCE_DIR}/data/font2.fnt
+  VERBATIM
+  )
+
+add_custom_command(
+  OUTPUT ${PROJECT_BINARY_DIR}/font2.fnt
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-transpose_descr < ${PROJECT_SOURCE_DIR}/data/font2.fnt > ${PROJECT_BINARY_DIR}/font2.fnt
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/font2.fnt
+  VERBATIM
+  )
+
 add_custom_target(
   resources_inc
   DEPENDS
