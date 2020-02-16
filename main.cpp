@@ -61,7 +61,7 @@ struct strip
 
         position[0] = uniform_real_distribution{-(grid_size / 2.0f), grid_size / 2.0f}(rand);
         position[1] = normal_distribution{grid_size / 2.0f}(rand);
-        position[2] = uniform_real_distribution{-(grid_depth * 0.75f), grid_depth * 0.2f}(rand);
+        position[2] = uniform_real_distribution{-(grid_depth * 0.5f), grid_depth * 0.2f}(rand);
 
         velocity[0] = 0.0f;
         velocity[1] = 0.0f;
