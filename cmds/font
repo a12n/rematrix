@@ -95,6 +95,24 @@ def combine_glyphs():
     out.paste(in2, (in1.size[0], 0))
     out.save(sys.argv[3])
 
+def combine_descrs():
+    with open(sys.argv[1], "r") as f:
+        descr1 = parse(f)
+    with open(sys.argv[2], "r") as f:
+        descr2 = parse(f)
+    assert(all((descr1[k] == descr2[k] for k in ["size", "padding", "spacing", "lineHeight", "base", "scaleW", "scaleH"])))
+    descr2["scaleW"] += descr1["scaleW"]
+    for c, ((x, y), (width, height), (xoffset, yoffset), advance) in list(descr2["chars"].items()):
+        x += descr1["scaleW"]
+        if c == ord("3"):
+            yoffset += 0        # TODO
+        else:
+            xoffset += 0        # TODO
+            advance += 0        # TODO
+        descr2["chars"][c] = ((x, y), (width, height), (xoffset, yoffset), advance)
+    descr2["chars"].update(descr1["chars"])
+    write(descr2, sys.stdout)
+
 if __name__ == "__main__":
     if sys.argv[0].endswith("make_cpp_inc"):
         make_cpp_inc()
@@ -104,3 +122,5 @@ if __name__ == "__main__":
         transpose_descr()
     elif sys.argv[0].endswith("combine_glyphs"):
         combine_glyphs()
+    elif sys.argv[0].endswith("combine_descrs"):
+        combine_descrs()
