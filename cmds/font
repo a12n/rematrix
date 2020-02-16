@@ -45,7 +45,7 @@ def write(descr, f):
     print("common lineHeight={} base={} scaleW={} scaleH={} pages={}".format(descr["lineHeight"], descr["base"], descr["scaleW"], descr["scaleH"], 1), file=f)
     print("page id={}".format(1), file=f)
     print("chars count={}".format(len(descr["chars"])), file=f)
-    for c, ((x, y), (width, height), (xoffset, yoffset), advance) in descr["chars"].items():
+    for c, ((x, y), (width, height), (xoffset, yoffset), advance) in sorted(descr["chars"].items()):
         print("char id={} x={} y={} width={} height={} xoffset={} yoffset={} xadvance={} page={}".format(c, x, y, width, height, xoffset, yoffset, advance, 0))
 
 def make_cpp_inc():
