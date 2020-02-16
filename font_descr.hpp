@@ -45,16 +45,16 @@ struct glyph_descr
 struct font_descr
 {
     array<float, 8>
-    coords(char c) const
+    coords(char16_t c) const
     {
         return glyphs.at(c).coords(image_size);
     }
 
-    pair<vector<float>, unordered_map<char, uintptr_t>>
+    pair<vector<float>, unordered_map<char16_t, uintptr_t>>
     coords_data() const
     {
         vector<float> coords;
-        unordered_map<char, uintptr_t> offsets;
+        unordered_map<char16_t, uintptr_t> offsets;
 
         for (const auto [c, g] : glyphs) {
             const auto off = coords.size() * sizeof(float);
@@ -86,7 +86,7 @@ struct font_descr
     advance(string_view s) const
     {
         float ans{0.0f};
-        for (const char c : s) {
+        for (const char16_t c : s) {
             ans += glyphs.at(c).advance / static_cast<float>(line_height);
         }
         return ans;
@@ -96,11 +96,11 @@ struct font_descr
     // position (2 floats) and texture coordinates (2 floats), for
     // GL_TRIANGLE_STRIP rendering. Returns mapping of characters to
     // vertex indices for glDrawArrays.
-    pair<vector<float>, unordered_map<char, unsigned int>>
+    pair<vector<float>, unordered_map<char16_t, unsigned int>>
     buffer_data() const
     {
         vector<float> ans;
-        unordered_map<char, unsigned int> indices;
+        unordered_map<char16_t, unsigned int> indices;
 
         for (const auto [c, g] : glyphs) {
             const auto off = ans.size() / 4;
@@ -123,7 +123,7 @@ struct font_descr
     const array<short, 2> spacing{0, 0};
     const unsigned short line_height{0};
     const unsigned short base{0};
-    const unordered_map<char, glyph_descr> glyphs;
+    const unordered_map<char16_t, glyph_descr> glyphs;
 };
 
 } // namespace rematrix
