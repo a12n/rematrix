@@ -228,11 +228,22 @@ init(const array<unsigned int, 2>& window_size)
 
         // Keep list of known glyph indices
 
-        // XXX: index for space glyph must be at index 0 in the glyph_indices array
-        // for (const auto [c, j] : i) {
-        for (const char c : {' ', 'A', 'C', 'G', 'T'}) {
-            const auto j = i.at(c);
-            glyph_indices.push_back(j);
+        for (const auto [c, j] : i) {
+            // Binary
+            // if (c == ' ' || c == '0' || c == '1')
+            // DNA
+            // if (c == ' ' || c == 'A' || c == 'C' || c == 'G' || c == 'T')
+            // Decimal
+            // if (c == ' ' || (c >= '0' && c <= '9'))
+            // Hexadecimal
+            // if (c == ' ' || (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F'))
+            // Matrix encoding
+            if (c == ' ' || c == '1' || c == '7' || c == '0' || c == 'Z' ||
+                c == ':' || c == '.' || c == '"' || c == '=' || c == '*' || c == '+' || c == '-' || c == 166 || c == '|' ||
+                c > 256)
+            {
+                glyph_indices.push_back(j);
+            }
         }
     }
 
