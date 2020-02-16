@@ -69,17 +69,17 @@ struct font_descr
     array<float, 8>
     position(const glyph_descr& g) const
     {
-        const auto lh{static_cast<float>(line_height)};
+        const auto fs{static_cast<float>(font_size)};
 
         const auto x1{-g.advance / 2.0f + g.offset[0]};
-        const auto y1{lh / 2.0f - g.offset[1]};
+        const auto y1{fs / 2.0f - g.offset[1]};
         const auto x2{x1 + g.size[0]};
         const auto y2{y1 - g.size[1]};
 
-        return {{ x1 / lh, y1 / lh,
-                  x2 / lh, y1 / lh,
-                  x1 / lh, y2 / lh,
-                  x2 / lh, y2 / lh }};
+        return {{ x1 / fs, y1 / fs,
+                  x2 / fs, y1 / fs,
+                  x1 / fs, y2 / fs,
+                  x2 / fs, y2 / fs }};
     }
 
     float
