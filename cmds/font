@@ -118,6 +118,11 @@ def image_size():
     img = Image.open(sys.argv[1])
     print(",".join(map(str, img.size)))
 
+def dump_image_inc():
+    from PIL import Image
+    for pixel in Image.open(sys.argv[1]).getdata():
+        print(pixel, ",")
+
 if __name__ == "__main__":
     if sys.argv[0].endswith("make_cpp_inc"):
         make_cpp_inc()
@@ -131,3 +136,5 @@ if __name__ == "__main__":
         combine_descrs()
     elif sys.argv[0].endswith("image_size"):
         image_size()
+    elif sys.argv[0].endswith("dump_image_inc"):
+        dump_image_inc()
