@@ -27,8 +27,6 @@ include_directories(${GLEW_INCLUDE_DIRS})
 find_path(GLM_INCLUDE_DIR glm/glm.hpp)
 include_directories(${GLM_INCLUDE_DIR})
 
-find_package(ImageMagick COMPONENTS convert identify REQUIRED)
-
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 #------------------------------------------------------------------------------
@@ -72,7 +70,7 @@ install(TARGETS rematrix DESTINATION bin)
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font_image_size.inc
-  COMMAND ${ImageMagick_identify_EXECUTABLE} -format "%w, %h" ${PROJECT_SOURCE_DIR}/data/font.png > ${PROJECT_BINARY_DIR}/font_image_size.inc
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-image_size ${PROJECT_SOURCE_DIR}/data/font.png > ${PROJECT_BINARY_DIR}/font_image_size.inc
   DEPENDS ${PROJECT_SOURCE_DIR}/data/font.png
   VERBATIM
   )
@@ -94,16 +92,9 @@ add_custom_command(
   )
 
 add_custom_command(
-  OUTPUT ${PROJECT_BINARY_DIR}/font.raw
-  COMMAND ${ImageMagick_convert_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/font.png -depth 8 gray:${PROJECT_BINARY_DIR}/font.raw
-  DEPENDS ${PROJECT_SOURCE_DIR}/data/font.png
-  VERBATIM
-  )
-
-add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font_image_data.inc
-  COMMAND od -v -A n -t u1 -w1 ${PROJECT_BINARY_DIR}/font.raw | sed "s/^ *//;s/\$/,/" > ${PROJECT_BINARY_DIR}/font_image_data.inc
-  DEPENDS ${PROJECT_BINARY_DIR}/font.raw
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-dump_image_inc ${PROJECT_SOURCE_DIR}/data/font.png > ${PROJECT_BINARY_DIR}/font_image_data.inc
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/font.png
   VERBATIM
   )
 
