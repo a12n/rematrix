@@ -113,6 +113,11 @@ def combine_descrs():
     descr2["chars"].update(descr1["chars"])
     write(descr2, sys.stdout)
 
+def image_size():
+    from PIL import Image
+    img = Image.open(sys.argv[1])
+    print(",".join(map(str, img.size)))
+
 if __name__ == "__main__":
     if sys.argv[0].endswith("make_cpp_inc"):
         make_cpp_inc()
@@ -124,3 +129,5 @@ if __name__ == "__main__":
         combine_glyphs()
     elif sys.argv[0].endswith("combine_descrs"):
         combine_descrs()
+    elif sys.argv[0].endswith("image_size"):
+        image_size()
