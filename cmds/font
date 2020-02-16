@@ -85,6 +85,16 @@ def transpose_descr():
         del(descr["chars"][cold])
     write(descr, sys.stdout)
 
+def combine_glyphs():
+    from PIL import Image
+    in1 = Image.open(sys.argv[1])
+    in2 = Image.open(sys.argv[2])
+    assert(in1.size == in2.size)
+    out = Image.new("L", (in1.size[0] + in2.size[0], in1.size[1]))
+    out.paste(in1, (0, 0))
+    out.paste(in2, (in1.size[0], 0))
+    out.save(sys.argv[3])
+
 if __name__ == "__main__":
     if sys.argv[0].endswith("make_cpp_inc"):
         make_cpp_inc()
@@ -92,3 +102,5 @@ if __name__ == "__main__":
         transpose_glyphs()
     elif sys.argv[0].endswith("transpose_descr"):
         transpose_descr()
+    elif sys.argv[0].endswith("combine_glyphs"):
+        combine_glyphs()
