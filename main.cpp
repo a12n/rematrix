@@ -76,6 +76,10 @@ struct strip
         spin_accum = 0.0f;
         spin_after = max(normal_distribution{1.0f, 0.3f}(rand), 0.001f);
 
+        wave_pos = 0;
+        wave_accum = 0.0f;
+        wave_after = max(normal_distribution{1.5f}(rand), 0.001f);
+
         for (auto& [index, spin] : chars) {
             if (bernoulli_distribution{7.0f / 8.0f}(rand)) {
                 spin = bernoulli_distribution{1.0f / 20.0f}(rand);
@@ -121,6 +125,14 @@ struct strip
                     index = glyph_indices[glyph_indices_distr(rand)];
                     spin = bernoulli_distribution{799.0f / 800.0f}(rand);
                 }
+            }
+        }
+
+        wave_accum += dt.count();
+        if (wave_accum >= wave_after) {
+            wave_after = 0.0f;
+            if (++wave_pos >= wave_size) {
+                wave_pos = 0;
             }
         }
     }
