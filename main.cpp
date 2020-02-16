@@ -69,7 +69,7 @@ struct strip
         erasing = false;
 
         feeder_char = glyph_indices[glyph_indices_distr(rand)];
-        feeder_y = 0.0f;
+        feeder_pos = 0.0f;
         feeder_speed = max(normal_distribution{3.0f}(rand), 0.001f);
 
         spin_accum = 0.0f;
@@ -97,14 +97,14 @@ struct strip
             return;
         }
 
-        feeder_y += feeder_speed * dt.count();
-        if (feeder_y >= grid_size) {
+        feeder_pos += feeder_speed * dt.count();
+        if (feeder_pos >= grid_size) {
             if (erasing) {
                 reset();
                 return;
             } else {
                 erasing = true;
-                feeder_y = 0.0f;
+                feeder_pos = 0.0f;
                 feeder_speed /= 2.0f;
             }
         }
@@ -129,9 +129,9 @@ struct strip
     {
         prog->set_uniform(is_feeder_uniform, false);
         prog->set_uniform(is_erasing_uniform, erasing);
-        prog->set_uniform(feeder_pos_uniform, feeder_y);
+        prog->set_uniform(feeder_pos_uniform, feeder_pos);
         for (unsigned int i{0}; i < chars.size(); ++i) {
-            bool below{feeder_y > i};
+            bool below{feeder_pos > i};
 
             if (erasing) {
                 below = ! below;
@@ -145,7 +145,7 @@ struct strip
         }
 
         if (! erasing) {
-            prog->set_uniform(model_uniform, translate(mat4(1.0f), {position[0], position[1] - feeder_y, position[2]}));
+            prog->set_uniform(model_uniform, translate(mat4(1.0f), {position[0], position[1] - feeder_pos, position[2]}));
             prog->set_uniform(is_feeder_uniform, true);
             render_glyph(feeder_char);
         }
@@ -157,7 +157,7 @@ struct strip
     bool erasing;
 
     unsigned int feeder_char;
-    float feeder_y;
+    float feeder_pos;
     float feeder_speed;
 
     array<pair<unsigned int, bool>, grid_size> chars;
