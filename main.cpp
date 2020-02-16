@@ -74,7 +74,7 @@ struct strip
         feeder_speed = max(normal_distribution{2.0f}(rand), 0.001f);
 
         spin_accum = 0.0f;
-        spin_after = max(normal_distribution{1.0f, 0.3f}(rand), 0.001f);
+        spin_after = max(normal_distribution{0.25f, 0.1f}(rand), 0.001f);
 
         wave_pos = 0;
         wave_accum = 0.0f;
