@@ -52,6 +52,7 @@ struct strip
     static constexpr unsigned int grid_size{70};
     static constexpr unsigned int grid_depth{35};
     static constexpr float splash_ratio{0.7f};
+    static constexpr unsigned int wave_size{22};
 
     void
     reset()
@@ -164,6 +165,10 @@ struct strip
 
     float spin_accum;
     float spin_after;
+
+    unsigned int wave_pos;
+    float wave_accum;
+    float wave_after;
 };
 
 vector<strip> strips;
