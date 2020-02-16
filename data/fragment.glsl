@@ -5,13 +5,13 @@ in float fragDepth;
 
 uniform sampler2D sdfTex;
 uniform vec3 fillColor = vec3(0x45 / 255.0, 0x85 / 255.0, 0x88 / 255.0);
-uniform bool isFeeder = false;
 
 const vec3 feederColor = vec3(0x83 / 255.0, 0xa5 / 255.0, 0x98 / 255.0);
 
-uniform float feederPos = 0.0;
 uniform int charPos = 1;
+uniform float feederPos = 0.0;
 uniform bool isErasing = false;
+uniform bool isFeeder = false;
 
 void
 main()
