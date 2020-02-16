@@ -78,7 +78,7 @@ struct strip
 
         wave_pos = 0;
         wave_accum = 0.0f;
-        wave_after = max(normal_distribution{1.5f}(rand), 0.001f);
+        wave_after = max(normal_distribution{1.0f, 0.3f}(rand), 0.001f);
 
         for (auto& [index, spin] : chars) {
             if (bernoulli_distribution{7.0f / 8.0f}(rand)) {
