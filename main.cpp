@@ -78,11 +78,11 @@ struct strip
 
         for (auto& [index, spin] : chars) {
             if (bernoulli_distribution{7.0f / 8.0f}(rand)) {
+                spin = bernoulli_distribution{1.0f / 20.0f}(rand);
                 index = glyph_indices[glyph_indices_distr(rand)];
             } else {
                 index = glyph_indices[0];
             }
-            spin = bernoulli_distribution{1.0 / 20.0}(rand);
         }
     }
 
