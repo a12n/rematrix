@@ -116,9 +116,10 @@ struct strip
 
         spin_accum += dt.count();
         if (spin_accum >= spin_after) {
+            spin_accum = 0.0f;
+
             uniform_int_distribution<unsigned long> glyph_indices_distr{1, glyph_indices.size() - 1};
 
-            spin_accum = 0.0f;
             feeder_char = glyph_indices[glyph_indices_distr(rand)];
             for (auto& [index, spin] : chars) {
                 if (spin) {
