@@ -27,6 +27,7 @@ GLint char_pos_uniform{-1};
 GLint feeder_pos_uniform{-1};
 GLint is_erasing_uniform{-1};
 GLint is_feeder_uniform{-1};
+GLint wave_pos_uniform{-1};
 
 minstd_rand rand{0};
 
@@ -144,6 +145,7 @@ struct strip
         prog->set_uniform(is_feeder_uniform, false);
         prog->set_uniform(is_erasing_uniform, erasing);
         prog->set_uniform(feeder_pos_uniform, feeder_pos);
+        prog->set_uniform(wave_pos_uniform, static_cast<int>(wave_pos));
         for (unsigned int i{0}; i < chars.size(); ++i) {
             bool below{feeder_pos > i};
 
@@ -215,6 +217,7 @@ init(const array<unsigned int, 2>& window_size)
     feeder_pos_uniform = prog->uniform_location("feederPos");
     is_erasing_uniform = prog->uniform_location("isErasing");
     is_feeder_uniform = prog->uniform_location("isFeeder");
+    wave_pos_uniform = prog->uniform_location("wavePos");
 
     {
         const auto ar = static_cast<float>(window_size[0]) / static_cast<float>(window_size[1]);
