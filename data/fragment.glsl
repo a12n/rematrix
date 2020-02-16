@@ -22,7 +22,8 @@ main()
     float alpha = clamp(d + 0.5, 0.0, 1.0);
     // gl_FragColor = vec4(fillColor, min(alpha + 0.5, 1.0));
     float splashFactor = smoothstep(24, 23, fragDepth);
+    float fogFactor = 0.2 + ((fragDepth / 35) + 0.5) * 0.8;
     float eraseFactor = isErasing ? smoothstep(0, -1, feederPos - charPos) : 1;
     float appearFactor = isErasing ? 1 : smoothstep(0, 1, feederPos - charPos);
-    gl_FragColor = vec4(isFeeder ? feederColor : fillColor, eraseFactor * splashFactor * alpha);
+    gl_FragColor = fogFactor * vec4(isFeeder ? feederColor : fillColor, eraseFactor * splashFactor * alpha);
 }
