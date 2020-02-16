@@ -70,8 +70,8 @@ install(TARGETS rematrix DESTINATION bin)
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font_image_size.inc
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-image_size ${PROJECT_SOURCE_DIR}/data/font.png > ${PROJECT_BINARY_DIR}/font_image_size.inc
-  DEPENDS ${PROJECT_SOURCE_DIR}/data/font.png
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-image_size ${PROJECT_BINARY_DIR}/font.png > ${PROJECT_BINARY_DIR}/font_image_size.inc
+  DEPENDS ${PROJECT_BINARY_DIR}/font.png
   VERBATIM
   )
 
