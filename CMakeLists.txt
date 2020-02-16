@@ -86,15 +86,15 @@ endforeach()
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font.inc
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-make_cpp_inc < ${PROJECT_SOURCE_DIR}/data/font.fnt > ${PROJECT_BINARY_DIR}/font.inc
-  DEPENDS ${PROJECT_SOURCE_DIR}/data/font.fnt
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-make_cpp_inc < ${PROJECT_BINARY_DIR}/font.fnt > ${PROJECT_BINARY_DIR}/font.inc
+  DEPENDS ${PROJECT_BINARY_DIR}/font.fnt
   VERBATIM
   )
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font_image_data.inc
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-dump_image_inc ${PROJECT_SOURCE_DIR}/data/font.png > ${PROJECT_BINARY_DIR}/font_image_data.inc
-  DEPENDS ${PROJECT_SOURCE_DIR}/data/font.png
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-dump_image_inc ${PROJECT_BINARY_DIR}/font.png > ${PROJECT_BINARY_DIR}/font_image_data.inc
+  DEPENDS ${PROJECT_BINARY_DIR}/font.png
   VERBATIM
   )
 
