@@ -88,7 +88,7 @@ endforeach()
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font.inc
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font_descr < ${PROJECT_SOURCE_DIR}/data/font.fnt > ${PROJECT_BINARY_DIR}/font.inc
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-make_cpp_inc < ${PROJECT_SOURCE_DIR}/data/font.fnt > ${PROJECT_BINARY_DIR}/font.inc
   DEPENDS ${PROJECT_SOURCE_DIR}/data/font.fnt
   VERBATIM
   )
