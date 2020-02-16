@@ -112,6 +112,20 @@ add_custom_command(
   VERBATIM
   )
 
+add_custom_command(
+  OUTPUT ${PROJECT_BINARY_DIR}/font.png
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-combine_glyphs ${PROJECT_SOURCE_DIR}/data/font1.png ${PROJECT_BINARY_DIR}/font2.png ${PROJECT_BINARY_DIR}/font.png
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/font1.png ${PROJECT_BINARY_DIR}/font2.png
+  VERBATIM
+  )
+
+add_custom_command(
+  OUTPUT ${PROJECT_BINARY_DIR}/font.fnt
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font-combine_descrs ${PROJECT_SOURCE_DIR}/data/font1.fnt ${PROJECT_BINARY_DIR}/font2.fnt > ${PROJECT_BINARY_DIR}/font.fnt
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/font1.fnt ${PROJECT_BINARY_DIR}/font2.fnt
+  VERBATIM
+  )
+
 add_custom_target(
   resources_inc
   DEPENDS
