@@ -155,13 +155,13 @@ struct strip
 
             if (below) {
                 prog->set_uniform(char_pos_uniform, static_cast<int>(i));
-                prog->set_uniform(model_uniform, translate(mat4(1.0f), {position[0], position[1] - i, position[2]}));
+                prog->set_uniform(model_uniform, translate({position[0], position[1] - i, position[2]}));
                 render_glyph(chars[i].first);
             }
         }
 
         if (! erasing) {
-            prog->set_uniform(model_uniform, translate(mat4(1.0f), {position[0], position[1] - feeder_pos, position[2]}));
+            prog->set_uniform(model_uniform, translate({position[0], position[1] - feeder_pos, position[2]}));
             prog->set_uniform(is_feeder_uniform, true);
             render_glyph(feeder_char);
         }
@@ -222,7 +222,7 @@ init(const array<unsigned int, 2>& window_size)
     {
         const auto ar = static_cast<float>(window_size[0]) / static_cast<float>(window_size[1]);
         prog->set_uniform(projection_uniform, perspective(radians(80.0f), ar, 0.1f, 100.0f));
-        prog->set_uniform(view_uniform, translate(mat4(1.0f), {0.0f, 0.0f, -25.0f}));
+        prog->set_uniform(view_uniform, translate({0.0f, 0.0f, -25.0f}));
     }
 
     // Make vertex buffer
