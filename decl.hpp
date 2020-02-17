@@ -20,7 +20,6 @@ using std::array;
 using std::begin;
 using std::bernoulli_distribution;
 using std::chrono::duration;
-using std::chrono::duration_cast;
 using std::chrono::milliseconds;
 using std::chrono::steady_clock;
 using std::end;
