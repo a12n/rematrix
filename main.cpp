@@ -208,7 +208,7 @@ vector<strip> strips;
 //----------------------------------------------------------------------------
 
 void
-init(const array<unsigned int, 2>& window_size)
+init(const options& opts, const array<unsigned int, 2>& window_size)
 {
     if (auto status{glewInit()}; status != GLEW_OK) {
         throw runtime_error(reinterpret_cast<const char*>(glewGetErrorString(status)));
@@ -292,10 +292,7 @@ init(const array<unsigned int, 2>& window_size)
     // Other GL init
 
     glViewport(0, 0, window_size[0], window_size[1]);
-    glClearColor(static_cast<double>(0x28) / 255,
-                 static_cast<double>(0x28) / 255,
-                 static_cast<double>(0x28) / 255,
-                 1.0);
+    glClearColor(opts.clear_color[0], opts.clear_color[1], opts.clear_color[2], 1.0);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -338,7 +335,7 @@ main(int argc, char* argv[])
         const options opts{parse_options(argc, argv)};
         frame_interval = milliseconds{1'000 / opts.frame_rate};
         ctx = make_unique<rendering_context>();
-        init(ctx->window_size());
+        init(opts, ctx->window_size());
     }
 
     auto frame_tick{steady_clock::now()};
