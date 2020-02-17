@@ -29,7 +29,14 @@ main()
     // gl_FragColor = vec4(charColor, min(alpha + 0.5, 1.0));
     float splashFactor = smoothstep(24, 23, fragDepth);
     float fogFactor = enableFog ? 0.2 + ((fragDepth / 35) + 0.5) * 0.8 : 1;
+    float waveFactor;
+    if (enableWave && ! isFeeder) {
+        int waveFactorI = (charPos + (70 - wavePos)) % 22;
+        waveFactor = 0.5 + 0.5 * sin((waveFactorI / (22.0 - 1.0)) * (PI / 2));
+    } else {
+        waveFactor = 1;
+    }
     float eraseFactor = isErasing ? smoothstep(0, -1, feederPos - charPos) : 1;
     float appearFactor = isErasing ? 1 : smoothstep(0, 1, feederPos - charPos);
-    gl_FragColor = fogFactor * vec4(isFeeder ? 1.5 * feederColor : charColor, eraseFactor * splashFactor * alpha);
+    gl_FragColor = waveFactor * fogFactor * vec4(isFeeder ? 1.5 * feederColor : charColor, eraseFactor * splashFactor * alpha);
 }
