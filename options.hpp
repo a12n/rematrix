@@ -25,11 +25,7 @@ struct options
 };
 
 options
-parse_options(int argc, char* argv[])
-{
-    // TODO
-    return {};
-}
+parse_options(int argc, char* argv[]);
 
 } // namespace rematrix
 
