@@ -362,11 +362,11 @@ main(int argc, char* argv[])
 
     while (true) {
         this_thread::sleep_until(frame_tick += frame_interval);
-        update(frame_interval);
         if (! ctx->window_obscured()) {
+            update(frame_interval);
             render();
-            ctx->swap_buffers();
         }
+        ctx->swap_buffers();
     }
 
     return 0;
