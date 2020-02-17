@@ -271,23 +271,39 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
 
         // Keep list of known glyph indices
 
-        for (const auto [c, j] : i) {
-            // Binary
-            // if (c == ' ' || c == '0' || c == '1')
-            // DNA
-            // if (c == ' ' || c == 'A' || c == 'C' || c == 'G' || c == 'T')
-            // Decimal
-            // if (c == ' ' || (c >= '0' && c <= '9'))
-            // Hexadecimal
-            // if (c == ' ' || (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F'))
-            // Matrix encoding
-            if (c == ' ' || c == '1' || c == '7' || c == '0' || c == 'Z' ||
-                c == ':' || c == '.' || c == '"' || c == '=' || c == '*' || c == '+' || c == '-' || c == 166 || c == '|' ||
-                c > 256)
-            {
-                glyph_indices.push_back(j);
+        glyph_indices.push_back(i.at(' '));
+        switch (opts.mode) {
+        case options::binary :
+            for (const char16_t c : string_view{"01"}) {
+                glyph_indices.push_back(i.at(c));
             }
-        }
+            break;
+        case options::decimal :
+            for (const char16_t c : string_view{"0123456789"}) {
+                glyph_indices.push_back(i.at(c));
+            }
+            break;
+        case options::hexadecimal :
+            for (const char16_t c : string_view{"0123456789ABCDEF"}) {
+                glyph_indices.push_back(i.at(c));
+            }
+            break;
+        case options::matrix :
+            for (const auto [c, j] : i) {
+                if (c == '1' || c == '7' || c == '0' || c == 'Z' ||
+                    c == ':' || c == '.' || c == '"' || c == '=' || c == '*' || c == '+' || c == '-' || c == 166 || c == '|' ||
+                    c > 256)
+                {
+                    glyph_indices.push_back(j);
+                }
+            }
+            break;
+        case options::dna :
+            for (const char16_t c : string_view{"ACGT"}) {
+                glyph_indices.push_back(i.at(c));
+            }
+            break;
+        };
     }
 
     // Load font texture
