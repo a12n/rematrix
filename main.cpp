@@ -55,36 +55,12 @@ public:
     void
     reset()
     {
-        uniform_int_distribution<unsigned long> glyph_indices_distr{1, glyph_indices.size() - 1};
-
-        position[0] = uniform_real_distribution{-(grid_size / 2.0f), grid_size / 2.0f}(rand);
-        position[1] = normal_distribution{grid_size / 2.0f}(rand);
-        position[2] = uniform_real_distribution{-(grid_depth * 0.5f), grid_depth * 0.2f}(rand);
-
-        velocity[0] = 0.0f;
-        velocity[1] = 0.0f;
-        velocity[2] = max(normal_distribution{0.8f, 0.01f}(rand), 0.001f);
-
-        erasing = false;
-
-        feeder_char = glyph_indices[glyph_indices_distr(rand)];
-        feeder_pos = 0.0f;
-        feeder_speed = max(normal_distribution{2.0f}(rand), 0.1f);
-
-        spin_accum = 0.0f;
-        spin_after = max(normal_distribution{0.25f, 0.1f}(rand), 0.1f);
-
-        wave_pos = 0;
-        wave_accum = 0.0f;
-        wave_after = max(normal_distribution{1.0f, 0.3f}(rand), 0.1f);
-
+        internal_reset();
+        erasing = true;
+        feeder_pos = uniform_real_distribution{0.0f, static_cast<float>(grid_size)}(rand);
         for (auto& [index, spin] : chars) {
-            if (bernoulli_distribution{7.0f / 8.0f}(rand)) {
-                spin = bernoulli_distribution{1.0f / 20.0f}(rand);
-                index = glyph_indices[glyph_indices_distr(rand)];
-            } else {
-                index = glyph_indices[0];
-            }
+            index = glyph_indices[0];
+            spin = false;
         }
     }
 
@@ -96,14 +72,14 @@ public:
         position[2] += velocity[2] * dt.count();
 
         if (position[2] > splash_ratio * grid_depth) {
-            reset();
+            internal_reset();
             return;
         }
 
         feeder_pos += feeder_speed * dt.count();
         if (feeder_pos >= grid_size) {
             if (erasing) {
-                reset();
+                internal_reset();
                 return;
             } else {
                 erasing = true;
@@ -169,6 +145,43 @@ private:
     static constexpr unsigned int grid_depth{35};
     static constexpr float splash_ratio{0.7f};
     static constexpr unsigned int wave_size{22};
+
+    void
+    internal_reset()
+    {
+        uniform_int_distribution<unsigned long> glyph_indices_distr{1, glyph_indices.size() - 1};
+
+        position[0] = uniform_real_distribution{-(grid_size / 2.0f), grid_size / 2.0f}(rand);
+        position[1] = normal_distribution{grid_size / 2.0f}(rand);
+        position[2] = uniform_real_distribution{-(grid_depth * 0.5f), grid_depth * 0.2f}(rand);
+
+        velocity[0] = 0.0f;
+        velocity[1] = 0.0f;
+        velocity[2] = max(normal_distribution{0.8f, 0.01f}(rand), 0.001f);
+
+        erasing = false;
+
+        feeder_char = glyph_indices[glyph_indices_distr(rand)];
+        feeder_pos = 0.0f;
+        feeder_speed = max(normal_distribution{2.0f}(rand), 0.1f);
+
+        spin_accum = 0.0f;
+        spin_after = max(normal_distribution{0.25f, 0.1f}(rand), 0.05f);
+
+        wave_pos = 0;
+        wave_accum = 0.0f;
+        wave_after = max(normal_distribution{1.0f, 0.3f}(rand), 0.1f);
+
+        for (auto& [index, spin] : chars) {
+            if (bernoulli_distribution{7.0f / 8.0f}(rand)) {
+                spin = bernoulli_distribution{1.0f / 20.0f}(rand);
+                index = glyph_indices[glyph_indices_distr(rand)];
+            } else {
+                index = glyph_indices[0];
+            }
+        }
+    }
+
 
     array<float, 3> position;
     array<float, 3> velocity;
