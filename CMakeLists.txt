@@ -39,7 +39,6 @@ add_executable(
   resources.cpp
   shader.cpp
   texture.cpp
-  vertex_array.cpp
   )
 
 add_dependencies(
