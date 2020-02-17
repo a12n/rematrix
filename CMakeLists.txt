@@ -24,9 +24,6 @@ include_directories(${OPENGL_INCLUDE_DIR})
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIRS})
 
-find_path(GLM_INCLUDE_DIR glm/glm.hpp)
-include_directories(${GLM_INCLUDE_DIR})
-
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 #------------------------------------------------------------------------------
