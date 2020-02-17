@@ -40,16 +40,6 @@ struct vertex_buffer : buffer
     bind();
 };
 
-//----------------------------------------------------------------------------
-
-struct element_buffer : buffer
-{
-    element_buffer(const void* data, GLsizeiptr size, GLenum usage = GL_STATIC_DRAW);
-
-    void
-    bind();
-};
-
 } // namespace rematrix
 
 #endif  // REMATRIX_BUFFER_HPP
