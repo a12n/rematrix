@@ -17,8 +17,6 @@ unique_ptr<vertex_buffer> vertex_buf;
 unique_ptr<texture> tex;
 
 GLint model_uniform{-1};
-GLint projection_uniform{-1};
-GLint view_uniform{-1};
 
 GLint char_pos_uniform{-1};
 GLint feeder_pos_uniform{-1};
@@ -202,6 +200,9 @@ init(const array<unsigned int, 2>& window_size)
 
     GLint position_attrib{-1};
     GLint tex_coord_attrib{-1};
+
+    GLint projection_uniform{-1};
+    GLint view_uniform{-1};
 
     prog = make_unique<program>(vertex_shader{vertex_src}, fragment_shader{fragment_src});
     prog->use();
