@@ -12,7 +12,7 @@ uniform int charPos = 1;
 uniform float feederPos = 0.0;
 uniform bool isErasing = false;
 uniform bool isFeeder = false;
-uniform float wavePos = 0.0;
+uniform int wavePos = 0;
 
 void
 main()
