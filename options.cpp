@@ -44,7 +44,7 @@ parse_options(int argc, char* argv[])
     options ans;
 
     int opt{-1};
-    while ((opt = getopt(argc, argv, "c:f:l:")) != -1) {
+    while ((opt = getopt(argc, argv, "c:f:l:m:")) != -1) {
         switch (opt) {
         case 'c' :
             ans.char_color = parse_color(optarg);
@@ -55,11 +55,30 @@ parse_options(int argc, char* argv[])
         case 'l' :
             ans.clear_color = parse_color(optarg);
             break;
+        case 'm' :
+        {
+            const string_view s{optarg};
+            if (s == "bin" || s == "binary") {
+                ans.mode = options::binary;
+            } else if (s == "dna") {
+                ans.mode = options::dna;
+            } else if (s == "dec" || s == "decimal") {
+                ans.mode = options::decimal;
+            } else if (s == "hex" || s == "hexadecimal") {
+                ans.mode = options::hexadecimal;
+            } else if (s == "matrix") {
+                ans.mode = options::matrix;
+            } else {
+                throw runtime_error("invalid mode");
+            }
+        }
+        break;
         default :
             cerr << "Usage: " << argv[0]
                  << " [-c char_color]"
                  << " [-f feeder_color]"
                  << " [-l clear_color]"
+                 << " [-m binary|dna|decimal|hexadecimal|matrix]"
                  << endl;
             exit(EXIT_FAILURE);
             break;
