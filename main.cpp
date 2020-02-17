@@ -278,6 +278,11 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
                 glyph_indices.push_back(i.at(c));
             }
             break;
+        case options::dna :
+            for (const char16_t c : string_view{"ACGT"}) {
+                glyph_indices.push_back(i.at(c));
+            }
+            break;
         case options::decimal :
             for (const char16_t c : string_view{"0123456789"}) {
                 glyph_indices.push_back(i.at(c));
@@ -296,11 +301,6 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
                 {
                     glyph_indices.push_back(j);
                 }
-            }
-            break;
-        case options::dna :
-            for (const char16_t c : string_view{"ACGT"}) {
-                glyph_indices.push_back(i.at(c));
             }
             break;
         };
