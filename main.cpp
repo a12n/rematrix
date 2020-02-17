@@ -221,7 +221,7 @@ init(const array<unsigned int, 2>& window_size)
     wave_pos_uniform = prog->uniform_location("wavePos");
 
     {
-        const auto ar = static_cast<float>(window_size[0]) / static_cast<float>(window_size[1]);
+        const auto ar{static_cast<float>(window_size[0]) / static_cast<float>(window_size[1])};
         prog->set_uniform(projection_uniform, perspective(radians(80.0f), ar, 0.1f, 100.0f));
         prog->set_uniform(view_uniform, translate({0.0f, 0.0f, -25.0f}));
     }
