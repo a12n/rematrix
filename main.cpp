@@ -219,21 +219,10 @@ init(const array<unsigned int, 2>& window_size)
 
     // Build GLSL program
 
-    GLint position_attrib{-1};
-    GLint tex_coord_attrib{-1};
-
-    GLint projection_uniform{-1};
-    GLint view_uniform{-1};
-
     prog = make_unique<program>(vertex_shader{vertex_src}, fragment_shader{fragment_src});
     prog->use();
 
-    position_attrib = prog->attrib_location("position");
-    tex_coord_attrib = prog->attrib_location("texCoord");
-
     model_uniform = prog->uniform_location("model");
-    projection_uniform = prog->uniform_location("projection");
-    view_uniform = prog->uniform_location("view");
 
     char_pos_uniform = prog->uniform_location("charPos");
     feeder_pos_uniform = prog->uniform_location("feederPos");
@@ -243,6 +232,8 @@ init(const array<unsigned int, 2>& window_size)
 
     {
         const auto ar{static_cast<float>(window_size[0]) / static_cast<float>(window_size[1])};
+        const auto projection_uniform{prog->uniform_location("projection")};
+        const auto view_uniform{prog->uniform_location("view")};
         prog->set_uniform(projection_uniform, perspective(radians(80.0f), ar, 0.1f, 100.0f));
         prog->set_uniform(view_uniform, translate({0.0f, 0.0f, -25.0f}));
     }
@@ -256,6 +247,9 @@ init(const array<unsigned int, 2>& window_size)
 
         vertex_buf = make_unique<vertex_buffer>(v.data(), v.size() * sizeof(float));
         vertex_buf->bind();
+
+        const auto position_attrib{prog->attrib_location("position")};
+        const auto tex_coord_attrib{prog->attrib_location("texCoord")};
 
         glVertexAttribPointer(position_attrib,
                               2, GL_FLOAT, GL_FALSE,
