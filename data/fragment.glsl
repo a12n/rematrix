@@ -8,6 +8,9 @@ uniform sampler2D sdfTex;
 uniform vec3 charColor = vec3(0x45 / 255.0, 0x85 / 255.0, 0x88 / 255.0);
 uniform vec3 feederColor = vec3(0x83 / 255.0, 0xa5 / 255.0, 0x98 / 255.0);
 
+uniform bool enableWave = true;
+uniform bool enableFog = true;
+
 uniform int charPos = 1;
 uniform float feederPos = 0.0;
 uniform bool isErasing = false;
@@ -23,7 +26,7 @@ main()
     float alpha = clamp(d + 0.5, 0.0, 1.0);
     // gl_FragColor = vec4(charColor, min(alpha + 0.5, 1.0));
     float splashFactor = smoothstep(24, 23, fragDepth);
-    float fogFactor = 0.2 + ((fragDepth / 35) + 0.5) * 0.8;
+    float fogFactor = enableFog ? 0.2 + ((fragDepth / 35) + 0.5) * 0.8 : 1;
     float eraseFactor = isErasing ? smoothstep(0, -1, feederPos - charPos) : 1;
     float appearFactor = isErasing ? 1 : smoothstep(0, 1, feederPos - charPos);
     gl_FragColor = fogFactor * vec4(isFeeder ? 1.5 * feederColor : charColor, eraseFactor * splashFactor * alpha);
