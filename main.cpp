@@ -43,12 +43,9 @@ render_glyph(unsigned int index)
 
 //----------------------------------------------------------------------------
 
-struct strip
+class strip
 {
-    static constexpr unsigned int grid_size{70};
-    static constexpr unsigned int grid_depth{35};
-    static constexpr float splash_ratio{0.7f};
-    static constexpr unsigned int wave_size{22};
+public:
 
     void
     reset()
@@ -161,6 +158,12 @@ struct strip
             render_glyph(feeder_char);
         }
     }
+
+private:
+    static constexpr unsigned int grid_size{70};
+    static constexpr unsigned int grid_depth{35};
+    static constexpr float splash_ratio{0.7f};
+    static constexpr unsigned int wave_size{22};
 
     array<float, 3> position;
     array<float, 3> velocity;
