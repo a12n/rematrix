@@ -5,11 +5,10 @@ in float fragDepth;
 
 uniform sampler2D sdfTex;
 
-uniform vec3 charColor = vec3(0x45 / 255.0, 0x85 / 255.0, 0x88 / 255.0);
-uniform vec3 feederColor = vec3(0x83 / 255.0, 0xa5 / 255.0, 0x98 / 255.0);
-
-uniform bool enableWave = true;
 uniform bool enableFog = false;
+uniform bool enableWaves = true;
+uniform vec3 charColor = vec3(0, 1, 0);
+uniform vec3 feederColor = vec3(0, 0, 1);
 
 uniform int charPos = 1;
 uniform float feederPos = 0.0;
@@ -30,7 +29,7 @@ main()
     float splashFactor = smoothstep(24, 23, fragDepth);
     float fogFactor = enableFog ? 0.2 + ((fragDepth / 35) + 0.5) * 0.8 : 1;
     float waveFactor;
-    if (enableWave && ! isFeeder) {
+    if (enableWaves && ! isFeeder) {
         int waveFactorI = (charPos + (70 - wavePos)) % 22;
         waveFactor = 0.5 + 0.5 * sin((waveFactorI / (22.0 - 1.0)) * (PI / 2));
     } else {
