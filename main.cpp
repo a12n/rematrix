@@ -183,7 +183,6 @@ private:
         }
     }
 
-
     array<float, 3> position;
     array<float, 3> velocity;
 
