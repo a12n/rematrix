@@ -45,28 +45,6 @@ struct glyph_descr
 struct font_descr
 {
     array<float, 8>
-    coords(char16_t c) const
-    {
-        return glyphs.at(c).coords(image_size);
-    }
-
-    pair<vector<float>, unordered_map<char16_t, uintptr_t>>
-    coords_data() const
-    {
-        vector<float> coords;
-        unordered_map<char16_t, uintptr_t> offsets;
-
-        for (const auto [c, g] : glyphs) {
-            const auto off = coords.size() * sizeof(float);
-            offsets.insert(make_pair(c, off));
-            const auto uv = g.coords(image_size);
-            coords.insert(end(coords), begin(uv), end(uv));
-        }
-
-        return make_pair(coords, offsets);
-    }
-
-    array<float, 8>
     position(const glyph_descr& g) const
     {
         const auto fs{static_cast<float>(font_size)};
@@ -80,16 +58,6 @@ struct font_descr
                   x2 / fs, y1 / fs,
                   x1 / fs, y2 / fs,
                   x2 / fs, y2 / fs }};
-    }
-
-    float
-    advance(string_view s) const
-    {
-        float ans{0.0f};
-        for (const char16_t c : s) {
-            ans += glyphs.at(c).advance / static_cast<float>(line_height);
-        }
-        return ans;
     }
 
     // Generate vertex buffer contents with interleaved vertex
