@@ -34,6 +34,7 @@ using std::pair;
 using std::remove_pointer_t;
 using std::runtime_error;
 using std::sort;
+using std::stoul;
 using std::string;
 using std::string_view;
 using std::uniform_int_distribution;
