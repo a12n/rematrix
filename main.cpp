@@ -239,6 +239,11 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
         prog->set_uniform(view_uniform, translate({0.0f, 0.0f, -25.0f}));
     }
 
+    prog->set_uniform(prog->uniform_location("charColor"), opts.char_color);
+    prog->set_uniform(prog->uniform_location("enableFog"), opts.enable_fog);
+    prog->set_uniform(prog->uniform_location("enableWaves"), opts.enable_waves);
+    prog->set_uniform(prog->uniform_location("feederColor"), opts.feeder_color);
+
     // Make vertex buffer
 
     {
