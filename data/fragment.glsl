@@ -9,7 +9,7 @@ uniform vec3 charColor = vec3(0x45 / 255.0, 0x85 / 255.0, 0x88 / 255.0);
 uniform vec3 feederColor = vec3(0x83 / 255.0, 0xa5 / 255.0, 0x98 / 255.0);
 
 uniform bool enableWave = true;
-uniform bool enableFog = true;
+uniform bool enableFog = false;
 
 uniform int charPos = 1;
 uniform float feederPos = 0.0;
