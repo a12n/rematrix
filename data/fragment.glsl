@@ -17,6 +17,8 @@ uniform bool isErasing = false;
 uniform bool isFeeder = false;
 uniform int wavePos = 0;
 
+const float PI = asin(1) * 2;
+
 void
 main()
 {
