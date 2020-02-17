@@ -44,7 +44,7 @@ parse_options(int argc, char* argv[])
     options ans;
 
     int opt{-1};
-    while ((opt = getopt(argc, argv, "c:f:l:m:ow")) != -1) {
+    while ((opt = getopt(argc, argv, "c:f:l:m:owr:")) != -1) {
         switch (opt) {
         case 'c' :
             ans.char_color = parse_color(optarg);
@@ -79,6 +79,12 @@ parse_options(int argc, char* argv[])
         case 'w' :
             ans.enable_waves = ! ans.enable_waves;
             break;
+        case 'r' :
+            ans.frame_rate = stoul(optarg, nullptr);
+            if (ans.frame_rate > 30) {
+                throw runtime_error("invalid frame rate");
+            }
+            break;
         default :
             cerr << "Usage: " << argv[0]
                  << " [-c char_color]"
@@ -87,6 +93,7 @@ parse_options(int argc, char* argv[])
                  << " [-m binary|dna|decimal|hexadecimal|matrix]"
                  << " [-o]"
                  << " [-w]"
+                 << " [-r frame-rate]"
                  << endl;
             exit(EXIT_FAILURE);
             break;
