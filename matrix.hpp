@@ -1,25 +1,44 @@
 #ifndef REMATRIX_MATRIX_HPP
 #define REMATRIX_MATRIX_HPP
 
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_projection.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/mat4x4.hpp>
-#include <glm/trigonometric.hpp>
-#include <glm/vec3.hpp>
-#include <glm/vec4.hpp>
+#include <cmath>
+
+#include "decl.hpp"
 
 namespace rematrix {
 
-using glm::vec3;
-using glm::vec4;
-using glm::mat4;
+using vec3 = array<float, 3>;
+using vec4 = array<float, 4>;
+using mat4 = array<vec4, 4>;
 
-using glm::perspective;
-using glm::radians;
-using glm::rotate;
-using glm::scale;
-using glm::translate;
+constexpr float
+radians(float degrees)
+{
+    return degrees * M_PI / 180.0f;
+}
+
+constexpr mat4
+translate(const vec3& v)
+{
+    return {
+        { { 1.0f, 0.0f, 0.0f, 0.0f},
+          { 0.0f, 1.0f, 0.0f, 0.0f},
+          { 0.0f, 0.0f, 1.0f, 0.0f},
+          { v[0], v[1], v[2], 1.0f} }
+    };
+}
+
+inline mat4
+perspective(float fovy, float aspect, float near, float far)
+{
+    const float tan_half_fovy{tanf(fovy / 2.0f)};
+    return {
+        { {1.0f / (aspect * tan_half_fovy), 0.0f, 0.0f, 0.0f},
+          {0.0f, 1.0f / tan_half_fovy, 0.0f, 0.0f},
+          {0.0f, 0.0f, -(far + near) / (far - near), -1.0f},
+          {0.0f, 0.0f, -(2.0f * far * near) / (far - near), 1.0f} }
+    };
+}
 
 } // namespace rematrix
 
