@@ -46,6 +46,11 @@ render_glyph(unsigned int index)
 class strip
 {
 public:
+    bool
+    operator<(const strip& other) const
+    {
+        return position[2] < other.position[2];
+    }
 
     void
     reset()
@@ -307,7 +312,7 @@ void
 render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    sort(strips.begin(), strips.end(), [] (const strip& a, const strip& b) { return a.position[2] < b.position[2]; });
+    sort(strips.begin(), strips.end());
     for (const strip& s : strips) {
         s.render();
     }
