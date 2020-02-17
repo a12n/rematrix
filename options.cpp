@@ -44,7 +44,7 @@ parse_options(int argc, char* argv[])
     options ans;
 
     int opt{-1};
-    while ((opt = getopt(argc, argv, "c:f:l:m:")) != -1) {
+    while ((opt = getopt(argc, argv, "c:f:l:m:ow")) != -1) {
         switch (opt) {
         case 'c' :
             ans.char_color = parse_color(optarg);
@@ -73,12 +73,20 @@ parse_options(int argc, char* argv[])
             }
         }
         break;
+        case 'o' :
+            ans.enable_fog = ! ans.enable_fog;
+            break;
+        case 'w' :
+            ans.enable_waves = ! ans.enable_waves;
+            break;
         default :
             cerr << "Usage: " << argv[0]
                  << " [-c char_color]"
                  << " [-f feeder_color]"
                  << " [-l clear_color]"
                  << " [-m binary|dna|decimal|hexadecimal|matrix]"
+                 << " [-o]"
+                 << " [-w]"
                  << endl;
             exit(EXIT_FAILURE);
             break;
