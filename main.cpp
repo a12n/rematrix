@@ -2,6 +2,7 @@
 
 #include "buffer.hpp"
 #include "matrix.hpp"
+#include "options.hpp"
 #include "program.hpp"
 #include "rendering_context.hpp"
 #include "resources.hpp"
@@ -328,22 +329,26 @@ render()
 } // namespace
 
 int
-main()
+main(int argc, char* argv[])
 {
-    rendering_context ctx;
+    milliseconds frame_interval{1'000 / 30};
+    unique_ptr<rendering_context> ctx;
 
-    init(ctx.window_size());
+    {
+        const options opts{parse_options(argc, argv)};
+        frame_interval = milliseconds{1'000 / opts.frame_rate};
+        ctx = make_unique<rendering_context>();
+        init(ctx->window_size());
+    }
 
-    constexpr unsigned int frame_rate{5};
-    constexpr milliseconds frame_interval{1'000 / frame_rate};
     auto frame_tick{steady_clock::now()};
 
     while (true) {
         this_thread::sleep_until(frame_tick += frame_interval);
         update(frame_interval);
-        if (! ctx.window_obscured()) {
+        if (! ctx->window_obscured()) {
             render();
-            ctx.swap_buffers();
+            ctx->swap_buffers();
         }
     }
 
