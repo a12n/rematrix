@@ -46,9 +46,13 @@ using std::vector;
 class rendering_context;
 struct buffer;
 struct element_buffer;
+struct font_descr;
 struct fragment_shader;
+struct glyph_descr;
+struct options;
 struct program;
 struct shader;
+struct texture;
 struct vertex_buffer;
 struct vertex_shader;
 
