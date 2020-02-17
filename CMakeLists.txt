@@ -33,6 +33,7 @@ add_executable(
   rematrix
   buffer.cpp
   main.cpp
+  options.cpp
   program.cpp
   rendering_context.cpp
   resources.cpp
