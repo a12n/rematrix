@@ -11,7 +11,7 @@ struct texture
 {
     texture();
 
-    texture(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels);
+    texture(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels = nullptr);
 
     texture(const texture&) = delete;
 
@@ -26,7 +26,7 @@ struct texture
     operator=(texture&& other) noexcept;
 
     void
-    load(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels);
+    load(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels = nullptr);
 
     void
     bind();
