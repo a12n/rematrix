@@ -31,7 +31,7 @@ translate(const vec3& v)
 inline mat4
 perspective(float fovy, float aspect, float near, float far)
 {
-    const float tan_half_fovy{tanf(fovy / 2.0f)};
+    const auto tan_half_fovy{tanf(fovy / 2.0f)};
     return {
         { {1.0f / (aspect * tan_half_fovy), 0.0f, 0.0f, 0.0f},
           {0.0f, 1.0f / tan_half_fovy, 0.0f, 0.0f},
