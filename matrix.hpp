@@ -11,6 +11,13 @@ using vec3 = array<float, 3>;
 using vec4 = array<float, 4>;
 using mat4 = array<vec4, 4>;
 
+inline const mat4 identity{
+    { { 1.0f, 0.0f, 0.0f, 0.0f },
+      { 0.0f, 1.0f, 0.0f, 0.0f },
+      { 0.0f, 0.0f, 1.0f, 0.0f },
+      { 0.0f, 0.0f, 0.0f, 1.0f } }
+};
+
 constexpr float
 radians(float degrees)
 {
