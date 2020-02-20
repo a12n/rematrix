@@ -28,6 +28,12 @@ struct texture
     void
     load(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels);
 
+    void
+    bind();
+
+    void
+    unbind();
+
     const GLuint id{0};
 };
 

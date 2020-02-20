@@ -38,7 +38,7 @@ texture::operator=(texture&& other) noexcept
 void
 texture::load(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels)
 {
-    glBindTexture(GL_TEXTURE_2D, id);
+    bind();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -50,6 +50,18 @@ texture::load(GLint internal_format, GLsizei width, GLsizei height, GLenum forma
         format, type,             // external format, type
         pixels                    // pixels
         );
+}
+
+void
+texture::bind()
+{
+    glBindTexture(GL_TEXTURE_2D, id);
+}
+
+void
+texture::unbind()
+{
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 } // namespace rematrix
