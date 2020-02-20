@@ -24,8 +24,8 @@ struct glyph_descr
     coords(array<unsigned short, 2> image_size) const
     {
         const auto [u1, w1, u2, w2, u3, w3, u4, w4] = coords();
-        const float w = static_cast<float>(image_size[0]);
-        const float h = static_cast<float>(image_size[1]);
+        const auto w{static_cast<float>(image_size[0])};
+        const auto h{static_cast<float>(image_size[1])};
         return {{ static_cast<float>(u1) / w,
                   static_cast<float>(w1) / h,
                   static_cast<float>(u2) / w,
