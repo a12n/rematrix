@@ -79,7 +79,7 @@ struct font_descr
                                       x2, y2, u2, v2,
                                       x3, y3, u3, v3,
                                       x4, y4, u4, v4};
-            ans.insert(end(ans), begin(interleaved), end(interleaved));
+            ans.insert(end(ans), cbegin(interleaved), cend(interleaved));
         }
 
         return make_pair(ans, indices);
