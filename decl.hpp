@@ -19,6 +19,8 @@ namespace this_thread = std::this_thread;
 using std::array;
 using std::begin;
 using std::bernoulli_distribution;
+using std::cbegin;
+using std::cend;
 using std::chrono::duration;
 using std::chrono::milliseconds;
 using std::chrono::steady_clock;
