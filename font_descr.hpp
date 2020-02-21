@@ -9,7 +9,7 @@ struct glyph_descr
 {
     // Image coordinates of the glyph in triangle strip order.
     constexpr array<unsigned short, 8>
-    coords() const
+    coords() const noexcept
     {
         const auto [x, y] = pos;
         const auto [w, h] = size;
