@@ -3,6 +3,8 @@
 
 #include <GL/glew.h>
 
+#include "decl.hpp"
+
 namespace rematrix {
 
 struct frame_buffer
@@ -26,6 +28,9 @@ struct frame_buffer
 
     void
     unbind();
+
+    void
+    draw_buffers(initializer_list<GLenum> bufs);
 
     void
     attach(GLenum point, GLuint texture_id);

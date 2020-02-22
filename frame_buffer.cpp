@@ -43,6 +43,13 @@ frame_buffer::unbind()
 }
 
 void
+frame_buffer::draw_buffers(initializer_list<GLenum> bufs)
+{
+    const vector<GLenum> bufs2{bufs};
+    glDrawBuffers(bufs2.size(), bufs2.data());
+}
+
+void
 frame_buffer::attach(GLenum point, GLuint texture_id)
 {
     glFramebufferTexture2D(GL_FRAMEBUFFER,
