@@ -61,6 +61,12 @@ program::use()
     glUseProgram(id);
 }
 
+void
+program::bind_frag_data_location(GLuint color_number, const char *name)
+{
+    glBindFragDataLocation(id, color_number, name);
+}
+
 GLint
 program::attrib_location(const GLchar* name) const
 {

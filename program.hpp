@@ -32,6 +32,9 @@ struct program
     void
     use();
 
+    void
+    bind_frag_data_location(GLuint color_number, const char* name);
+
     GLint
     attrib_location(const GLchar* name) const;
 
