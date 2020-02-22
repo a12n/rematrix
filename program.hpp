@@ -33,6 +33,9 @@ struct program
     use();
 
     void
+    bind_attrib_location(GLuint index, const char* name);
+
+    void
     bind_frag_data_location(GLuint color_number, const char* name);
 
     GLint
