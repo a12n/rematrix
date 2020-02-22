@@ -100,6 +100,12 @@ program::set_uniform(GLint location, GLfloat x)
 }
 
 void
+program::set_uniform(GLint location, GLint i1, GLint i2)
+{
+    glUniform2i(location, i1, i2);
+}
+
+void
 program::set_uniform(GLint location, const vec3& v)
 {
     glUniform3fv(location, 1, &v[0]);

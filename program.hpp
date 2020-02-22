@@ -48,6 +48,9 @@ struct program
     set_uniform(GLint location, GLfloat x);
 
     void
+    set_uniform(GLint location, GLint i1, GLint i2);
+
+    void
     set_uniform(GLint location, const vec3& v);
 
     void
