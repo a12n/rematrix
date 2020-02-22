@@ -339,7 +339,7 @@ void
 render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    sort(strips.begin(), strips.end());
+    sort(begin(strips), end(strips));
     for (const strip& s : strips) {
         s.render();
     }
