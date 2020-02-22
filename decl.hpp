@@ -26,6 +26,7 @@ using std::chrono::milliseconds;
 using std::chrono::steady_clock;
 using std::end;
 using std::function;
+using std::initializer_list;
 using std::make_pair;
 using std::make_unique;
 using std::max;
