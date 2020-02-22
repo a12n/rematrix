@@ -68,8 +68,6 @@ rendering_context::choose_fb_config(int screen) const
     const int attrs[] = {
         GLX_DOUBLEBUFFER, True,
         GLX_X_RENDERABLE, True,
-        GLX_SAMPLE_BUFFERS, 1,
-        GLX_SAMPLES, 4,
         None
     };
 
