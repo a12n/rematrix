@@ -29,8 +29,8 @@ minstd_rand rand{0};
 
 vector<unsigned int> glyph_indices;
 
-constexpr auto position_attrib{0};
-constexpr auto tex_coord_attrib{1};
+constexpr GLuint position_attrib{0};
+constexpr GLuint tex_coord_attrib{1};
 
 void
 render_glyph(unsigned int index)
