@@ -5,7 +5,7 @@ in float fragDepth;
 
 out vec4 fragColor;
 
-uniform sampler2D sdfTex;
+uniform sampler2D fontTex;
 
 uniform bool enableFog = false;
 uniform bool enableWaves = true;
@@ -23,7 +23,7 @@ const float PI = asin(1) * 2;
 void
 main()
 {
-    float s = texture(sdfTex, fragTexCoord).r;
+    float s = texture(fontTex, fragTexCoord).r;
     float c = 1.0 / fwidth(s);
     float d = (s - 0.5) * c;
     float alpha = clamp(d + 0.5, 0.0, 1.0);
