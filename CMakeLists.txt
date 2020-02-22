@@ -34,6 +34,7 @@ add_executable(
   buffer.cpp
   main.cpp
   options.cpp
+  frame_buffer.cpp
   program.cpp
   rendering_context.cpp
   resources.cpp
