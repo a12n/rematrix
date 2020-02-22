@@ -219,7 +219,7 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
 
     // Build GLSL program
 
-    prog = make_unique<program>(vertex_shader{vertex_src}, fragment_shader{fragment_src});
+    prog = make_unique<program>(vertex_shader{vertex_src}, fragment_shader{frag_src});
     prog->use();
 
     model_uniform = prog->uniform_location("model");

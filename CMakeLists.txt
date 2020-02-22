@@ -74,7 +74,7 @@ add_custom_command(
   VERBATIM
   )
 
-foreach(SHADER vertex fragment)
+foreach(SHADER vertex frag)
   add_custom_command(
     OUTPUT ${PROJECT_BINARY_DIR}/${SHADER}_src.inc
     COMMAND sh -c "echo 'R\"('; cat ${PROJECT_SOURCE_DIR}/data/${SHADER}.glsl; echo ')\"'" > ${PROJECT_BINARY_DIR}/${SHADER}_src.inc
@@ -131,6 +131,6 @@ add_custom_target(
   ${PROJECT_BINARY_DIR}/font.inc
   ${PROJECT_BINARY_DIR}/font_image_data.inc
   ${PROJECT_BINARY_DIR}/font_image_size.inc
-  ${PROJECT_BINARY_DIR}/fragment_src.inc
+  ${PROJECT_BINARY_DIR}/frag_src.inc
   ${PROJECT_BINARY_DIR}/vertex_src.inc
   )

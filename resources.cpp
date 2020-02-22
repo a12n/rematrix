@@ -6,8 +6,8 @@ const char vertex_src[] =
 #include "vertex_src.inc"
     ;
 
-const char fragment_src[] =
-#include "fragment_src.inc"
+const char frag_src[] =
+#include "frag_src.inc"
     ;
 
 const array<unsigned short, 2> font_image_size{
