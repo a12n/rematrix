@@ -3,6 +3,8 @@
 in vec2 fragTexCoord;
 in float fragDepth;
 
+out vec4 outColor;
+
 uniform sampler2D sdfTex;
 
 uniform bool enableFog = false;
@@ -25,7 +27,7 @@ main()
     float c = 1.0 / fwidth(s);
     float d = (s - 0.5) * c;
     float alpha = clamp(d + 0.5, 0.0, 1.0);
-    // gl_FragColor = vec4(charColor, min(alpha + 0.5, 1.0));
+    // outColor = vec4(charColor, min(alpha + 0.5, 1.0));
     float splashFactor = smoothstep(24, 23, fragDepth);
     float fogFactor = enableFog ? 0.2 + ((fragDepth / 35) + 0.5) * 0.8 : 1;
     float waveFactor;
@@ -37,5 +39,5 @@ main()
     }
     float eraseFactor = isErasing ? smoothstep(0, -1, feederPos - charPos) : 1;
     float appearFactor = isErasing ? 1 : smoothstep(0, 1, feederPos - charPos);
-    gl_FragColor = waveFactor * fogFactor * vec4(isFeeder ? feederColor : charColor, eraseFactor * splashFactor * alpha);
+    outColor = waveFactor * fogFactor * vec4(isFeeder ? feederColor : charColor, eraseFactor * splashFactor * alpha);
 }

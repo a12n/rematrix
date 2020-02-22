@@ -230,6 +230,8 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
     is_feeder_uniform = prog->uniform_location("isFeeder");
     wave_pos_uniform = prog->uniform_location("wavePos");
 
+    prog->bind_frag_data_location(0, "outColor");
+
     {
         const auto ar{static_cast<float>(window_size[0]) / static_cast<float>(window_size[1])};
         const auto projection_uniform{prog->uniform_location("projection")};
