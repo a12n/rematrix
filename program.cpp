@@ -88,7 +88,10 @@ program::uniform_location(const GLchar* name) const
 {
     auto ans{glGetUniformLocation(id, name)};
     if (ans == -1) {
-        throw runtime_error("couldn't locate a uniform in program");
+        string msg{"couldn't locate \""};
+        msg += name;
+        msg += "\" uniform in program";
+        throw runtime_error(msg);
     }
     return ans;
 }
