@@ -36,4 +36,10 @@ vertex_array::bind()
     glBindVertexArray(id);
 }
 
+void
+vertex_array::unbind()
+{
+    glBindVertexArray(0);
+}
+
 } // namespace rematrix

@@ -24,6 +24,9 @@ struct vertex_array
     void
     bind();
 
+    void
+    unbind();
+
     const GLuint id{0};
 };
 
