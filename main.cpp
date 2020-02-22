@@ -29,6 +29,9 @@ minstd_rand rand{0};
 
 vector<unsigned int> glyph_indices;
 
+constexpr auto position_attrib{0};
+constexpr auto tex_coord_attrib{1};
+
 void
 render_glyph(unsigned int index)
 {
@@ -219,7 +222,10 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
 
     // Build GLSL program
 
-    prog = make_unique<program>(vertex_shader{vertex_src}, fragment_shader{frag_src});
+    prog = make_unique<program>();
+    prog->bind_attrib_location(position_attrib, "position");
+    prog->bind_attrib_location(tex_coord_attrib, "texCoord");
+    prog->link(vertex_shader{vertex_src}, fragment_shader{frag_src});
     prog->use();
 
     model_uniform = prog->uniform_location("model");
@@ -254,9 +260,6 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
 
         vertex_buf = make_unique<vertex_buffer>(v.data(), v.size() * sizeof(float));
         vertex_buf->bind();
-
-        const auto position_attrib{prog->attrib_location("position")};
-        const auto tex_coord_attrib{prog->attrib_location("texCoord")};
 
         glVertexAttribPointer(position_attrib,
                               2, GL_FLOAT, GL_FALSE,
