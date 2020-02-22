@@ -14,7 +14,7 @@ using namespace rematrix;
 namespace {
 
 unique_ptr<program> prog;
-unique_ptr<vertex_buffer> vertex_buf;
+unique_ptr<vertex_buffer> font_vertex_buf;
 unique_ptr<texture> font_tex;
 
 GLint model_uniform{-1};
@@ -258,8 +258,8 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
 
         // Create and fill buffer
 
-        vertex_buf = make_unique<vertex_buffer>(v.data(), v.size() * sizeof(float));
-        vertex_buf->bind();
+        font_vertex_buf = make_unique<vertex_buffer>(v.data(), v.size() * sizeof(float));
+        font_vertex_buf->bind();
 
         glVertexAttribPointer(position_attrib,
                               2, GL_FLOAT, GL_FALSE,
