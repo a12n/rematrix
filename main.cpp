@@ -224,12 +224,24 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
 
     // Build GLSL program
 
+    const auto aspect{static_cast<float>(window_size[0]) / static_cast<float>(window_size[1])};
+
     prog = make_unique<program>();
     prog->bind_attrib_location(position_attrib, "position");
     prog->bind_attrib_location(tex_coord_attrib, "texCoord");
     prog->bind_frag_data_location(frag_color_attrib, "fragColor");
     prog->link(vertex_shader{vertex_src}, fragment_shader{frag_src});
     prog->use();
+
+
+    prog->set_uniform(prog->uniform_location("projection"), perspective(radians(80.0f), aspect, 0.1f, 100.0f));
+    prog->set_uniform(prog->uniform_location("view"), translate({0.0f, 0.0f, -25.0f}));
+
+
+    prog->set_uniform(prog->uniform_location("charColor"), opts.char_color);
+    prog->set_uniform(prog->uniform_location("enableFog"), opts.enable_fog);
+    prog->set_uniform(prog->uniform_location("enableWaves"), opts.enable_waves);
+    prog->set_uniform(prog->uniform_location("feederColor"), opts.feeder_color);
 
     model_uniform = prog->uniform_location("model");
 
@@ -238,21 +250,6 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
     is_erasing_uniform = prog->uniform_location("isErasing");
     is_feeder_uniform = prog->uniform_location("isFeeder");
     wave_pos_uniform = prog->uniform_location("wavePos");
-
-    prog->bind_frag_data_location(0, "outColor");
-
-    {
-        const auto ar{static_cast<float>(window_size[0]) / static_cast<float>(window_size[1])};
-        const auto projection_uniform{prog->uniform_location("projection")};
-        const auto view_uniform{prog->uniform_location("view")};
-        prog->set_uniform(projection_uniform, perspective(radians(80.0f), ar, 0.1f, 100.0f));
-        prog->set_uniform(view_uniform, translate({0.0f, 0.0f, -25.0f}));
-    }
-
-    prog->set_uniform(prog->uniform_location("charColor"), opts.char_color);
-    prog->set_uniform(prog->uniform_location("enableFog"), opts.enable_fog);
-    prog->set_uniform(prog->uniform_location("enableWaves"), opts.enable_waves);
-    prog->set_uniform(prog->uniform_location("feederColor"), opts.feeder_color);
 
     // Make vertex buffer
 
