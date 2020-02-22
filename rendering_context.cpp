@@ -66,6 +66,9 @@ GLXFBConfig
 rendering_context::choose_fb_config(int screen) const
 {
     const int attrs[] = {
+        GLX_RED_SIZE, 5,
+        GLX_GREEN_SIZE, 5,
+        GLX_BLUE_SIZE, 5,
         GLX_DOUBLEBUFFER, True,
         None
     };
