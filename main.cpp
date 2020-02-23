@@ -233,10 +233,8 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
     prog->link(vertex_shader{vertex_src}, fragment_shader{frag_src});
     prog->use();
 
-
     prog->set_uniform(prog->uniform_location("projection"), perspective(radians(80.0f), aspect, 0.1f, 100.0f));
     prog->set_uniform(prog->uniform_location("view"), translate({0.0f, 0.0f, -25.0f}));
-
 
     prog->set_uniform(prog->uniform_location("charColor"), opts.char_color);
     prog->set_uniform(prog->uniform_location("enableFog"), opts.enable_fog);
