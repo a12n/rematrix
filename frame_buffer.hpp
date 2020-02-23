@@ -11,14 +11,9 @@ struct frame_buffer
 {
     frame_buffer();
 
-    frame_buffer(const frame_buffer&) = delete;
-
     frame_buffer(frame_buffer&& other) noexcept;
 
     ~frame_buffer();
-
-    frame_buffer&
-    operator=(const frame_buffer&) = delete;
 
     frame_buffer&
     operator=(frame_buffer&& other) noexcept;

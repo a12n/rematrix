@@ -11,14 +11,9 @@ struct buffer
 {
     buffer(GLenum target, const void* data, GLsizeiptr size, GLenum usage = GL_STATIC_DRAW);
 
-    buffer(const buffer&) = delete;
-
     buffer(buffer&& other) noexcept;
 
     ~buffer();
-
-    buffer&
-    operator=(const buffer&) = delete;
 
     buffer&
     operator=(buffer&& other) noexcept;

@@ -14,14 +14,9 @@ struct program
 
     program(const vertex_shader& v, const fragment_shader& f);
 
-    program(const program&) = delete;
-
     program(program&& other) noexcept;
 
     ~program();
-
-    program&
-    operator=(const program&) = delete;
 
     program&
     operator=(program&& other) noexcept;

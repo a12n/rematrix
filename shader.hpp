@@ -11,14 +11,9 @@ struct shader
 {
     shader(GLenum type);
 
-    shader(const shader&) = delete;
-
     shader(shader&& other) noexcept;
 
     ~shader();
-
-    shader&
-    operator=(const shader&) = delete;
 
     shader&
     operator=(shader&& other) noexcept;

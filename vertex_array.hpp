@@ -9,14 +9,9 @@ struct vertex_array
 {
     vertex_array();
 
-    vertex_array(const vertex_array&) = delete;
-
     vertex_array(vertex_array&& other) noexcept;
 
     ~vertex_array();
-
-    vertex_array&
-    operator=(const vertex_array&) = delete;
 
     vertex_array&
     operator=(vertex_array&& other) noexcept;

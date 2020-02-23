@@ -13,14 +13,9 @@ struct texture
 
     texture(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels = nullptr);
 
-    texture(const texture&) = delete;
-
     texture(texture&& other) noexcept;
 
     ~texture();
-
-    texture&
-    operator=(const texture&) = delete;
 
     texture&
     operator=(texture&& other) noexcept;
