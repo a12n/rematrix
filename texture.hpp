@@ -27,7 +27,13 @@ struct texture
     bind();
 
     void
+    bind(GLenum unit);
+
+    void
     unbind();
+
+    void
+    unbind(GLenum unit);
 
     const GLuint id{0};
 };

@@ -59,9 +59,23 @@ texture::bind()
 }
 
 void
+texture::bind(GLenum unit)
+{
+    glActiveTexture(unit);
+    bind();
+}
+
+void
 texture::unbind()
 {
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void
+texture::unbind(GLenum unit)
+{
+    glActiveTexture(unit);
+    unbind();
 }
 
 } // namespace rematrix
