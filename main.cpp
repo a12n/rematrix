@@ -240,6 +240,7 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
     prog->set_uniform(prog->uniform_location("enableFog"), opts.enable_fog);
     prog->set_uniform(prog->uniform_location("enableWaves"), opts.enable_waves);
     prog->set_uniform(prog->uniform_location("feederColor"), opts.feeder_color);
+    prog->set_uniform(prog->uniform_location("fontTex"), static_cast<GLint>(0));
 
     model_uniform = prog->uniform_location("model");
 
