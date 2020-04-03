@@ -10,6 +10,14 @@ const char frag_src[] =
 #include "frag_src.inc"
     ;
 
+const char blur_vertex_src[] =
+#include "blur_vertex_src.inc"
+    ;
+
+const char blur_frag_src[] =
+#include "blur_frag_src.inc"
+    ;
+
 const array<unsigned short, 2> font_image_size{
 #include "font_image_size.inc"
 };
