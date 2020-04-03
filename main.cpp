@@ -19,6 +19,7 @@ unique_ptr<vertex_array> font_vertex_arr;
 unique_ptr<vertex_buffer> font_vertex_buf;
 unique_ptr<texture> font_tex;
 
+unique_ptr<program> blur_prog;
 unique_ptr<vertex_array> quad_vertex_arr;
 unique_ptr<vertex_buffer> quad_vertex_buf;
 
@@ -237,6 +238,17 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
     // Create post processing stuff
 
     {
+        // Blur program
+        blur_prog = make_unique<program>();
+        blur_prog->bind_attrib_location(position_attrib, "position");
+        blur_prog->bind_frag_data_location(frag_color_attrib, "fragColor");
+        blur_prog->link(vertex_shader{blur_vertex_src}, fragment_shader{blur_frag_src});
+        blur_prog->use();
+
+        blur_prog->set_uniform(blur_prog->uniform_location("targetSize"), window_size[0], window_size[1]);
+
+        blur_prog->set_uniform(blur_prog->uniform_location("tex"), static_cast<GLint>(0));
+
         // Quad vertex array
         quad_vertex_arr = make_unique<vertex_array>();
         quad_vertex_arr->bind();
