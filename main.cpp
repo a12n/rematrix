@@ -446,11 +446,42 @@ update(const duration<double>& dt)
 void
 render()
 {
+    // Render schene to color and bright textures
+
+    color_bright_fb->bind();
+    prog->use();
+    font_vertex_arr->bind();
+    font_tex->bind(GL_TEXTURE0);
+
     glClear(GL_COLOR_BUFFER_BIT);
     sort(begin(strips), end(strips));
     for (const strip& s : strips) {
         s.render();
     }
+
+    // Horizontal blur on bright texture
+    horiz_blur_fb->bind();
+    blur_prog->use();
+    quad_vertex_arr->bind();
+    bright_tex->bind();
+
+    blur_prog->set_uniform(is_horiz_uniform, true);
+    render_quad();
+
+    // Vertical blur on horizontal blur texture
+    vert_blur_fb->bind();
+    horiz_blur_tex->bind();
+
+    blur_prog->set_uniform(is_horiz_uniform, false);
+    render_quad();
+
+    // Combine color and vertical blur textures
+    vert_blur_fb->unbind();
+    combine_prog->use();
+    color_tex->bind(GL_TEXTURE0);
+    vert_blur_tex->bind(GL_TEXTURE1);
+
+    render_quad();
 }
 
 } // namespace
