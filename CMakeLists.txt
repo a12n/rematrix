@@ -74,7 +74,7 @@ add_custom_command(
   VERBATIM
   )
 
-foreach(SHADER blur_frag blur_vertex frag vertex)
+foreach(SHADER blur_frag blur_vertex combine_frag combine_vertex frag vertex)
   add_custom_command(
     OUTPUT ${PROJECT_BINARY_DIR}/${SHADER}_src.inc
     COMMAND sh -c "echo 'R\"('; cat ${PROJECT_SOURCE_DIR}/data/${SHADER}.glsl; echo ')\"'" > ${PROJECT_BINARY_DIR}/${SHADER}_src.inc
@@ -130,6 +130,8 @@ add_custom_target(
   DEPENDS
   ${PROJECT_BINARY_DIR}/blur_frag_src.inc
   ${PROJECT_BINARY_DIR}/blur_vertex_src.inc
+  ${PROJECT_BINARY_DIR}/combine_frag_src.inc
+  ${PROJECT_BINARY_DIR}/combine_vertex_src.inc
   ${PROJECT_BINARY_DIR}/font.inc
   ${PROJECT_BINARY_DIR}/font_image_data.inc
   ${PROJECT_BINARY_DIR}/font_image_size.inc
