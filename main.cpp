@@ -32,6 +32,8 @@ GLint is_erasing_uniform{-1};
 GLint is_feeder_uniform{-1};
 GLint wave_pos_uniform{-1};
 
+GLint is_horiz_uniform{-1};
+
 minstd_rand rand{0};
 
 vector<unsigned int> glyph_indices;
@@ -249,6 +251,8 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
         blur_prog->set_uniform(blur_prog->uniform_location("targetSize"), window_size[0], window_size[1]);
 
         blur_prog->set_uniform(blur_prog->uniform_location("tex"), static_cast<GLint>(0));
+
+        is_horiz_uniform = blur_prog->uniform_location("isHoriz");
 
         // Combine program
         combine_prog = make_unique<program>();
