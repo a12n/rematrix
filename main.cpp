@@ -53,6 +53,12 @@ render_glyph(unsigned int index)
     // glEnd();
 }
 
+void
+render_quad()
+{
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+
 //----------------------------------------------------------------------------
 
 class strip
