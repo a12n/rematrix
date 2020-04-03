@@ -33,6 +33,7 @@ constexpr GLuint position_attrib{0};
 constexpr GLuint tex_coord_attrib{1};
 
 constexpr GLuint frag_color_attrib{0};
+constexpr GLuint bright_color_attrib{1};
 
 void
 render_glyph(unsigned int index)
@@ -229,6 +230,7 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
     prog = make_unique<program>();
     prog->bind_attrib_location(position_attrib, "position");
     prog->bind_attrib_location(tex_coord_attrib, "texCoord");
+    prog->bind_frag_data_location(bright_color_attrib, "brightColor");
     prog->bind_frag_data_location(frag_color_attrib, "fragColor");
     prog->link(vertex_shader{vertex_src}, fragment_shader{frag_src});
     prog->use();
