@@ -11,6 +11,9 @@ extern const char frag_src[];
 extern const char blur_vertex_src[];
 extern const char blur_frag_src[];
 
+extern const char combine_vertex_src[];
+extern const char combine_frag_src[];
+
 extern const array<unsigned short, 2> font_image_size;
 extern const unsigned char font_image_data[];
 
