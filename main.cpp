@@ -23,6 +23,10 @@ unique_ptr<program> blur_prog;
 unique_ptr<program> combine_prog;
 unique_ptr<vertex_array> quad_vertex_arr;
 unique_ptr<vertex_buffer> quad_vertex_buf;
+unique_ptr<texture> bright_tex;
+unique_ptr<texture> color_tex;
+unique_ptr<texture> horiz_blur_tex;
+unique_ptr<texture> vert_blur_tex;
 
 GLint model_uniform{-1};
 
@@ -283,6 +287,12 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
                               0,
                               static_cast<const void*>(0));
         glEnableVertexAttribArray(position_attrib);
+
+        // Frame buffer textures
+        color_tex = make_unique<texture>(GL_RGB, window_size[0], window_size[1], GL_RGB, GL_UNSIGNED_BYTE);
+        bright_tex = make_unique<texture>(GL_RGB, window_size[0], window_size[1], GL_RGB, GL_UNSIGNED_BYTE);
+        horiz_blur_tex = make_unique<texture>(GL_RGB, window_size[0], window_size[1], GL_RGB, GL_UNSIGNED_BYTE);
+        vert_blur_tex = make_unique<texture>(GL_RGB, window_size[0], window_size[1], GL_RGB, GL_UNSIGNED_BYTE);
 
         quad_vertex_arr->unbind();
     }
