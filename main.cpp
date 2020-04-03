@@ -20,6 +20,7 @@ unique_ptr<vertex_buffer> font_vertex_buf;
 unique_ptr<texture> font_tex;
 
 unique_ptr<program> blur_prog;
+unique_ptr<program> combine_prog;
 unique_ptr<vertex_array> quad_vertex_arr;
 unique_ptr<vertex_buffer> quad_vertex_buf;
 
@@ -248,6 +249,16 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
         blur_prog->set_uniform(blur_prog->uniform_location("targetSize"), window_size[0], window_size[1]);
 
         blur_prog->set_uniform(blur_prog->uniform_location("tex"), static_cast<GLint>(0));
+
+        // Combine program
+        combine_prog = make_unique<program>();
+        combine_prog->bind_attrib_location(position_attrib, "position");
+        combine_prog->bind_frag_data_location(frag_color_attrib, "fragColor");
+        combine_prog->link(vertex_shader{combine_vertex_src}, fragment_shader{combine_frag_src});
+        combine_prog->use();
+
+        combine_prog->set_uniform(combine_prog->uniform_location("colorTex"), static_cast<GLint>(0));
+        combine_prog->set_uniform(combine_prog->uniform_location("highlightTex"), static_cast<GLint>(1));
 
         // Quad vertex array
         quad_vertex_arr = make_unique<vertex_array>();
