@@ -19,6 +19,9 @@ unique_ptr<vertex_array> font_vertex_arr;
 unique_ptr<vertex_buffer> font_vertex_buf;
 unique_ptr<texture> font_tex;
 
+unique_ptr<vertex_array> quad_vertex_arr;
+unique_ptr<vertex_buffer> quad_vertex_buf;
+
 GLint model_uniform{-1};
 
 GLint char_pos_uniform{-1};
@@ -223,6 +226,32 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
 
     if (! GLEW_VERSION_3_0) {
         throw runtime_error("OpenGL 3.0 required");
+    }
+
+    // Create post processing stuff
+
+    {
+        // Quad vertex array
+        quad_vertex_arr = make_unique<vertex_array>();
+        quad_vertex_arr->bind();
+
+        const float quad[] = {
+            -0.9f, -0.9f,
+             0.9f, -0.9f,
+            -0.9f,  0.9f,
+             0.9f,  0.9f,
+        };
+
+        quad_vertex_buf = make_unique<vertex_buffer>(quad, sizeof(quad));
+        quad_vertex_buf->bind();
+
+        glVertexAttribPointer(position_attrib,
+                              2, GL_FLOAT, GL_FALSE,
+                              0,
+                              static_cast<const void*>(0));
+        glEnableVertexAttribArray(position_attrib);
+
+        quad_vertex_arr->unbind();
     }
 
     // Build GLSL program
