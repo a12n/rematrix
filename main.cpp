@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 
 #include "buffer.hpp"
+#include "frame_buffer.hpp"
 #include "matrix.hpp"
 #include "options.hpp"
 #include "program.hpp"
@@ -27,6 +28,10 @@ unique_ptr<texture> bright_tex;
 unique_ptr<texture> color_tex;
 unique_ptr<texture> horiz_blur_tex;
 unique_ptr<texture> vert_blur_tex;
+
+unique_ptr<frame_buffer> color_bright_fb;
+unique_ptr<frame_buffer> horiz_blur_fb;
+unique_ptr<frame_buffer> vert_blur_fb;
 
 GLint model_uniform{-1};
 
@@ -293,6 +298,28 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
         bright_tex = make_unique<texture>(GL_RGB, window_size[0], window_size[1], GL_RGB, GL_UNSIGNED_BYTE);
         horiz_blur_tex = make_unique<texture>(GL_RGB, window_size[0], window_size[1], GL_RGB, GL_UNSIGNED_BYTE);
         vert_blur_tex = make_unique<texture>(GL_RGB, window_size[0], window_size[1], GL_RGB, GL_UNSIGNED_BYTE);
+
+        // Frame buffer for color and bright outputs
+        color_bright_fb = make_unique<frame_buffer>();
+        color_bright_fb->bind();
+        color_bright_fb->attach(GL_COLOR_ATTACHMENT0, color_tex->id);
+        color_bright_fb->attach(GL_COLOR_ATTACHMENT1, bright_tex->id);
+        color_bright_fb->draw_buffers({ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 });
+        color_bright_fb->check_complete();
+        color_bright_fb->unbind();
+
+        // Blur frame buffer
+        horiz_blur_fb = make_unique<frame_buffer>();
+        horiz_blur_fb->bind();
+        horiz_blur_fb->attach(GL_COLOR_ATTACHMENT0, horiz_blur_tex->id);
+        horiz_blur_fb->check_complete();
+        horiz_blur_fb->unbind();
+
+        vert_blur_fb = make_unique<frame_buffer>();
+        vert_blur_fb->bind();
+        vert_blur_fb->attach(GL_COLOR_ATTACHMENT0, vert_blur_tex->id);
+        vert_blur_fb->check_complete();
+        vert_blur_fb->unbind();
 
         quad_vertex_arr->unbind();
     }
