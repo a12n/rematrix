@@ -3,6 +3,7 @@
 in vec2 fragTexCoord;
 in float fragDepth;
 
+out vec4 brightColor;
 out vec4 fragColor;
 
 uniform sampler2D fontTex;
@@ -40,4 +41,10 @@ main()
     float eraseFactor = isErasing ? smoothstep(0, -1, feederPos - charPos) : 1;
     float appearFactor = isErasing ? 1 : smoothstep(0, 1, feederPos - charPos);
     fragColor = waveFactor * fogFactor * vec4(isFeeder ? feederColor : charColor, eraseFactor * splashFactor * alpha);
+    float brightness = dot(fragColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+    if (brightness > 0.45) {
+        brightColor = vec4(brightness, brightness, brightness, fragColor.a);
+    } else {
+        brightColor = vec4(0.0);
+    }
 }
