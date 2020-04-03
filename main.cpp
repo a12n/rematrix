@@ -8,12 +8,14 @@
 #include "resources.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
+#include "vertex_array.hpp"
 
 using namespace rematrix;
 
 namespace {
 
 unique_ptr<program> prog;
+unique_ptr<vertex_array> font_vertex_arr;
 unique_ptr<vertex_buffer> font_vertex_buf;
 unique_ptr<texture> font_tex;
 
@@ -253,6 +255,9 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
     wave_pos_uniform = prog->uniform_location("wavePos");
 
     // Make vertex buffer
+
+    font_vertex_arr = make_unique<vertex_array>();
+    font_vertex_arr->bind();
 
     {
         const auto [v, i] = font.buffer_data();
