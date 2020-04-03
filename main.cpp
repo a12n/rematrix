@@ -1,3 +1,5 @@
+#include <csignal>
+
 #include <GL/glew.h>
 
 #include "buffer.hpp"
@@ -347,6 +349,18 @@ render()
     }
 }
 
+//----------------------------------------------------------------------------
+
+volatile sig_atomic_t paused{0};
+
+void
+signal_handler(int sig) noexcept
+{
+    paused = (sig == SIGUSR1 ? true :
+              sig == SIGUSR2 ? false :
+              paused);
+}
+
 } // namespace
 
 int
@@ -362,11 +376,14 @@ main(int argc, char* argv[])
         init(opts, ctx->window_size());
     }
 
+    signal(SIGUSR1, signal_handler);
+    signal(SIGUSR2, signal_handler);
+
     auto frame_tick{steady_clock::now()};
 
     while (true) {
         this_thread::sleep_until(frame_tick += frame_interval);
-        if (! ctx->window_obscured()) {
+        if (! paused && ! ctx->window_obscured()) {
             update(frame_interval);
             render();
         }
