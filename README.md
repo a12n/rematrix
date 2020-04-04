@@ -65,7 +65,7 @@ graphics hardware and drivers.
 
 # Issues
 
-Orignal `glmatrix` has view rotations, which are missing in `rematrix`
+Original `glmatrix` has view rotations, which are missing in `rematrix`
 for now.
 
 It would probably look better with a bloom effect added (either as a
