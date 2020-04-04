@@ -62,3 +62,12 @@ make
 
 Support of modern OpenGL (version 3.0 or higher) is required in
 graphics hardware and drivers.
+
+# Issues
+
+Orignal `glmatrix` has view rotations, which are missing in `rematrix`
+for now.
+
+It would probably look better with a bloom effect added (either as a
+post-processing effect or somehow backed into font texture). The
+effect should be customizable with command line parameters.
