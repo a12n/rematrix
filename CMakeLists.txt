@@ -69,8 +69,8 @@ install(TARGETS rematrix DESTINATION bin)
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font_image_size.inc
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font image_size ${PROJECT_BINARY_DIR}/font.png > ${PROJECT_BINARY_DIR}/font_image_size.inc
-  DEPENDS ${PROJECT_BINARY_DIR}/font.png ${PROJECT_SOURCE_DIR}/cmds/font
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/procfont image_size ${PROJECT_BINARY_DIR}/font.png > ${PROJECT_BINARY_DIR}/font_image_size.inc
+  DEPENDS ${PROJECT_BINARY_DIR}/font.png ${PROJECT_SOURCE_DIR}/data/procfont
   VERBATIM
   )
 
@@ -85,43 +85,43 @@ endforeach()
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font.inc
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font make_cpp_inc < ${PROJECT_BINARY_DIR}/font.fnt > ${PROJECT_BINARY_DIR}/font.inc
-  DEPENDS ${PROJECT_BINARY_DIR}/font.fnt ${PROJECT_SOURCE_DIR}/cmds/font
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/procfont make_cpp_inc < ${PROJECT_BINARY_DIR}/font.fnt > ${PROJECT_BINARY_DIR}/font.inc
+  DEPENDS ${PROJECT_BINARY_DIR}/font.fnt ${PROJECT_SOURCE_DIR}/data/procfont
   VERBATIM
   )
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font_image_data.inc
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font dump_image_inc ${PROJECT_BINARY_DIR}/font.png > ${PROJECT_BINARY_DIR}/font_image_data.inc
-  DEPENDS ${PROJECT_BINARY_DIR}/font.png ${PROJECT_SOURCE_DIR}/cmds/font
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/procfont dump_image_inc ${PROJECT_BINARY_DIR}/font.png > ${PROJECT_BINARY_DIR}/font_image_data.inc
+  DEPENDS ${PROJECT_BINARY_DIR}/font.png ${PROJECT_SOURCE_DIR}/data/procfont
   VERBATIM
   )
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font2.png
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font transpose_glyphs ${PROJECT_SOURCE_DIR}/data/font2.png ${PROJECT_BINARY_DIR}/font2.png < ${PROJECT_SOURCE_DIR}/data/font2.fnt
-  DEPENDS ${PROJECT_SOURCE_DIR}/cmds/font ${PROJECT_SOURCE_DIR}/data/font2.fnt ${PROJECT_SOURCE_DIR}/data/font2.png
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/procfont transpose_glyphs ${PROJECT_SOURCE_DIR}/data/font2.png ${PROJECT_BINARY_DIR}/font2.png < ${PROJECT_SOURCE_DIR}/data/font2.fnt
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/procfont ${PROJECT_SOURCE_DIR}/data/font2.fnt ${PROJECT_SOURCE_DIR}/data/font2.png
   VERBATIM
   )
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font2.fnt
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font transpose_descr < ${PROJECT_SOURCE_DIR}/data/font2.fnt > ${PROJECT_BINARY_DIR}/font2.fnt
-  DEPENDS ${PROJECT_SOURCE_DIR}/cmds/font ${PROJECT_SOURCE_DIR}/data/font2.fnt
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/procfont transpose_descr < ${PROJECT_SOURCE_DIR}/data/font2.fnt > ${PROJECT_BINARY_DIR}/font2.fnt
+  DEPENDS ${PROJECT_SOURCE_DIR}/data/procfont ${PROJECT_SOURCE_DIR}/data/font2.fnt
   VERBATIM
   )
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font.png
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font combine_glyphs ${PROJECT_SOURCE_DIR}/data/font1.png ${PROJECT_BINARY_DIR}/font2.png ${PROJECT_BINARY_DIR}/font.png
-  DEPENDS ${PROJECT_BINARY_DIR}/font2.png ${PROJECT_SOURCE_DIR}/cmds/font ${PROJECT_SOURCE_DIR}/data/font1.png
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/procfont combine_glyphs ${PROJECT_SOURCE_DIR}/data/font1.png ${PROJECT_BINARY_DIR}/font2.png ${PROJECT_BINARY_DIR}/font.png
+  DEPENDS ${PROJECT_BINARY_DIR}/font2.png ${PROJECT_SOURCE_DIR}/data/procfont ${PROJECT_SOURCE_DIR}/data/font1.png
   VERBATIM
   )
 
 add_custom_command(
   OUTPUT ${PROJECT_BINARY_DIR}/font.fnt
-  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/cmds/font combine_descrs ${PROJECT_SOURCE_DIR}/data/font1.fnt ${PROJECT_BINARY_DIR}/font2.fnt > ${PROJECT_BINARY_DIR}/font.fnt
-  DEPENDS ${PROJECT_BINARY_DIR}/font2.fnt ${PROJECT_SOURCE_DIR}/cmds/font ${PROJECT_SOURCE_DIR}/data/font1.fnt
+  COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/data/procfont combine_descrs ${PROJECT_SOURCE_DIR}/data/font1.fnt ${PROJECT_BINARY_DIR}/font2.fnt > ${PROJECT_BINARY_DIR}/font.fnt
+  DEPENDS ${PROJECT_BINARY_DIR}/font2.fnt ${PROJECT_SOURCE_DIR}/data/procfont ${PROJECT_SOURCE_DIR}/data/font1.fnt
   VERBATIM
   )
 
