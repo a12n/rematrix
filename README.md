@@ -28,6 +28,27 @@ Colors may be customized:
 
 ![Black Matrix](images/black-matrix.png)
 
+# Usage
+
+There are the following command line parameters handled:
+
+  * `-c color` — color of characters in a strip.
+  * `-f color` — color of the feeder character at the bottom of each
+    strip.
+  * `-l color` — background color.
+  * `-m mode` — character encoding. The following modes are supported:
+    `binary` or `bin`, `dna`, `decimal` or `dec`, `hexadecimal` or
+    `hex`, `matrix`.
+  * `-o` — enable fog effect. If enabled, strips which are farther
+    from the screen will look darker.
+  * `-w` — disable brightness waves effect. If enabled, brightness of
+    characters in a strip changes in waves from top to bottom.
+  * `-r rate` — limit frame rate. `rematrix` will try to present a
+    frame `rate` times per second and will sleep between frames.
+
+`rematrix` handles `SIGUSR1` and `SIGUSR2` signals. It will pause
+rendering on receiving `SIGUSR1` and resume on receiving `SIGUSR2`.
+
 # Dependencies
 
 ## Build
