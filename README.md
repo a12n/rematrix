@@ -46,6 +46,8 @@ There are the following command line parameters handled:
   * `-r rate` — limit frame rate. `rematrix` will try to present a
     frame `rate` times per second and will sleep between frames.
 
+All colors are in `#RRGGBB` format.
+
 `rematrix` handles `SIGUSR1` and `SIGUSR2` signals. It will pause
 rendering on receiving `SIGUSR1` and resume on receiving `SIGUSR2`.
 
