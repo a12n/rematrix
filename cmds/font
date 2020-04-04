@@ -65,16 +65,16 @@ def make_cpp_inc():
 
 # Transpose glyphs in the texture as The Matrix glyphs (all mirrored
 # left/right, except 3).
-def transpose_glyphs():
+def transpose_glyphs(in_file, out_file):
     from PIL import Image
     descr = parse(sys.stdin)
-    img = Image.open(sys.argv[1])
+    img = Image.open(in_file)
     for c, ((x, y), (width, height), (xoffset, yoffset), advance) in descr["chars"].items():
         box = (x, y, x + width, y + height)
         glyph = img.crop(box)
         glyph = glyph.transpose(Image.FLIP_TOP_BOTTOM if c == ord("3") else Image.FLIP_LEFT_RIGHT)
         img.paste(glyph, box)
-    img.save(sys.argv[2])
+    img.save(out_file)
 
 # Remap font description for The Matrix texture to Unicode Private Use Area
 def transpose_descr():
@@ -85,20 +85,20 @@ def transpose_descr():
         del(descr["chars"][cold])
     write(descr, sys.stdout)
 
-def combine_glyphs():
+def combine_glyphs(in1_file, in2_file, out_file):
     from PIL import Image
-    in1 = Image.open(sys.argv[1])
-    in2 = Image.open(sys.argv[2])
+    in1 = Image.open(in1_file)
+    in2 = Image.open(in2_file)
     assert(in1.size == in2.size)
     out = Image.new("L", (in1.size[0] + in2.size[0], in1.size[1]))
     out.paste(in1, (0, 0))
     out.paste(in2, (in1.size[0], 0))
-    out.save(sys.argv[3])
+    out.save(out_file)
 
-def combine_descrs():
-    with open(sys.argv[1], "r") as f:
+def combine_descrs(descr1_file, descr2_file):
+    with open(descr1_file, "r") as f:
         descr1 = parse(f)
-    with open(sys.argv[2], "r") as f:
+    with open(descr2_file, "r") as f:
         descr2 = parse(f)
     assert(all((descr1[k] == descr2[k] for k in ["size", "padding", "spacing", "lineHeight", "base", "scaleW", "scaleH"])))
     descr2["scaleW"] += descr1["scaleW"]
@@ -113,28 +113,28 @@ def combine_descrs():
     descr2["chars"].update(descr1["chars"])
     write(descr2, sys.stdout)
 
-def image_size():
+def image_size(in_file):
     from PIL import Image
-    img = Image.open(sys.argv[1])
+    img = Image.open(in_file)
     print(",".join(map(str, img.size)))
 
-def dump_image_inc():
+def dump_image_inc(in_file):
     from PIL import Image
-    for pixel in Image.open(sys.argv[1]).getdata():
+    for pixel in Image.open(in_file).getdata():
         print(pixel, ",")
 
 if __name__ == "__main__":
-    if sys.argv[0].endswith("make_cpp_inc"):
+    if sys.argv[1] == "make_cpp_inc":
         make_cpp_inc()
-    elif sys.argv[0].endswith("transpose_glyphs"):
-        transpose_glyphs()
-    elif sys.argv[0].endswith("transpose_descr"):
+    elif sys.argv[1] == "transpose_glyphs":
+        transpose_glyphs(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == "transpose_descr":
         transpose_descr()
-    elif sys.argv[0].endswith("combine_glyphs"):
-        combine_glyphs()
-    elif sys.argv[0].endswith("combine_descrs"):
-        combine_descrs()
-    elif sys.argv[0].endswith("image_size"):
-        image_size()
-    elif sys.argv[0].endswith("dump_image_inc"):
-        dump_image_inc()
+    elif sys.argv[1] == "combine_glyphs":
+        combine_glyphs(sys.argv[2], sys.argv[3], sys.argv[4])
+    elif sys.argv[1] == "combine_descrs":
+        combine_descrs(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == "image_size":
+        image_size(sys.argv[2])
+    elif sys.argv[1] == "dump_image_inc":
+        dump_image_inc(sys.argv[2])
