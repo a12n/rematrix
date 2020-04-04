@@ -27,3 +27,27 @@ Colors may be customized:
 ![Red Matrix](images/red-matrix.png)
 
 ![Black Matrix](images/black-matrix.png)
+
+# Dependencies
+
+## Build
+
+You will need the following at build time:
+
+  * CMake
+  * C++17 compiler
+  * libX11
+  * GLEW
+  * Python3 with Python Imaging Library
+
+In Debian the dependencies may be installed from the following
+packages:
+
+```
+cmake g++ libglew-dev libx11-dev python3-pil
+```
+
+## Runtime
+
+Support of modern OpenGL (version 3.0 or higher) is required in
+graphics hardware and drivers.
