@@ -47,6 +47,17 @@ packages:
 cmake g++ libglew-dev libx11-dev python3-pil
 ```
 
+Create directory for build files, configure, build and run:
+
+```
+cd rematrix
+mkdir _build
+cd _build
+cmake ..
+make
+./rematrix
+```
+
 ## Runtime
 
 Support of modern OpenGL (version 3.0 or higher) is required in
