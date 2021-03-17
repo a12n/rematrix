@@ -16,7 +16,7 @@ set(CMAKE_CXX_EXTENSIONS off)
 # Find packages
 
 find_package(X11 REQUIRED)
-find_package(OpenGL COMPONENTS GLX OpenGL REQUIRED)
+find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
