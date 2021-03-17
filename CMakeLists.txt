@@ -16,14 +16,8 @@ set(CMAKE_CXX_EXTENSIONS off)
 # Find packages
 
 find_package(X11 REQUIRED)
-include_directories(${X11_X11_INCLUDE_PATH})
-
 find_package(OpenGL COMPONENTS GLX OpenGL REQUIRED)
-include_directories(${OPENGL_INCLUDE_DIR})
-
 find_package(GLEW REQUIRED)
-include_directories(${GLEW_INCLUDE_DIRS})
-
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 #------------------------------------------------------------------------------
@@ -57,9 +51,9 @@ target_include_directories(
 target_link_libraries(
   rematrix
   PRIVATE
-  ${X11_X11_LIB}
-  ${OPENGL_LIBRARIES}
-  ${GLEW_LIBRARIES}
+  GLEW::GLEW
+  OpenGL::GL
+  X11::X11
   )
 
 install(TARGETS rematrix DESTINATION bin)
