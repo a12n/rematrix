@@ -20,7 +20,7 @@ program::program(const vertex_shader& v, const fragment_shader& f) :
 program::program(program&& other) noexcept :
     id{other.id}
 {
-    const_cast<GLuint&>(other.id) = 0;
+    other.id = 0;
 }
 
 program::~program()
@@ -31,8 +31,8 @@ program::~program()
 program&
 program::operator=(program&& other) noexcept
 {
-    const_cast<GLuint&>(id) = other.id;
-    const_cast<GLuint&>(other.id) = 0;
+    id = other.id;
+    other.id = 0;
     return *this;
 }
 
