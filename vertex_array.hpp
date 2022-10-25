@@ -22,7 +22,8 @@ struct vertex_array
     void
     unbind();
 
-    const GLuint id{0};
+private:
+    GLuint id_{0};
 };
 
 } // namespace rematrix
