@@ -4,8 +4,8 @@ namespace rematrix {
 
 texture::texture()
 {
-    glGenTextures(1, const_cast<GLuint*>(&id));
-    if (id == 0) {
+    glGenTextures(1, &id_);
+    if (id_ == 0) {
         throw runtime_error("couldn't create texture");
     }
 }
@@ -17,21 +17,21 @@ texture::texture(GLint internal_format, GLsizei width, GLsizei height, GLenum fo
 }
 
 texture::texture(texture&& other) noexcept :
-    id{other.id}
+    id_{other.id_}
 {
-    const_cast<GLuint&>(other.id) = 0;
+    other.id_ = 0;
 }
 
 texture::~texture()
 {
-    glDeleteTextures(1, &id);
+    glDeleteTextures(1, &id_);
 }
 
 texture&
 texture::operator=(texture&& other) noexcept
 {
-    const_cast<GLuint&>(id) = other.id;
-    const_cast<GLuint&>(other.id) = 0;
+    id_ = other.id_;
+    other.id_ = 0;
     return *this;
 }
 
@@ -55,7 +55,7 @@ texture::load(GLint internal_format, GLsizei width, GLsizei height, GLenum forma
 void
 texture::bind()
 {
-    glBindTexture(GL_TEXTURE_2D, id);
+    glBindTexture(GL_TEXTURE_2D, id_);
 }
 
 void

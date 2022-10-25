@@ -35,7 +35,8 @@ struct texture
     void
     unbind(GLenum unit);
 
-    const GLuint id{0};
+private:
+    GLuint id_{0};
 };
 
 } // namespace rematrix
