@@ -18,7 +18,6 @@ struct buffer
     buffer&
     operator=(buffer&& other) noexcept;
 
-protected:
     void
     bind(GLenum target);
 
