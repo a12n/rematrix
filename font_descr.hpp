@@ -7,7 +7,7 @@ namespace rematrix {
 
 struct glyph_descr {
     // Image coordinates of the glyph in triangle strip order.
-    constexpr array<unsigned short, 8> coords() const noexcept
+    array<unsigned short, 8> coords() const noexcept
     {
         const auto [x, y] = pos;
         const auto [w, h] = size;
@@ -18,7 +18,7 @@ struct glyph_descr {
     }
 
     // Normalized texture coordinates.
-    constexpr array<float, 8> coords(array<unsigned short, 2> image_size) const
+    array<float, 8> coords(array<unsigned short, 2> image_size) const
     {
         const auto [u1, w1, u2, w2, u3, w3, u4, w4] = coords();
         const auto w { static_cast<float>(image_size[0]) };
