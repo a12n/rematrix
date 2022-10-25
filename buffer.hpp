@@ -7,19 +7,16 @@
 
 namespace rematrix {
 
-struct buffer
-{
+struct buffer {
     buffer(GLenum target, const void* data, GLsizeiptr size, GLenum usage = GL_STATIC_DRAW);
 
     buffer(buffer&& other) noexcept;
 
     ~buffer();
 
-    buffer&
-    operator=(buffer&& other) noexcept;
+    buffer& operator=(buffer&& other) noexcept;
 
-    void
-    bind(GLenum target);
+    void bind(GLenum target);
 
 private:
     GLuint id { 0 };
@@ -27,14 +24,12 @@ private:
 
 //----------------------------------------------------------------------------
 
-struct vertex_buffer : buffer
-{
+struct vertex_buffer : buffer {
     vertex_buffer(const void* data, GLsizeiptr size, GLenum usage = GL_STATIC_DRAW);
 
-    void
-    bind();
+    void bind();
 };
 
 } // namespace rematrix
 
-#endif  // REMATRIX_BUFFER_HPP
+#endif // REMATRIX_BUFFER_HPP
