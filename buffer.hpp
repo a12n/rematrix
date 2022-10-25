@@ -18,11 +18,12 @@ struct buffer
     buffer&
     operator=(buffer&& other) noexcept;
 
-    const GLuint id{0};
-
 protected:
     void
     bind(GLenum target);
+
+private:
+    GLuint id { 0 };
 };
 
 //----------------------------------------------------------------------------
