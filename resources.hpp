@@ -15,4 +15,4 @@ extern const font_descr font;
 
 } // namespace rematrix
 
-#endif  // REMATRIX_RESOURCES_HPP
+#endif // REMATRIX_RESOURCES_HPP
