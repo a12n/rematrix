@@ -21,7 +21,13 @@ struct shader
     void
     compile(const char* src);
 
-    const GLuint id;
+    GLuint id() const
+    {
+        return id_;
+    }
+
+private:
+    GLuint id_;
 };
 
 //----------------------------------------------------------------------------

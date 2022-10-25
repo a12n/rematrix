@@ -37,13 +37,13 @@ program& program::operator=(program&& other) noexcept
 
 void program::link(const vertex_shader& v, const fragment_shader& f)
 {
-    glAttachShader(id, v.id);
-    glAttachShader(id, f.id);
+    glAttachShader(id, v.id());
+    glAttachShader(id, f.id());
     glLinkProgram(id);
     GLint ok;
     glGetProgramiv(id, GL_LINK_STATUS, &ok);
-    glDetachShader(id, f.id);
-    glDetachShader(id, v.id);
+    glDetachShader(id, f.id());
+    glDetachShader(id, v.id());
     if (!ok) {
         GLint length;
         glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);

@@ -3,44 +3,44 @@
 namespace rematrix {
 
 shader::shader(GLenum type) :
-    id{glCreateShader(type)}
+    id_{glCreateShader(type)}
 {
-    if (id == 0) {
+    if (id_ == 0) {
         throw runtime_error("couldn't create shader");
     }
 }
 
 shader::shader(shader&& other) noexcept :
-    id{other.id}
+    id_{other.id_}
 {
-    const_cast<GLuint&>(other.id) = 0;
+    other.id_ = 0;
 }
 
 shader::~shader()
 {
-    glDeleteShader(id);
+    glDeleteShader(id_);
 }
 
 shader&
 shader::operator=(shader&& other) noexcept
 {
-    const_cast<GLuint&>(id) = other.id;
-    const_cast<GLuint&>(other.id) = 0;
+    id_ = other.id_;
+    other.id_ = 0;
     return *this;
 }
 
 void
 shader::compile(const char* src)
 {
-    glShaderSource(id, 1, &src, nullptr);
-    glCompileShader(id);
+    glShaderSource(id_, 1, &src, nullptr);
+    glCompileShader(id_);
     GLint ok;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &ok);
+    glGetShaderiv(id_, GL_COMPILE_STATUS, &ok);
     if (! ok) {
         GLint length;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+        glGetShaderiv(id_, GL_INFO_LOG_LENGTH, &length);
         string log(length, '\0');
-        glGetShaderInfoLog(id, length, nullptr, log.data());
+        glGetShaderInfoLog(id_, length, nullptr, log.data());
         throw runtime_error(log);
     }
 }
