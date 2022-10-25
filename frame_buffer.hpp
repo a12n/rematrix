@@ -33,7 +33,8 @@ struct frame_buffer
     void
     check_complete() const;
 
-    const GLuint id{0};
+private:
+    GLuint id{0};
 };
 
 } // namespace rematrix

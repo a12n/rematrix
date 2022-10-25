@@ -5,7 +5,7 @@ namespace rematrix {
 
 frame_buffer::frame_buffer()
 {
-    glGenFramebuffers(1, const_cast<GLuint*>(&id));
+    glGenFramebuffers(1, &id);
     if (id == 0) {
         throw runtime_error("couldn't generate frame buffer");
     }
@@ -14,7 +14,7 @@ frame_buffer::frame_buffer()
 frame_buffer::frame_buffer(frame_buffer&& other) noexcept :
     id{other.id}
 {
-    const_cast<GLuint&>(other.id) = 0;
+    other.id = 0;
 }
 
 frame_buffer::~frame_buffer()
@@ -25,8 +25,8 @@ frame_buffer::~frame_buffer()
 frame_buffer&
 frame_buffer::operator=(frame_buffer&& other) noexcept
 {
-    const_cast<GLuint&>(id) = other.id;
-    const_cast<GLuint&>(other.id) = 0;
+    id = other.id;
+    other.id = 0;
     return *this;
 }
 
