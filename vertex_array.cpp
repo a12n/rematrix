@@ -1,5 +1,5 @@
-#include "decl.hpp"
 #include "vertex_array.hpp"
+#include "decl.hpp"
 
 namespace rematrix {
 
@@ -11,8 +11,8 @@ vertex_array::vertex_array()
     }
 }
 
-vertex_array::vertex_array(vertex_array&& other) noexcept :
-    id_{other.id_}
+vertex_array::vertex_array(vertex_array&& other) noexcept
+    : id_ { other.id_ }
 {
     other.id_ = 0;
 }
@@ -22,22 +22,19 @@ vertex_array::~vertex_array()
     glDeleteVertexArrays(1, &id_);
 }
 
-vertex_array&
-vertex_array::operator=(vertex_array&& other) noexcept
+vertex_array& vertex_array::operator=(vertex_array&& other) noexcept
 {
     id_ = other.id_;
     other.id_ = 0;
     return *this;
 }
 
-void
-vertex_array::bind()
+void vertex_array::bind()
 {
     glBindVertexArray(id_);
 }
 
-void
-vertex_array::unbind()
+void vertex_array::unbind()
 {
     glBindVertexArray(0);
 }

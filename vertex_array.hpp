@@ -5,27 +5,23 @@
 
 namespace rematrix {
 
-struct vertex_array
-{
+struct vertex_array {
     vertex_array();
 
     vertex_array(vertex_array&& other) noexcept;
 
     ~vertex_array();
 
-    vertex_array&
-    operator=(vertex_array&& other) noexcept;
+    vertex_array& operator=(vertex_array&& other) noexcept;
 
-    void
-    bind();
+    void bind();
 
-    void
-    unbind();
+    void unbind();
 
 private:
-    GLuint id_{0};
+    GLuint id_ { 0 };
 };
 
 } // namespace rematrix
 
-#endif  // REMATRIX_VERTEX_ARRAY_HPP
+#endif // REMATRIX_VERTEX_ARRAY_HPP
