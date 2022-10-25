@@ -21,16 +21,12 @@ struct glyph_descr {
     array<float, 8> coords(array<unsigned short, 2> image_size) const
     {
         const auto [u1, w1, u2, w2, u3, w3, u4, w4] = coords();
-        const auto w { static_cast<float>(image_size[0]) };
-        const auto h { static_cast<float>(image_size[1]) };
-        return { { static_cast<float>(u1) / w,
-            static_cast<float>(w1) / h,
-            static_cast<float>(u2) / w,
-            static_cast<float>(w2) / h,
-            static_cast<float>(u3) / w,
-            static_cast<float>(w3) / h,
-            static_cast<float>(u4) / w,
-            static_cast<float>(w4) / h } };
+        const float w = image_size[0];
+        const float h = image_size[1];
+        return { { u1 / w, w1 / h,
+            u2 / w, w2 / h,
+            u3 / w, w3 / h,
+            u4 / w, w4 / h } };
     }
 
     const array<unsigned short, 2> pos { 0, 0 };
@@ -42,12 +38,12 @@ struct glyph_descr {
 struct font_descr {
     array<float, 8> position(const glyph_descr& g) const
     {
-        const auto fs { static_cast<float>(font_size) };
+        const float fs = font_size;
 
-        const auto x1 { -g.advance / 2.0f + g.offset[0] };
-        const auto y1 { fs / 2.0f - g.offset[1] };
-        const auto x2 { x1 + g.size[0] };
-        const auto y2 { y1 - g.size[1] };
+        const auto x1 = -g.advance / 2.0f + g.offset[0];
+        const auto y1 = fs / 2.0f - g.offset[1];
+        const auto x2 = x1 + g.size[0];
+        const auto y2 = y1 - g.size[1];
 
         return { { x1 / fs, y1 / fs,
             x2 / fs, y1 / fs,
