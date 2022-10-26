@@ -357,7 +357,7 @@ int main(int argc, char* argv[])
     unique_ptr<render_context> ctx;
 
     {
-        const options opts { parse_options(argc, argv) };
+        const auto opts { parse_options(argc, argv) };
         frame_interval = milliseconds { 1'000 / opts.frame_rate };
         ctx = make_unique<render_context>();
         init(opts, ctx->window_size());
