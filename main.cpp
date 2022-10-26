@@ -6,7 +6,7 @@
 #include "matrix.hpp"
 #include "options.hpp"
 #include "program.hpp"
-#include "rendering_context.hpp"
+#include "render_context.hpp"
 #include "resources.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
@@ -19,25 +19,24 @@ unique_ptr<program> prog;
 unique_ptr<vertex_buffer> font_vertex_buf;
 unique_ptr<texture> font_tex;
 
-GLint model_uniform{-1};
+GLint model_uniform { -1 };
 
-GLint char_pos_uniform{-1};
-GLint feeder_pos_uniform{-1};
-GLint is_erasing_uniform{-1};
-GLint is_feeder_uniform{-1};
-GLint wave_pos_uniform{-1};
+GLint char_pos_uniform { -1 };
+GLint feeder_pos_uniform { -1 };
+GLint is_erasing_uniform { -1 };
+GLint is_feeder_uniform { -1 };
+GLint wave_pos_uniform { -1 };
 
-minstd_rand rand{0};
+minstd_rand rand { 0 };
 
 vector<unsigned int> glyph_indices;
 
-constexpr GLuint position_attrib{0};
-constexpr GLuint tex_coord_attrib{1};
+constexpr GLuint position_attrib { 0 };
+constexpr GLuint tex_coord_attrib { 1 };
 
-constexpr GLuint frag_color_attrib{0};
+constexpr GLuint frag_color_attrib { 0 };
 
-void
-render_glyph(unsigned int index)
+void render_glyph(unsigned int index)
 {
     glDrawArrays(GL_TRIANGLE_STRIP, index, 4);
     // glBegin(GL_LINE_STRIP);
@@ -51,29 +50,25 @@ render_glyph(unsigned int index)
 
 //----------------------------------------------------------------------------
 
-class strip
-{
+class strip {
 public:
-    bool
-    operator<(const strip& other) const
+    bool operator<(const strip& other) const
     {
         return position[2] < other.position[2];
     }
 
-    void
-    reset()
+    void reset()
     {
         internal_reset();
         erasing = true;
-        feeder_pos = uniform_real_distribution{0.0f, static_cast<float>(grid_size)}(rand);
+        feeder_pos = uniform_real_distribution { 0.0f, static_cast<float>(grid_size) }(rand);
         for (auto& [index, spin] : chars) {
             index = glyph_indices[0];
             spin = false;
         }
     }
 
-    void
-    update(const duration<double>& dt)
+    void update(const duration<double>& dt)
     {
         position[0] += velocity[0] * dt.count();
         position[1] += velocity[1] * dt.count();
@@ -100,13 +95,13 @@ public:
         if (spin_accum >= spin_after) {
             spin_accum = 0.0f;
 
-            uniform_int_distribution<unsigned long> glyph_indices_distr{1, glyph_indices.size() - 1};
+            uniform_int_distribution<unsigned long> glyph_indices_distr { 1, glyph_indices.size() - 1 };
 
             feeder_char = glyph_indices[glyph_indices_distr(rand)];
             for (auto& [index, spin] : chars) {
                 if (spin) {
                     index = glyph_indices[glyph_indices_distr(rand)];
-                    spin = bernoulli_distribution{799.0f / 800.0f}(rand);
+                    spin = bernoulli_distribution { 799.0f / 800.0f }(rand);
                 }
             }
         }
@@ -120,69 +115,67 @@ public:
         }
     }
 
-    void
-    render() const
+    void render() const
     {
         prog->set_uniform(is_feeder_uniform, false);
         prog->set_uniform(is_erasing_uniform, erasing);
         prog->set_uniform(feeder_pos_uniform, feeder_pos);
         prog->set_uniform(wave_pos_uniform, static_cast<int>(wave_pos));
-        for (unsigned int i{0}; i < chars.size(); ++i) {
-            bool below{feeder_pos > i};
+        for (unsigned int i { 0 }; i < chars.size(); ++i) {
+            bool below { feeder_pos > i };
 
             if (erasing) {
-                below = ! below;
+                below = !below;
             }
 
             if (below) {
                 prog->set_uniform(char_pos_uniform, static_cast<int>(i));
-                prog->set_uniform(model_uniform, translate({position[0], position[1] - i, position[2]}));
+                prog->set_uniform(model_uniform, translate({ position[0], position[1] - i, position[2] }));
                 render_glyph(chars[i].first);
             }
         }
 
-        if (! erasing) {
-            prog->set_uniform(model_uniform, translate({position[0], position[1] - feeder_pos, position[2]}));
+        if (!erasing) {
+            prog->set_uniform(model_uniform, translate({ position[0], position[1] - feeder_pos, position[2] }));
             prog->set_uniform(is_feeder_uniform, true);
             render_glyph(feeder_char);
         }
     }
 
 private:
-    static constexpr unsigned int grid_size{70};
-    static constexpr unsigned int grid_depth{35};
-    static constexpr float splash_ratio{0.7f};
-    static constexpr unsigned int wave_size{22};
+    static constexpr unsigned int grid_size { 70 };
+    static constexpr unsigned int grid_depth { 35 };
+    static constexpr float splash_ratio { 0.7f };
+    static constexpr unsigned int wave_size { 22 };
 
-    void
-    internal_reset()
+    void internal_reset()
     {
-        uniform_int_distribution<unsigned long> glyph_indices_distr{1, glyph_indices.size() - 1};
+        uniform_int_distribution<unsigned long> glyph_indices_distr { 1, glyph_indices.size() - 1 };
 
-        position[0] = uniform_real_distribution{-(grid_size / 2.0f), grid_size / 2.0f}(rand);
-        position[1] = normal_distribution{grid_size / 2.0f}(rand);
-        position[2] = uniform_real_distribution{-(grid_depth * 0.5f), grid_depth * 0.2f}(rand);
+        position[0] = uniform_real_distribution { -(grid_size / 2.0f), grid_size / 2.0f }(rand);
+        position[1] = normal_distribution { grid_size / 2.0f }(rand);
+        position[2] = uniform_real_distribution { -(grid_depth * 0.5f), grid_depth * 0.2f }(rand);
 
         velocity[0] = 0.0f;
         velocity[1] = 0.0f;
-        velocity[2] = max(normal_distribution{0.8f, 0.01f}(rand), 0.001f);
+        velocity[2] = max(normal_distribution { 0.8f, 0.01f }(rand), 0.001f);
 
         erasing = false;
 
         feeder_char = glyph_indices[glyph_indices_distr(rand)];
         feeder_pos = 0.0f;
-        feeder_speed = max(normal_distribution{2.0f}(rand), 0.1f);
+        feeder_speed = max(normal_distribution { 2.0f }(rand), 0.1f);
 
         spin_accum = 0.0f;
-        spin_after = max(normal_distribution{0.25f, 0.1f}(rand), 0.05f);
+        spin_after = max(normal_distribution { 0.25f, 0.1f }(rand), 0.05f);
 
         wave_pos = 0;
         wave_accum = 0.0f;
-        wave_after = max(normal_distribution{1.0f, 0.3f}(rand), 0.1f);
+        wave_after = max(normal_distribution { 1.0f, 0.3f }(rand), 0.1f);
 
         for (auto& [index, spin] : chars) {
-            if (bernoulli_distribution{7.0f / 8.0f}(rand)) {
-                spin = bernoulli_distribution{1.0f / 20.0f}(rand);
+            if (bernoulli_distribution { 7.0f / 8.0f }(rand)) {
+                spin = bernoulli_distribution { 1.0f / 20.0f }(rand);
                 index = glyph_indices[glyph_indices_distr(rand)];
             } else {
                 index = glyph_indices[0];
@@ -213,30 +206,29 @@ vector<strip> strips;
 
 //----------------------------------------------------------------------------
 
-void
-init(const options& opts, const array<unsigned int, 2>& window_size)
+void init(const options& opts, const array<unsigned int, 2>& window_size)
 {
-    if (auto status{glewInit()}; status != GLEW_OK) {
+    if (auto status { glewInit() }; status != GLEW_OK) {
         throw runtime_error(reinterpret_cast<const char*>(glewGetErrorString(status)));
     }
 
-    if (! GLEW_VERSION_3_0) {
+    if (!GLEW_VERSION_3_0) {
         throw runtime_error("OpenGL 3.0 required");
     }
 
     // Build GLSL program
 
-    const auto aspect{static_cast<float>(window_size[0]) / static_cast<float>(window_size[1])};
+    const auto aspect { static_cast<float>(window_size[0]) / static_cast<float>(window_size[1]) };
 
     prog = make_unique<program>();
     prog->bind_attrib_location(position_attrib, "position");
     prog->bind_attrib_location(tex_coord_attrib, "texCoord");
     prog->bind_frag_data_location(frag_color_attrib, "fragColor");
-    prog->link(vertex_shader{vertex_src}, fragment_shader{frag_src});
+    prog->link(vertex_shader { vertex_src }, fragment_shader { frag_src });
     prog->use();
 
     prog->set_uniform(prog->uniform_location("projection"), perspective(radians(80.0f), aspect, 0.1f, 100.0f));
-    prog->set_uniform(prog->uniform_location("view"), translate({0.0f, 0.0f, -25.0f}));
+    prog->set_uniform(prog->uniform_location("view"), translate({ 0.0f, 0.0f, -25.0f }));
 
     prog->set_uniform(prog->uniform_location("charColor"), opts.char_color);
     prog->set_uniform(prog->uniform_location("enableFog"), opts.enable_fog);
@@ -263,47 +255,44 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
         font_vertex_buf->bind();
 
         glVertexAttribPointer(position_attrib,
-                              2, GL_FLOAT, GL_FALSE,
-                              4 * sizeof(float),
-                              static_cast<const void*>(0));
+            2, GL_FLOAT, GL_FALSE,
+            4 * sizeof(float),
+            static_cast<const void*>(0));
         glEnableVertexAttribArray(position_attrib);
 
         glVertexAttribPointer(tex_coord_attrib,
-                              2, GL_FLOAT, GL_FALSE,
-                              4 * sizeof(float),
-                              reinterpret_cast<const void*>(static_cast<uintptr_t>(2 * sizeof(float))));
+            2, GL_FLOAT, GL_FALSE,
+            4 * sizeof(float),
+            reinterpret_cast<const void*>(static_cast<uintptr_t>(2 * sizeof(float))));
         glEnableVertexAttribArray(tex_coord_attrib);
 
         // Keep list of known glyph indices
 
         glyph_indices.push_back(i.at(' '));
         switch (opts.mode) {
-        case options::binary :
-            for (const char16_t c : string_view{"01"}) {
+        case options::binary:
+            for (const char16_t c : string_view { "01" }) {
                 glyph_indices.push_back(i.at(c));
             }
             break;
-        case options::dna :
-            for (const char16_t c : string_view{"ACGT"}) {
+        case options::dna:
+            for (const char16_t c : string_view { "ACGT" }) {
                 glyph_indices.push_back(i.at(c));
             }
             break;
-        case options::decimal :
-            for (const char16_t c : string_view{"0123456789"}) {
+        case options::decimal:
+            for (const char16_t c : string_view { "0123456789" }) {
                 glyph_indices.push_back(i.at(c));
             }
             break;
-        case options::hexadecimal :
-            for (const char16_t c : string_view{"0123456789ABCDEF"}) {
+        case options::hexadecimal:
+            for (const char16_t c : string_view { "0123456789ABCDEF" }) {
                 glyph_indices.push_back(i.at(c));
             }
             break;
-        case options::matrix :
+        case options::matrix:
             for (const auto [c, j] : i) {
-                if (c == '1' || c == '7' || c == '0' || c == 'Z' ||
-                    c == ':' || c == '.' || c == '"' || c == '=' || c == '*' || c == '+' || c == '-' || c == 166 || c == '|' ||
-                    c > 256)
-                {
+                if (c == '1' || c == '7' || c == '0' || c == 'Z' || c == ':' || c == '.' || c == '"' || c == '=' || c == '*' || c == '+' || c == '-' || c == 166 || c == '|' || c > 256) {
                     glyph_indices.push_back(j);
                 }
             }
@@ -330,8 +319,7 @@ init(const options& opts, const array<unsigned int, 2>& window_size)
     }
 }
 
-void
-update(const duration<double>& dt)
+void update(const duration<double>& dt)
 {
     // TODO: parallel?
     for (strip& s : strips) {
@@ -339,8 +327,7 @@ update(const duration<double>& dt)
     }
 }
 
-void
-render()
+void render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     sort(begin(strips), end(strips));
@@ -351,39 +338,39 @@ render()
 
 //----------------------------------------------------------------------------
 
-volatile sig_atomic_t paused{0};
+volatile sig_atomic_t paused { 0 };
 
-void
-signal_handler(int sig) noexcept
+void signal_handler(int sig) noexcept
 {
-    paused = (sig == SIGUSR1 ? true :
-              sig == SIGUSR2 ? false :
-              paused);
+    if (sig == SIGUSR1) {
+        paused = true;
+    } else if (sig == SIGUSR2) {
+        paused = false;
+    }
 }
 
 } // namespace
 
-int
-main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
-    milliseconds frame_interval{1'000 / 30};
-    unique_ptr<rendering_context> ctx;
+    milliseconds frame_interval { 1'000 / 30 };
+    unique_ptr<render_context> ctx;
 
     {
-        const options opts{parse_options(argc, argv)};
-        frame_interval = milliseconds{1'000 / opts.frame_rate};
-        ctx = make_unique<rendering_context>();
+        const auto opts { parse_options(argc, argv) };
+        frame_interval = milliseconds { 1'000 / opts.frame_rate };
+        ctx = make_unique<render_context>();
         init(opts, ctx->window_size());
     }
 
     signal(SIGUSR1, signal_handler);
     signal(SIGUSR2, signal_handler);
 
-    auto frame_tick{steady_clock::now()};
+    auto frame_tick { steady_clock::now() };
 
     while (true) {
         this_thread::sleep_until(frame_tick += frame_interval);
-        if (! paused && ! ctx->window_obscured()) {
+        if (!paused && !ctx->window_obscured()) {
             update(frame_interval);
             render();
         }

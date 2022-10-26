@@ -21,9 +21,6 @@ using std::begin;
 using std::bernoulli_distribution;
 using std::cbegin;
 using std::cend;
-using std::chrono::duration;
-using std::chrono::milliseconds;
-using std::chrono::steady_clock;
 using std::end;
 using std::function;
 using std::initializer_list;
@@ -44,8 +41,11 @@ using std::uniform_real_distribution;
 using std::unique_ptr;
 using std::unordered_map;
 using std::vector;
+using std::chrono::duration;
+using std::chrono::milliseconds;
+using std::chrono::steady_clock;
 
-class rendering_context;
+class render_context;
 struct buffer;
 struct element_buffer;
 struct font_descr;
@@ -60,4 +60,4 @@ struct vertex_shader;
 
 } // namespace rematrix
 
-#endif  // REMATRIX_DECL_HPP
+#endif // REMATRIX_DECL_HPP

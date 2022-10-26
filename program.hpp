@@ -8,8 +8,7 @@
 
 namespace rematrix {
 
-struct program
-{
+struct program {
     program();
 
     program(const vertex_shader& v, const fragment_shader& f);
@@ -18,51 +17,38 @@ struct program
 
     ~program();
 
-    program&
-    operator=(program&& other) noexcept;
+    program& operator=(program&& other) noexcept;
 
-    void
-    link(const vertex_shader& v, const fragment_shader& f);
+    void link(const vertex_shader& v, const fragment_shader& f);
 
-    void
-    use();
+    void use();
 
-    void
-    bind_attrib_location(GLuint index, const char* name);
+    void bind_attrib_location(GLuint index, const char* name);
 
-    void
-    bind_frag_data_location(GLuint color_number, const char* name);
+    void bind_frag_data_location(GLuint color_number, const char* name);
 
-    GLint
-    attrib_location(const GLchar* name) const;
+    GLint attrib_location(const GLchar* name) const;
 
-    GLint
-    uniform_location(const GLchar* name) const;
+    GLint uniform_location(const GLchar* name) const;
 
-    void
-    set_uniform(GLint location, GLint i);
+    void set_uniform(GLint location, GLint i);
 
-    void
-    set_uniform(GLint location, GLfloat x);
+    void set_uniform(GLint location, GLfloat x);
 
-    void
-    set_uniform(GLint location, GLint i1, GLint i2);
+    void set_uniform(GLint location, GLint i1, GLint i2);
 
-    void
-    set_uniform(GLint location, const vec3& v);
+    void set_uniform(GLint location, const vec3& v);
 
-    void
-    set_uniform(GLint location, const vec4& v);
+    void set_uniform(GLint location, const vec4& v);
 
-    void
-    set_uniform(GLint location, const mat4& m);
+    void set_uniform(GLint location, const mat4& m);
 
-    void
-    set_uniform(GLint location, bool b);
+    void set_uniform(GLint location, bool b);
 
-    const GLuint id;
+private:
+    GLuint id_ { 0 };
 };
 
 } // namespace rematrix
 
-#endif  // REMATRIX_PROGRAM_HPP
+#endif // REMATRIX_PROGRAM_HPP

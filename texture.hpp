@@ -7,8 +7,7 @@
 
 namespace rematrix {
 
-struct texture
-{
+struct texture {
     texture();
 
     texture(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels = nullptr);
@@ -17,27 +16,22 @@ struct texture
 
     ~texture();
 
-    texture&
-    operator=(texture&& other) noexcept;
+    texture& operator=(texture&& other) noexcept;
 
-    void
-    load(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels = nullptr);
+    void load(GLint internal_format, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels = nullptr);
 
-    void
-    bind();
+    void bind();
 
-    void
-    bind(GLenum unit);
+    void bind(GLenum unit);
 
-    void
-    unbind();
+    void unbind();
 
-    void
-    unbind(GLenum unit);
+    void unbind(GLenum unit);
 
-    const GLuint id{0};
+private:
+    GLuint id_ { 0 };
 };
 
 } // namespace rematrix
 
-#endif  // REMATRIX_TEXTURE_HPP
+#endif // REMATRIX_TEXTURE_HPP

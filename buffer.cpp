@@ -4,48 +4,45 @@ namespace rematrix {
 
 buffer::buffer(GLenum target, const void* data, GLsizeiptr size, GLenum usage)
 {
-    glGenBuffers(1, const_cast<GLuint*>(&id));
-    if (id == 0) {
+    glGenBuffers(1, &id_);
+    if (id_ == 0) {
         throw runtime_error("couldn't generate buffer");
     }
     bind(target);
     glBufferData(target, size, data, usage);
 }
 
-buffer::buffer(buffer&& other) noexcept :
-    id{other.id}
+buffer::buffer(buffer&& other) noexcept
+    : id_ { other.id_ }
 {
-    const_cast<GLuint&>(other.id) = 0;
+    other.id_ = 0;
 }
 
 buffer::~buffer()
 {
-    glDeleteBuffers(1, &id);
+    glDeleteBuffers(1, &id_);
 }
 
-buffer&
-buffer::operator=(buffer&& other) noexcept
+buffer& buffer::operator=(buffer&& other) noexcept
 {
-    const_cast<GLuint&>(id) = other.id;
-    const_cast<GLuint&>(other.id) = 0;
+    id_ = other.id_;
+    other.id_ = 0;
     return *this;
 }
 
-void
-buffer::bind(GLenum target)
+void buffer::bind(GLenum target)
 {
-    glBindBuffer(target, id);
+    glBindBuffer(target, id_);
 }
 
 //----------------------------------------------------------------------------
 
-vertex_buffer::vertex_buffer(const void* data, GLsizeiptr size, GLenum usage) :
-    buffer{GL_ARRAY_BUFFER, data, size, usage}
+vertex_buffer::vertex_buffer(const void* data, GLsizeiptr size, GLenum usage)
+    : buffer { GL_ARRAY_BUFFER, data, size, usage }
 {
 }
 
-void
-vertex_buffer::bind()
+void vertex_buffer::bind()
 {
     buffer::bind(GL_ARRAY_BUFFER);
 }

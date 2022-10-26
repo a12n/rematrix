@@ -10,14 +10,14 @@ const char frag_src[] =
 #include "frag_src.inc"
     ;
 
-const array<unsigned short, 2> font_image_size{
+const array<unsigned short, 2> font_image_size {
 #include "font_image_size.inc"
 };
-const unsigned char font_image_data[]{
+const unsigned char font_image_data[] {
 #include "font_image_data.inc"
 };
 
-const font_descr font{
+const font_descr font {
 #include "font.inc"
 };
 

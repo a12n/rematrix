@@ -7,41 +7,38 @@
 
 namespace rematrix {
 
-struct shader
-{
-    shader(GLenum type);
+struct shader {
+    shader(GLenum type, const char* src = nullptr);
 
     shader(shader&& other) noexcept;
 
     ~shader();
 
-    shader&
-    operator=(shader&& other) noexcept;
+    shader& operator=(shader&& other) noexcept;
 
-    void
-    compile(const char* src);
+    void compile(const char* src);
 
-    const GLuint id;
+    GLuint id() const
+    {
+        return id_;
+    }
+
+private:
+    GLuint id_ { 0 };
 };
 
 //----------------------------------------------------------------------------
 
-struct vertex_shader : shader
-{
-    vertex_shader();
-
-    vertex_shader(const char* src);
+struct vertex_shader : shader {
+    vertex_shader(const char* src = nullptr);
 };
 
 //----------------------------------------------------------------------------
 
-struct fragment_shader : shader
-{
-    fragment_shader();
-
-    fragment_shader(const char* src);
+struct fragment_shader : shader {
+    fragment_shader(const char* src = nullptr);
 };
 
 } // namespace rematrix
 
-#endif  // REMATRIX_SHADER_HPP
+#endif // REMATRIX_SHADER_HPP
