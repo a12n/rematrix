@@ -2,11 +2,14 @@
 
 namespace rematrix {
 
-shader::shader(GLenum type)
+shader::shader(GLenum type, const char* src)
     : id_ { glCreateShader(type) }
 {
     if (id_ == 0) {
         throw runtime_error("couldn't create shader");
+    }
+    if (src) {
+        compile(src);
     }
 }
 
@@ -45,28 +48,16 @@ void shader::compile(const char* src)
 
 //----------------------------------------------------------------------------
 
-vertex_shader::vertex_shader()
-    : shader { GL_VERTEX_SHADER }
-{
-}
-
 vertex_shader::vertex_shader(const char* src)
-    : vertex_shader()
+    : shader { GL_VERTEX_SHADER, src }
 {
-    compile(src);
 }
 
 //----------------------------------------------------------------------------
 
-fragment_shader::fragment_shader()
-    : shader { GL_FRAGMENT_SHADER }
-{
-}
-
 fragment_shader::fragment_shader(const char* src)
-    : fragment_shader()
+    : shader { GL_FRAGMENT_SHADER, src }
 {
-    compile(src);
 }
 
 } // namespace rematrix

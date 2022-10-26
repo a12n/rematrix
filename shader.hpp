@@ -8,7 +8,7 @@
 namespace rematrix {
 
 struct shader {
-    shader(GLenum type);
+    shader(GLenum type, const char* src = nullptr);
 
     shader(shader&& other) noexcept;
 
@@ -30,17 +30,13 @@ private:
 //----------------------------------------------------------------------------
 
 struct vertex_shader : shader {
-    vertex_shader();
-
-    vertex_shader(const char* src);
+    vertex_shader(const char* src = nullptr);
 };
 
 //----------------------------------------------------------------------------
 
 struct fragment_shader : shader {
-    fragment_shader();
-
-    fragment_shader(const char* src);
+    fragment_shader(const char* src = nullptr);
 };
 
 } // namespace rematrix
