@@ -45,7 +45,7 @@ using std::unique_ptr;
 using std::unordered_map;
 using std::vector;
 
-class rendering_context;
+class render_context;
 struct buffer;
 struct element_buffer;
 struct font_descr;

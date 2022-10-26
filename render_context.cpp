@@ -1,8 +1,8 @@
-#include "rendering_context.hpp"
+#include "render_context.hpp"
 
 namespace rematrix {
 
-rendering_context::rendering_context()
+render_context::render_context()
     : display { open_display() }
     , window { XRootWindow(display.get(), XDefaultScreen(display.get())) }
     , context { create_context(choose_fb_config(XDefaultScreen(display.get()))) }
@@ -14,13 +14,13 @@ rendering_context::rendering_context()
     // XSync(display.get(), False);
 }
 
-void rendering_context::swap_buffers()
+void render_context::swap_buffers()
 {
     glXSwapBuffers(display.get(), window);
     // update_visibility();
 }
 
-array<unsigned int, 2> rendering_context::window_size() const
+array<unsigned int, 2> render_context::window_size() const
 {
     Window root;
     int x, y;
@@ -39,13 +39,13 @@ array<unsigned int, 2> rendering_context::window_size() const
     return { { width, height } };
 }
 
-bool rendering_context::window_obscured() const
+bool render_context::window_obscured() const
 {
-    // const_cast<rendering_context*>(this)->update_visibility();
+    // const_cast<render_context*>(this)->update_visibility();
     return obscured;
 }
 
-rendering_context::display_ptr rendering_context::open_display()
+render_context::display_ptr render_context::open_display()
 {
     display_ptr ans { XOpenDisplay(nullptr), XCloseDisplay };
 
@@ -56,7 +56,7 @@ rendering_context::display_ptr rendering_context::open_display()
     return ans;
 }
 
-GLXFBConfig rendering_context::choose_fb_config(int screen) const
+GLXFBConfig render_context::choose_fb_config(int screen) const
 {
     const int attrs[] = {
         GLX_RED_SIZE, 5,
@@ -75,7 +75,7 @@ GLXFBConfig rendering_context::choose_fb_config(int screen) const
     return configs.get()[0];
 }
 
-rendering_context::context_ptr rendering_context::create_context(GLXFBConfig config) const
+render_context::context_ptr render_context::create_context(GLXFBConfig config) const
 {
     auto context_deleter =
         [this](GLXContext c) -> void {
@@ -90,7 +90,7 @@ rendering_context::context_ptr rendering_context::create_context(GLXFBConfig con
     return ans;
 }
 
-void rendering_context::update_visibility()
+void render_context::update_visibility()
 {
     while (XPending(display.get()) > 0) {
         XEvent ev;

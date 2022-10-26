@@ -1,5 +1,5 @@
-#ifndef REMATRIX_RENDERING_CONTEXT_HPP
-#define REMATRIX_RENDERING_CONTEXT_HPP
+#ifndef REMATRIX_RENDER_CONTEXT_HPP
+#define REMATRIX_RENDER_CONTEXT_HPP
 
 #include <X11/Xlib.h>
 
@@ -9,9 +9,9 @@
 
 namespace rematrix {
 
-class rendering_context {
+class render_context {
 public:
-    rendering_context();
+    render_context();
 
     void swap_buffers();
 
@@ -39,4 +39,4 @@ private:
 
 } // namespace rematrix
 
-#endif // REMATRIX_RENDERING_CONTEXT_HPP
+#endif // REMATRIX_RENDER_CONTEXT_HPP

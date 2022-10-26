@@ -6,7 +6,7 @@
 #include "matrix.hpp"
 #include "options.hpp"
 #include "program.hpp"
-#include "rendering_context.hpp"
+#include "render_context.hpp"
 #include "resources.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
@@ -354,12 +354,12 @@ void signal_handler(int sig) noexcept
 int main(int argc, char* argv[])
 {
     milliseconds frame_interval { 1'000 / 30 };
-    unique_ptr<rendering_context> ctx;
+    unique_ptr<render_context> ctx;
 
     {
         const options opts { parse_options(argc, argv) };
         frame_interval = milliseconds { 1'000 / opts.frame_rate };
-        ctx = make_unique<rendering_context>();
+        ctx = make_unique<render_context>();
         init(opts, ctx->window_size());
     }
 

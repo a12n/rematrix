@@ -30,7 +30,7 @@ add_executable(
   options.cpp
   frame_buffer.cpp
   program.cpp
-  rendering_context.cpp
+  render_context.cpp
   resources.cpp
   shader.cpp
   texture.cpp
