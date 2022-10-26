@@ -342,8 +342,11 @@ volatile sig_atomic_t paused { 0 };
 
 void signal_handler(int sig) noexcept
 {
-    paused = (sig == SIGUSR1 ? true : sig == SIGUSR2 ? false
-                                                     : paused);
+    if (sig == SIGUSR1) {
+        paused = true;
+    } else if (sig == SIGUSR2) {
+        paused = false;
+    }
 }
 
 } // namespace
