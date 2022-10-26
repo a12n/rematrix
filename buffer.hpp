@@ -19,7 +19,7 @@ struct buffer {
     void bind(GLenum target);
 
 private:
-    GLuint id { 0 };
+    GLuint id_ { 0 };
 };
 
 //----------------------------------------------------------------------------

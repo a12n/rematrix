@@ -46,7 +46,7 @@ struct program {
     void set_uniform(GLint location, bool b);
 
 private:
-    GLuint id;
+    GLuint id_;
 };
 
 } // namespace rematrix

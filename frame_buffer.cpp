@@ -5,33 +5,33 @@ namespace rematrix {
 
 frame_buffer::frame_buffer()
 {
-    glGenFramebuffers(1, &id);
-    if (id == 0) {
+    glGenFramebuffers(1, &id_);
+    if (id_ == 0) {
         throw runtime_error("couldn't generate frame buffer");
     }
 }
 
 frame_buffer::frame_buffer(frame_buffer&& other) noexcept
-    : id { other.id }
+    : id_ { other.id_ }
 {
-    other.id = 0;
+    other.id_ = 0;
 }
 
 frame_buffer::~frame_buffer()
 {
-    glDeleteFramebuffers(1, &id);
+    glDeleteFramebuffers(1, &id_);
 }
 
 frame_buffer& frame_buffer::operator=(frame_buffer&& other) noexcept
 {
-    id = other.id;
-    other.id = 0;
+    id_ = other.id_;
+    other.id_ = 0;
     return *this;
 }
 
 void frame_buffer::bind()
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, id);
+    glBindFramebuffer(GL_FRAMEBUFFER, id_);
 }
 
 void frame_buffer::unbind()

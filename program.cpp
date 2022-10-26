@@ -4,9 +4,9 @@
 namespace rematrix {
 
 program::program()
-    : id { glCreateProgram() }
+    : id_ { glCreateProgram() }
 {
-    if (id == 0) {
+    if (id_ == 0) {
         throw runtime_error("couldn't create program");
     }
 }
@@ -18,59 +18,59 @@ program::program(const vertex_shader& v, const fragment_shader& f)
 }
 
 program::program(program&& other) noexcept
-    : id { other.id }
+    : id_ { other.id_ }
 {
-    other.id = 0;
+    other.id_ = 0;
 }
 
 program::~program()
 {
-    glDeleteProgram(id);
+    glDeleteProgram(id_);
 }
 
 program& program::operator=(program&& other) noexcept
 {
-    id = other.id;
-    other.id = 0;
+    id_ = other.id_;
+    other.id_ = 0;
     return *this;
 }
 
 void program::link(const vertex_shader& v, const fragment_shader& f)
 {
-    glAttachShader(id, v.id());
-    glAttachShader(id, f.id());
-    glLinkProgram(id);
+    glAttachShader(id_, v.id());
+    glAttachShader(id_, f.id());
+    glLinkProgram(id_);
     GLint ok;
-    glGetProgramiv(id, GL_LINK_STATUS, &ok);
-    glDetachShader(id, f.id());
-    glDetachShader(id, v.id());
+    glGetProgramiv(id_, GL_LINK_STATUS, &ok);
+    glDetachShader(id_, f.id());
+    glDetachShader(id_, v.id());
     if (!ok) {
         GLint length;
-        glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
+        glGetProgramiv(id_, GL_INFO_LOG_LENGTH, &length);
         string log(length, '\0');
-        glGetProgramInfoLog(id, length, nullptr, log.data());
+        glGetProgramInfoLog(id_, length, nullptr, log.data());
         throw runtime_error(log);
     }
 }
 
 void program::use()
 {
-    glUseProgram(id);
+    glUseProgram(id_);
 }
 
 void program::bind_attrib_location(GLuint index, const char* name)
 {
-    glBindAttribLocation(id, index, name);
+    glBindAttribLocation(id_, index, name);
 }
 
 void program::bind_frag_data_location(GLuint color_number, const char* name)
 {
-    glBindFragDataLocation(id, color_number, name);
+    glBindFragDataLocation(id_, color_number, name);
 }
 
 GLint program::attrib_location(const GLchar* name) const
 {
-    auto ans { glGetAttribLocation(id, name) };
+    auto ans { glGetAttribLocation(id_, name) };
     if (ans == -1) {
         throw runtime_error("couldn't locate program attribute");
     }
@@ -79,7 +79,7 @@ GLint program::attrib_location(const GLchar* name) const
 
 GLint program::uniform_location(const GLchar* name) const
 {
-    auto ans { glGetUniformLocation(id, name) };
+    auto ans { glGetUniformLocation(id_, name) };
     if (ans == -1) {
         string msg { "couldn't locate \"" };
         msg += name;

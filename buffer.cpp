@@ -4,8 +4,8 @@ namespace rematrix {
 
 buffer::buffer(GLenum target, const void* data, GLsizeiptr size, GLenum usage)
 {
-    glGenBuffers(1, &id);
-    if (id == 0) {
+    glGenBuffers(1, &id_);
+    if (id_ == 0) {
         throw runtime_error("couldn't generate buffer");
     }
     bind(target);
@@ -13,26 +13,26 @@ buffer::buffer(GLenum target, const void* data, GLsizeiptr size, GLenum usage)
 }
 
 buffer::buffer(buffer&& other) noexcept
-    : id { other.id }
+    : id_ { other.id_ }
 {
-    other.id = 0;
+    other.id_ = 0;
 }
 
 buffer::~buffer()
 {
-    glDeleteBuffers(1, &id);
+    glDeleteBuffers(1, &id_);
 }
 
 buffer& buffer::operator=(buffer&& other) noexcept
 {
-    id = other.id;
-    other.id = 0;
+    id_ = other.id_;
+    other.id_ = 0;
     return *this;
 }
 
 void buffer::bind(GLenum target)
 {
-    glBindBuffer(target, id);
+    glBindBuffer(target, id_);
 }
 
 //----------------------------------------------------------------------------
